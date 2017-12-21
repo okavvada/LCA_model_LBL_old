@@ -147,6 +147,7 @@ def GHGImpactVectorSum(time_horizon):
 
     return ghg_total_kg
 
+
 def IOSolutionCost(A, y):
     # Solves for total requirements from each sector in cost
     #
