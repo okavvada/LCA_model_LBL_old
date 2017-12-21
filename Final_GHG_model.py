@@ -49,10 +49,10 @@ for selectivity in P.selectivity:
         
         if (selectivity == "iHG-Projected"):
             y["lysine.us.kg"] = cost["lysine.us.kg"] * SP.other_params[selectivity]['chlys_amount'][scenario] * 0.58 
-            # 55% lysine + 45% ChOH for Chylys production (assumption) 
+            # 58% lysine + 42% ChOH for Chylys production (assumption) 
             y["cholinium.hydroxide.kg"] = (cost["cholinium.hydroxide.kg"] * 
                                            SP.other_params[selectivity]['chlys_amount'][scenario] * 0.42)  
-            # 50% lysine + 50% ChOH for Chylys production (assumption) 
+            # 58% lysine + 42% ChOH for Chylys production (assumption) 
             y["cellulase.kg"] = cost["cellulase.kg"] * SP.common_params['enzyme'][scenario]
             y["csl.kg"] = cost["csl.kg"] * 0.05
             y["farmedstover.kg"] = cost["farmedstover.kg"] * SP.other_params[selectivity]['feedstock'][scenario]
@@ -74,10 +74,10 @@ for selectivity in P.selectivity:
         if (selectivity == "iHG-Current"):
             # Data needs to be updated for H2SO4! 
             y["lysine.us.kg"] = cost["lysine.us.kg"] * SP.other_params[selectivity]['chlys_amount'][scenario] * 0.58        
-            # 55% lysine + 45% ChOH for Chylys production (assumption) 
+            # 58% lysine + 42% ChOH for Chylys production (assumption) 
             y["cholinium.hydroxide.kg"] = (cost["cholinium.hydroxide.kg"] * 
                                            SP.other_params[selectivity]['chlys_amount'][scenario] * 0.42)  
-            # 50% lysine + 50% ChOH for Chylys production (assumption) 
+            # 58% lysine + 42% ChOH for Chylys production (assumption) 
             y["cellulase.kg"] = cost["cellulase.kg"] * SP.common_params['enzyme'][scenario]
             y["csl.kg"] = cost["csl.kg"] * 0.05
             y["farmedstover.kg"] = cost["farmedstover.kg"] * SP.other_params[selectivity]['feedstock'][scenario]
