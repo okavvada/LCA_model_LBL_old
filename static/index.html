@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LCA Model Ionic Liquids</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+    #waterwashbox {
+        font-family: Arial, sans-serif;
+        background: #fff;
+        font-size: 14px;
+        padding: 5px;
+        border: 1px solid #000;
+        position: absolute;
+        top: 280px;
+        left: 10px;
+        width: 230px;
+        height: 230px;
+      }
+
+    #commonbox {
+        font-family: Arial, sans-serif;
+        background: #fff;
+        font-size: 14px;
+        padding: 5px;
+        border: 1px solid #000;
+        position: absolute;
+        top: 50px;
+        left: 10px;
+        width: 230px;
+        height: 200px;
+      }
+
+    #button {
+      position: absolute;
+      top: 5px;
+      left: 500px;
+      background-color: #fff;
+      border: 2px solid #e6e9ed;
+      border-radius: 10px;
+      margin-top: 1px;
+      box-shadow: 1px 2px 2px #a1a4a8;
+      cursor: pointer;
+      text-align: center;
+      display:inline-block;
+      width: 150px;
+    }
+
+    #controlTextEnergy {
+      color: #2F3030;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 35px;
+      width:150px;
+
+    }
+
+    h3 {
+      margin:0px;
+    }
+
+    h4 {
+      margin:2px;
+      text-align: center;
+      text-decoration: underline;
+    }
+
+    .value{
+      width: 40px;
+      margin-right:10px;
+      margin-bottom:5px;
+      padding-left: 3px;
+    }
+
+    #set_value{
+      border: 1px solid #abadb2;
+    }
+
+
+    </style>
+    <script type="text/javascript" src="jquery.js"></script>
+  </head>
+  <body>
+    <div id="map">
+      <div id="commonbox"><h4>Common Parameters</h4>
+        <span class="commonParams">enzyme = </span><input class="value" type='text' id="common_enzyme" value='0.03'/><br/>
+        <span class="commonParams">chlys percent = </span><input class="value" type='text' id="common_chlys_percent" value='0.58'/><br/>
+        <span class="commonParams">cholinium percent = </span><input class="value" type='text' id="common_cholinium_percent" value='0.42'/><br/>
+        <span class="commonParams">etoh distribution truck = </span><input class="value" type='text' id="common_etoh_distribution_truck" value='50'/><br/>
+        <span class="commonParams">etoh distribution rail = </span><input class="value" type='text' id="common_etoh_distribution_rail" value='135'/><br/>
+        <span class="commonParams">chlys rail = </span><input class="value" type='text' id="common_chlys_rail_mt_km" value='160'/><br/>
+        <span class="commonParams">chlys flatbedtruck = </span><input class="value" type='text' id="common_chlys_flatbedtruck_mt_km" value='80'/><br/></div>
+
+      <div id="waterwashbox"><h4>Waterwash Parameters</h4>
+        <span class="waterwashParams">chlys amount = </span><input class="value" type='text' id="waterwash_chlys_amount" value='0.17'/><br/>
+        <span class="waterwashParams">feedstock =</span><input class="value" type='text' id="waterwash_feedstock" value='5.47'/><br/>
+        <span class="waterwashParams">csl = </span><input class="value" type='text' id="waterwash_csl.kg" value='0.06' /><br/>
+        <span class="waterwashParams">dap = </span><input class="value" type='text' id="waterwash_dap.kg" value='0.01'/><br/>
+        <span class="waterwashParams">hcl = </span><input class="value" type='text' id="waterwash_hcl.kg" value='0'/><br/>
+        <span class="waterwashParams">h2so4 = </span><input class="value" type='text' id="waterwash_h2so4.kg" value='0.002'/><br/>
+        <span class="waterwashParams">ng input stream = </span><input class="value" type='text' id="waterwash_ng_input_stream_mass_ww_kg" value='1.31'/><br/>
+        <span class="waterwashParams">electricity requirements = </span><input class="value" type='text' id="waterwash_electricity_requirements" value='1.4'/><br/>
+        <span class="waterwashParams">electricity credit = </span><input class="value" type='text' id="waterwash_electricity_credit" value='0'/><br/></div>
+
+      <div id="currentbox"><h4>Waterwash Parameters</h4>
+        <span class="currentParams">chlys amount = </span><input class="value" type='text' id="waterwash_chlys_amount" value='0.17'/><br/>
+        <span class="currentParams">feedstock =</span><input class="value" type='text' id="waterwash_feedstock" value='5.47'/><br/>
+        <span class="currentParams">csl = </span><input class="value" type='text' id="waterwash_csl.kg" value='0.06' /><br/>
+        <span class="currentParams">dap = </span><input class="value" type='text' id="waterwash_dap.kg" value='0.01'/><br/>
+        <span class="currentParams">hcl = </span><input class="value" type='text' id="waterwash_hcl.kg" value='0'/><br/>
+        <span class="currentParams">h2so4 = </span><input class="value" type='text' id="waterwash_h2so4.kg" value='0.002'/><br/>
+        <span class="currentParams">ng input stream = </span><input class="value" type='text' id="waterwash_ng_input_stream_mass_ww_kg" value='1.31'/><br/>
+        <span class="currentParams">electricity requirements = </span><input class="value" type='text' id="waterwash_electricity_requirements" value='1.4'/><br/>
+        <span class="currentParams">electricity credit = </span><input class="value" type='text' id="waterwash_electricity_credit" value='0'/><br/></div>
+
+      <div id="projectedbox"><h4>Waterwash Parameters</h4>
+        <span class="projectedParams">chlys amount = </span><input class="value" type='text' id="waterwash_chlys_amount" value='0.17'/><br/>
+        <span class="projectedParams">feedstock =</span><input class="value" type='text' id="waterwash_feedstock" value='5.47'/><br/>
+        <span class="projectedParams">csl = </span><input class="value" type='text' id="waterwash_csl.kg" value='0.06' /><br/>
+        <span class="projectedParams">dap = </span><input class="value" type='text' id="waterwash_dap.kg" value='0.01'/><br/>
+        <span class="projectedParams">hcl = </span><input class="value" type='text' id="waterwash_hcl.kg" value='0'/><br/>
+        <span class="projectedParams">h2so4 = </span><input class="value" type='text' id="waterwash_h2so4.kg" value='0.002'/><br/>
+        <span class="projectedParams">ng input stream = </span><input class="value" type='text' id="waterwash_ng_input_stream_mass_ww_kg" value='1.31'/><br/>
+        <span class="projectedParams">electricity requirements = </span><input class="value" type='text' id="waterwash_electricity_requirements" value='1.4'/><br/>
+        <span class="projectedParams">electricity credit = </span><input class="value" type='text' id="waterwash_electricity_credit" value='0'/><br/></div>
+
+      <div id="button">
+      <div id="controlTextEnergy">Run Model</div></div>
+  </div>
+    <script type="text/javascript" src="all.js"></script>
+    async defer></script>
+    <script type="text/javascript">RunModel()</script>
+  </body>
+</html>
