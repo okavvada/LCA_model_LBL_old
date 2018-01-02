@@ -158,8 +158,7 @@ def IOSolutionCost(A, y):
     # Returns:
     #  The total (direct + indirect) monetary requirements by sector
     num_sectors = A.shape[1] 
-    I = np.zeros((A.shape[1], A.shape[1]), int)
-    np.fill_diagonal(I, 1)
+    I = np.eye(A.shape[1])
     solution = np.linalg.solve((I - A), y)
     return solution
 
@@ -287,4 +286,4 @@ def AggregateResults(m, results_kg_co2e, selectivity, scenario):
                         m[scenario][selectivity].loc['Chemicals_And_Fertilizers'],
                         m[scenario][selectivity].loc['Direct']]),3))
 
-    return m
+    
