@@ -1,13 +1,12 @@
 from __future__ import print_function
 from sys import stderr
 # steps:
-# install flask
 # pip install flask
 # Run server:
 # FLASK_DEBUG=1 FLASK_APP=server.py flask run
 import flask
 from flask import Flask, request
-from optimization2 import *
+from Final_GHG_model import *
 
 
 app = Flask(__name__)
@@ -16,19 +15,20 @@ app = Flask(__name__)
 def root():
   return app.send_static_file('index.html')
 
-@app.route("/lat_lng")
-def lat_lng():
-  a = float(request.args.get('a'))
-  b = float(request.args.get('b'))
-  c = float(request.args.get('c'))
-  d = float(request.args.get('d'))
-  direct = float(request.args.get('direct'))
+@app.route("/ParametersList", methods = ['POST'])
+def get_results2():
+  all_data = request.get_json()
+  return flask.jsonify(getMyPlotJSON(all_data['common_params'], all_data['other_params']))
 
-  return flask.jsonify(getMyGeoJSON(lat = lat, lng = lng, path = 'document.csv', metric = metric, a = a, b = b, c = c, d = d, direct = direct))
+# @app.route("/ParametersList2", methods = ['POST'])
+# def get_results():
+#   all_data = request.get_json()
+#   return flask.jsonify({'plot_html': getMyPlotHtml(all_data['common_params'], all_data['other_params'])})
 
-def getMyGeoJSON(lat,lng, path, metric, a, b, c, d, direct):
-  points = getServiceArea((lat,lng), path, metric,  a, b, c, d, direct)
-  return points
+def getMyPlotJSON(common_params, other_params):
+  data = FinalGHGModel(common_params, other_params)
+  return data.to_dict()
+
 
 if __name__ == '__main__':
     app.run()
