@@ -12,54 +12,55 @@ y = {}
 for item in cost.keys():
     y.update({item:0})
 
-m = {} 
+m2 = {} 
 for scenario in P.scenario_range:
     new_data = np.zeros([7,3])
-    m[scenario] = pd.DataFrame(new_data, columns=P.selectivity, index=P.processes)
+    m2[scenario] = pd.DataFrame(new_data, columns=P.selectivity, index=P.processes)
 
-def FinalGHGModel(SP_common_params=SP.common_params, SP_other_params=SP.other_params)
+def FinalGHGModel(SP_common_params=SP.common_params, SP_other_params=SP.other_params):
+	m = dict(m2)
 	for selectivity in P.selectivity:
 	    for scenario in P.scenario_range:
-            y["lysine.us.kg"] = cost["lysine.us.kg"] * (SP_other_params[selectivity]['chlys_amount'][scenario] * 
-            					SP_common_params['chlys_percent'][scenario]) 
-            # 58% lysine + 42% ChOH for Chylys production (Stoichiometry) 
-            y["cholinium.hydroxide.kg"] = (cost["cholinium.hydroxide.kg"] * 
-                                           SP_other_params[selectivity]['chlys_amount'][scenario] * 
-                                           SP_common_params['cholinium_percent'][scenario])  
-            # 58% lysine + 42% ChOH for Chylys production (Stoichiometry) 
-            y["cellulase.kg"] = cost["cellulase.kg"] * SP_common_params['enzyme'][scenario]
-            y["csl.kg"] = cost["csl.kg"] * SP_other_params[selectivity]['csl.kg'][scenario]
-            y["farmedstover.kg"] = cost["farmedstover.kg"] * SP_other_params[selectivity]['feedstock'][scenario]  
-            y["dap.kg"] = cost["dap.kg"] * SP_other_params[selectivity]['dap.kg'][scenario] 
-            y["h2so4.kg"] = cost["h2so4.kg"] * SP_other_params[selectivity]['h2so4.kg'][scenario]
-            y["naturalgas.MJ"] = cost["naturalgas.MJ"] * (hf.FuelConvertMJ(
-                    			SP_other_params[selectivity]['ng_input_stream_mass_ww_kg'][scenario], "naturalgas","kg"))
-            y["rail.mt_km"] = (cost["rail.mt_km"] * (SP_other_params[selectivity]['chlys_amount'][scenario]/1000) * 
-            				SP_common_params['chlys_rail_mt_km'][scenario] +
-                            	cost["rail.mt_km"] * (
-                                	P.etoh_feed_stream_mass_kg/1000 * SP_common_params['etoh_distribution_rail'][scenario])) 
-            y["flatbedtruck.mt_km"] = (cost["flatbedtruck.mt_km"] * (
-                    (SP_other_params[selectivity]['chlys_amount'][scenario]/1000) * 
-                    	SP_common_params['chlys_flatbedtruck_mt_km'][scenario]) +
-                    		cost["flatbedtruck.mt_km"] * (P.etoh_feed_stream_mass_kg/1000 * (
-                    			SP_common_params['etoh_distribution_truck'][scenario])))
-            y["electricity.{}.kWh".format(P.facility_electricity)] = (
-                cost["electricity.{}.kWh".format(P.facility_electricity)] * (
-                    SP_other_params[selectivity]['electricity_requirements'][scenario]))
-            y["hcl.kg"] = cost["hcl.kg"] * SP_other_params[selectivity]['hcl.kg'][scenario]
+			y["lysine.us.kg"] = cost["lysine.us.kg"] * (SP_other_params[selectivity]['chlys_amount'][scenario] * 
+								SP_common_params['chlys_percent'][scenario]) 
+			# 58% lysine + 42% ChOH for Chylys production (Stoichiometry) 
+			y["cholinium.hydroxide.kg"] = (cost["cholinium.hydroxide.kg"] * 
+			                               SP_other_params[selectivity]['chlys_amount'][scenario] * 
+			                               SP_common_params['cholinium_percent'][scenario])  
+			# 58% lysine + 42% ChOH for Chylys production (Stoichiometry) 
+			y["cellulase.kg"] = cost["cellulase.kg"] * SP_common_params['enzyme'][scenario]
+			y["csl.kg"] = cost["csl.kg"] * SP_other_params[selectivity]['csl.kg'][scenario]
+			y["farmedstover.kg"] = cost["farmedstover.kg"] * SP_other_params[selectivity]['feedstock'][scenario]  
+			y["dap.kg"] = cost["dap.kg"] * SP_other_params[selectivity]['dap.kg'][scenario] 
+			y["h2so4.kg"] = cost["h2so4.kg"] * SP_other_params[selectivity]['h2so4.kg'][scenario]
+			y["naturalgas.MJ"] = cost["naturalgas.MJ"] * (hf.FuelConvertMJ(
+			        			SP_other_params[selectivity]['ng_input_stream_mass_ww_kg'][scenario], "naturalgas","kg"))
+			y["rail.mt_km"] = (cost["rail.mt_km"] * (SP_other_params[selectivity]['chlys_amount'][scenario]/1000) * 
+							SP_common_params['chlys_rail_mt_km'][scenario] +
+			                	cost["rail.mt_km"] * (
+			                    	P.etoh_feed_stream_mass_kg/1000 * SP_common_params['etoh_distribution_rail'][scenario])) 
+			y["flatbedtruck.mt_km"] = (cost["flatbedtruck.mt_km"] * (
+			        (SP_other_params[selectivity]['chlys_amount'][scenario]/1000) * 
+			        	SP_common_params['chlys_flatbedtruck_mt_km'][scenario]) +
+			        		cost["flatbedtruck.mt_km"] * (P.etoh_feed_stream_mass_kg/1000 * (
+			        			SP_common_params['etoh_distribution_truck'][scenario])))
+			y["electricity.{}.kWh".format(P.facility_electricity)] = (
+			    cost["electricity.{}.kWh".format(P.facility_electricity)] * (
+			        SP_other_params[selectivity]['electricity_requirements'][scenario]))
+			y["hcl.kg"] = cost["hcl.kg"] * SP_other_params[selectivity]['hcl.kg'][scenario]
 
-            biorefinery_direct_ghg = hf.FuelCO2kg(hf.FuelConvertMJ(
-                    SP_other_params[selectivity]['ng_input_stream_mass_ww_kg'][scenario],"naturalgas","kg"), "naturalgas")
-            
+			biorefinery_direct_ghg = hf.FuelCO2kg(hf.FuelConvertMJ(
+			        SP_other_params[selectivity]['ng_input_stream_mass_ww_kg'][scenario],"naturalgas","kg"), "naturalgas")
 
-	        results_kg_co2e = hf.TotalGHGEmissions(io_data, y, cost, 
-	                                               biorefinery_direct_ghg, P.combustion_direct_ghg)
-	        
-	        results_kg_co2e_dict = results_kg_co2e.set_index('products')['ghg_results_kg'].to_dict()
 
-	        m = hf.AggregateResults(m, results_kg_co2e_dict, selectivity, scenario)
-	        
-	        m[scenario][selectivity] = m[scenario][selectivity] * 1000/27 # converting kg per kg results to g per MJ
+			results_kg_co2e = hf.TotalGHGEmissions(io_data, y, cost, 
+			                                       biorefinery_direct_ghg, P.combustion_direct_ghg)
+
+			results_kg_co2e_dict = results_kg_co2e.set_index('products')['ghg_results_kg'].to_dict()
+
+			hf.AggregateResults(m, results_kg_co2e_dict, selectivity, scenario)
+
+			m[scenario][selectivity] = m[scenario][selectivity] * 1000/27 # converting kg per kg results to g per MJ
 
 	# n = {} 
 	# for scenario in P.scenario_range:
@@ -95,17 +96,10 @@ def FinalGHGModel(SP_common_params=SP.common_params, SP_other_params=SP.other_pa
 	error_max = (aggregated_data_high.sum(axis=1) - aggregated_data_avg_pos.sum(axis=1)).values
 	plt_errors = [error_min, error_max]
 
-	# plot = aggregated_data_avg_plot.plot(kind='bar', stacked = True, figsize=(9,6),
-	#                                      colormap='PRGn_r',
-	#                                      yerr={'Farming':plt_errors}, 
-	#                                      error_kw= {'capsize':5, 'ecolor':'k', 'elinewidth':2, 'capthick':2, 'barsabove':True})
-	# plt.xticks(fontsize = 16)
-	# plt.yticks(fontsize = 16)
-	# plt.ylabel('gCO2 per MJ', fontsize = 18)
-	# plt.ylim(-20,195)
-	# plt.axhline(0, color='black', linewidth=2)
-	# plot.set_axis_bgcolor("#EBEBEB")
-	# plot.legend(loc='lower center', bbox_to_anchor=(1.25, 0.1),ncol=1, fancybox=True, shadow=True,fontsize=14)
-	# plt.show()
-	return aggregated_data_avg_plot, plt_errors
+	aggregated_data_avg_plot['error_bars_min'] = error_min
+	aggregated_data_avg_plot['error_bars_max'] = error_max
+	return aggregated_data_avg_plot
+
+
+
 
