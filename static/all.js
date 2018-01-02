@@ -1,50 +1,368 @@
+var common_params = {
+    'etoh_distribution_truck': {
+        'low': 45,
+        'avg': 50,
+        'high': 55
+    },
+    'etoh_distribution_rail': {
+        'low': 120,
+        'avg': 135,
+        'high': 150
+    },
+    'enzyme': {
+        'low': 0.027,
+        'avg': 0.03,
+        'high': 0.033
+    },
+    'chlys_percent': {
+        'low': 0.58,
+        'avg': 0.58,
+        'high': 0.58
+    },
+    'cholinium_percent': {
+        'low': 0.42,
+        'avg': 0.42,
+        'high': 0.42
+    },
+    'chlys_rail_mt_km': {
+        'low': 160,
+        'avg': 160,
+        'high': 160
+    },
+    'chlys_flatbedtruck_mt_km': {
+        'low': 80,
+        'avg': 80,
+        'high': 80
+    }
+};
 
+var other_params = {
+    "iHG-Projected": {
+        'chlys_amount': {
+            'low': 0.027,
+            'avg': 0.03,
+            'high': 0.033
+        },
+        'electricity_requirements': {
+            'low': 0,
+            'avg': 0,
+            'high': 0
+        },
+        'feedstock': {
+            'low': 4.23,
+            'avg': 4.7,
+            'high': 5.17
+        },
+        'electricity_credit': {
+            'low': 0,
+            'avg': 0,
+            'high': 0
+        },
+        'csl.kg': {
+            'low': 0.06,
+            'avg': 0.06,
+            'high': 0.06
+        },
+        'dap.kg': {
+            'low': 0.017,
+            'avg': 0.017,
+            'high': 0.017
+        },
+        'h2so4.kg': {
+            'low': 0,
+            'avg': 0,
+            'high': 0
+        },
+        'hcl.kg': {
+            'low': 0,
+            'avg': 0,
+            'high': 0
+        },
+        'ng_input_stream_mass_ww_kg': {
+            'low': 0,
+            'avg': 0,
+            'high': 0
+        }
+    },
+    "iHG-Current": {
+        'chlys_amount': {
+            'low': 0.14,
+            'avg': 0.16,
+            'high': 0.18
+        },
+        'electricity_requirements': {
+            'low': 0,
+            'avg': 0,
+            'high': 0
+        },
+        'feedstock': {
+            'low': 4.23,
+            'avg': 4.7,
+            'high': 5.17
+        },
+        'hcl.kg': {
+            'low': 0.16,
+            'avg': 0.18,
+            'high': 0.2
+        },
+        'electricity_credit': {
+            'low': 0.8,
+            'avg': 0.85,
+            'high': 0.9
+        },
+        'csl.kg': {
+            'low': 0.05,
+            'avg': 0.05,
+            'high': 0.05
+        },
+        'dap.kg': {
+            'low': 0.01,
+            'avg': 0.01,
+            'high': 0.01
+        },
+        'h2so4.kg': {
+            'low': 0,
+            'avg': 0,
+            'high': 0
+        },
+        'ng_input_stream_mass_ww_kg': {
+            'low': 0,
+            'avg': 0,
+            'high': 0
+        }
+    },
+    "waterwash": {
+        'chlys_amount': {
+            'low': 0.15,
+            'avg': 0.17,
+            'high': 0.18
+        },
+        'electricity_requirements': {
+            'low': 1.26,
+            'avg': 1.4,
+            'high': 1.54
+        },
+        'feedstock': {
+            'low': 4.9,
+            'avg': 5.47,
+            'high': 6.01
+        },
+        'ng_input_stream_mass_ww_kg': {
+            'low': 1.1,
+            'avg': 1.31,
+            'high': 1.4
+        },
+        'electricity_credit': {
+            'low': 0,
+            'avg': 0,
+            'high': 0
+        },
+        'csl.kg': {
+            'low': 0.06,
+            'avg': 0.06,
+            'high': 0.06
+        },
+        'dap.kg': {
+            'low': 0.01,
+            'avg': 0.01,
+            'high': 0.01
+        },
+        'hcl.kg': {
+            'low': 0,
+            'avg': 0,
+            'high': 0
+        },
+        'h2so4.kg': {
+            'low': 0.002,
+            'avg': 0.002,
+            'high': 0.002
+        },
+        'electricity_credit': {
+            'low': 0,
+            'avg': 0,
+            'high': 0
+        }
+    }
+};
 
-function RunModel() {
+var input_dict = {};
+input_dict.other_params = other_params;
+input_dict.common_params = common_params;
 
-  var Parameters = {};
+$("input").change(function(event) {
+    to_replace = event.target.name + '_';
+    if (event.target.placeholder == "value") {
+      key = event.target.id.replace(to_replace, '');
+      if (key in common_params) {
+        common_params[key]['avg'] = parseFloat(document.getElementById(event.target.id).value);
+        error_id = 'common_error_' + key
+        common_params[key]['low'] = (1 - parseFloat(document.getElementById(error_id).value)) * common_params[key]['avg'];
+        common_params[key]['high'] = (1 + parseFloat(document.getElementById(error_id).value)) * common_params[key]['avg'];
+      }
+      else {
+        other_params[event.target.name][key]['avg'] = parseFloat(document.getElementById(event.target.id).value);
+        error_id = event.target.name + '_error_' + key
+        other_params[event.target.name][key]['low'] = (1 - parseFloat(document.getElementById(error_id).value)) * other_params[event.target.name][key]['avg'];
+        other_params[event.target.name][key]['high'] = (1 + parseFloat(document.getElementById(error_id).value)) * other_params[event.target.name][key]['avg'];
+      }}
 
-  document.getElementById("common_enzyme").onchange = function() {
-      a = document.getElementById("common_enzyme").value;
-      return a
-  }
-  document.getElementById("common_chlys_percent").onchange = function() {
-      b = document.getElementById("common_chlys_percent").value;
-      return b
-  }
-  document.getElementById("common_cholinium_percent").onchange = function() {
-      c = document.getElementById("common_cholinium_percent").value;
-      return c
-  }
-  document.getElementById("common_etoh_distribution_truck").onchange = function() {
-      d = document.getElementById("common_etoh_distribution_truck").value;
-      return d
-  }
+    else {
+      to_replace = event.target.name + '_error_';
+      key = event.target.id.replace(to_replace, '');
+      console.log(key);
+      console.log('error');
+      if (key in common_params) {
+        error_id = 'common_error_' + key
+        target_id = error_id.replace('_error', '')
+        common_params[key]['low'] = (1 - parseFloat(document.getElementById(error_id).value)) * common_params[key]['avg'];
+        common_params[key]['high'] = (1 + parseFloat(document.getElementById(error_id).value)) * common_params[key]['avg'];
+      }
+      else {
+        error_id = event.target.name + '_error_' + key
+        target_id = error_id.replace('_error', '')
+        other_params[event.target.name][key]['low'] = (1 - parseFloat(document.getElementById(error_id).value)) * other_params[event.target.name][key]['avg'];
+        other_params[event.target.name][key]['high'] = (1 + parseFloat(document.getElementById(error_id).value)) * other_params[event.target.name][key]['avg'];
+      }}
 
-  document.getElementById("common_etoh_distribution_rail").onchange = function() {
-      e = document.getElementById("common_etoh_distribution_rail").value;
-      return e
-  }
-  
-  var run_button = document.getElementById('controlTextEnergy');
-  run_button.addEventListener('mouseover', function() {
-      run_button.style['background-color'] = '#e6e9ed';
-    });
-  run_button.addEventListener('mouseout', function() {
-      run_button.style['background-color'] = '#fff';
-    });
+    input_dict.other_params = other_params;
+    input_dict.common_params = common_params;
 
-  console.log(a)
-
-  run_button.addEventListener('click', function() {
-    console.log(a)
-
+    return input_dict 
   });
+
+var run_GHG_button = document.getElementById('buttonGHG');
+run_GHG_button.addEventListener('mouseover', function() {
+    run_GHG_button.style['background-color'] = '#e6e9ed';
+});
+run_GHG_button.addEventListener('mouseout', function() {
+    run_GHG_button.style['background-color'] = '#fff';
+});
+var run_water_button = document.getElementById('buttonWater');
+run_water_button.addEventListener('mouseover', function() {
+    run_water_button.style['background-color'] = '#e6e9ed';
+});
+run_water_button.addEventListener('mouseout', function() {
+    run_water_button.style['background-color'] = '#fff';
+});
+
+run_GHG_button.addEventListener('click', function() {
+    console.log(input_dict);
+    $.ajax({
+      url: "/ParametersList",
+      type: 'POST',
+      data: JSON.stringify(input_dict),
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      success: function(data) {
+        var trace2 = {
+            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
+            y: [data.Chemicals_And_Fertilizers['waterwash'],
+                data.Chemicals_And_Fertilizers['iHG-Current'],
+                data.Chemicals_And_Fertilizers['iHG-Projected']],
+            name: 'Chemicals_And_Fertilizers',
+            type: 'bar'
+          };
+
+        var trace3 = {
+            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
+            y: [data.Farming['waterwash'],
+                data.Farming['iHG-Current'],
+                data.Farming['iHG-Projected']],
+            name: 'Farming',
+            type: 'bar'
+          };
+
+        var trace4 = {
+            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
+            y: [data.Electricity['waterwash'],
+                data.Electricity['iHG-Current'],
+                data.Electricity['iHG-Projected']],
+            name: 'Electricity',
+            type: 'bar'
+          };
+
+        var trace5 = {
+            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
+            y: [data.Petroleum['waterwash'],
+                data.Petroleum['iHG-Current'],
+                data.Petroleum['iHG-Projected']],
+            name: 'Petroleum',
+            type: 'bar'
+          };
+
+        var trace6 = {
+            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
+            y: [data.Transportation['waterwash'],
+                data.Transportation['iHG-Current'],
+                data.Transportation['iHG-Projected']],
+            name: 'Transportation',
+            type: 'bar'
+          };
+
+        var trace7 = {
+            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
+            y: [data.Direct['waterwash'],
+                data.Direct['iHG-Current'],
+                data.Direct['iHG-Projected']],
+            name: 'Direct',
+            type: 'bar'
+          };
+
+        var trace8 = {
+            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
+            y: [data.Other['waterwash'],
+                data.Other['iHG-Current'],
+                data.Other['iHG-Projected']],
+            name: 'Other',
+            type: 'bar',
+            error_y: {
+              type: 'data',
+              symmetric: false,
+              array: [data.error_bars_max['waterwash'], 
+                      data.error_bars_max['iHG-Current'], 
+                      data.error_bars_max['iHG-Projected']],
+              arrayminus: [data.error_bars_min['waterwash'], 
+                           data.error_bars_min['iHG-Current'], 
+                           data.error_bars_min['iHG-Projected']]
+            },
+          };
+
+        var trace1 = {
+            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
+            y: [data.electricity_credit['waterwash'],
+                data.electricity_credit['iHG-Current'],
+                data.electricity_credit['iHG-Projected']],
+            name: 'electricity_credit',
+            type: 'bar'
+          };
+
+        console.log(data.error_bars_max['waterwash']);
+
+        var data = [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8];
+
+        var layout = {barmode: 'relative', height: 400, width: 700, margin: {
+                                                                              l: 50,
+                                                                              r: 50,
+                                                                              b: 50,
+                                                                              t: 50,
+                                                                              pad: 2}
+      };
+
+          Plotly.newPlot('chart', data, layout);
+
+          }});
+    });
+
+
+// run_button.addEventListener('click', function() {
+//   console.log(a)
+
+// });
 // element = document.getElementById('map');
 
 // element.addEventListener('click', function(event) {
 
-// 		$.getJSON("/lat_lng", {
+// 		$.getJSON("/ParametersList", {
 // 			a: a,
 // 			b: b,
 // 			c: c,
@@ -52,16 +370,4 @@ function RunModel() {
 // 			direct: direct
 // 		}
 
-// 			var results_text = "<br /><u>Cluster " + "</u> ()<br />Houses: <br />Population:<br />";
-//   			var results = document.getElementById('results');
-// 			results.style.fontSize = "14px";
-// 			var div = document.createElement('div');
-// 			div.innerHTML = results_text;
-// 			results.appendChild(div);
-
-
 // 	}); 
-
-}
-
-

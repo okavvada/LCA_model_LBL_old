@@ -24,9 +24,9 @@
         padding: 5px;
         border: 1px solid #000;
         position: absolute;
-        top: 280px;
-        left: 10px;
-        width: 230px;
+        top: 55px;
+        left: 310px;
+        width: 250px;
         height: 230px;
       }
 
@@ -37,16 +37,42 @@
         padding: 5px;
         border: 1px solid #000;
         position: absolute;
-        top: 50px;
+        top: 55px;
         left: 10px;
-        width: 230px;
+        width: 280px;
         height: 200px;
       }
 
-    #button {
-      position: absolute;
-      top: 5px;
-      left: 500px;
+    #currentbox {
+        font-family: Arial, sans-serif;
+        background: #fff;
+        font-size: 14px;
+        padding: 5px;
+        border: 1px solid #000;
+        position: absolute;
+        top: 55px;
+        left: 580px;
+        width: 250px;
+        height: 230px;
+      }
+
+    #projectedbox {
+        font-family: Arial, sans-serif;
+        background: #fff;
+        font-size: 14px;
+        padding: 5px;
+        border: 1px solid #000;
+        position: absolute;
+        top: 55px;
+        left: 850px;
+        width: 250px;
+        height: 230px;
+      }
+
+    #buttonGHG {
+      position: relative;
+      top: 6px;
+      left: 420px;
       background-color: #fff;
       border: 2px solid #e6e9ed;
       border-radius: 10px;
@@ -54,19 +80,37 @@
       box-shadow: 1px 2px 2px #a1a4a8;
       cursor: pointer;
       text-align: center;
-      display:inline-block;
-      width: 150px;
+      width: 160px;
     }
 
-    #controlTextEnergy {
+    #buttonWater {
+      position: absolute;
+      top: 6px;
+      left: 600px;
+      background-color: #fff;
+      border: 2px solid #e6e9ed;
+      border-radius: 10px;
+      margin-top: 1px;
+      box-shadow: 1px 2px 2px #a1a4a8;
+      cursor: pointer;
+      text-align: center;
+      width: 160px;
+    }
+
+    #chart {
+      position: absolute;
+      top: 300px;
+      left: 150px;
+    }
+
+    .controlText {
       color: #2F3030;
-      font-family: Arial, sans-serif;
       font-weight: bold;
-      font-size: 16px;
-      line-height: 35px;
-      width:150px;
-
+      font-size: 18px;
+      line-height: 25px;
+      width: 160px;
     }
+
 
     h3 {
       margin:0px;
@@ -78,8 +122,8 @@
       text-decoration: underline;
     }
 
-    .value{
-      width: 40px;
+    input {
+      width: 35px;
       margin-right:10px;
       margin-bottom:5px;
       padding-left: 3px;
@@ -91,57 +135,98 @@
 
 
     </style>
-    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
   </head>
   <body>
     <div id="map">
       <div id="commonbox"><h4>Common Parameters</h4>
-        <span class="commonParams">enzyme = </span><input class="value" type='text' id="common_enzyme" value='0.03'/><br/>
-        <span class="commonParams">chlys percent = </span><input class="value" type='text' id="common_chlys_percent" value='0.58'/><br/>
-        <span class="commonParams">cholinium percent = </span><input class="value" type='text' id="common_cholinium_percent" value='0.42'/><br/>
-        <span class="commonParams">etoh distribution truck = </span><input class="value" type='text' id="common_etoh_distribution_truck" value='50'/><br/>
-        <span class="commonParams">etoh distribution rail = </span><input class="value" type='text' id="common_etoh_distribution_rail" value='135'/><br/>
-        <span class="commonParams">chlys rail = </span><input class="value" type='text' id="common_chlys_rail_mt_km" value='160'/><br/>
-        <span class="commonParams">chlys flatbedtruck = </span><input class="value" type='text' id="common_chlys_flatbedtruck_mt_km" value='80'/><br/></div>
+        <span class="commonParams">enzyme = </span><input placeholder="value" name='common' type='text' id="common_enzyme" value='0.03'/>+/-
+          <input placeholder="error" name='common' type='text' id="common_error_enzyme" value='0.1'/><br/>
+        <span class="commonParams">chlys percent = </span><input placeholder="value" name='common' type='text' id="common_chlys_percent" value='0.58'/>+/-
+          <input placeholder="error" name='common' type='text' id="common_error_chlys_percent" value='0.0'/><br/>
+        <span class="commonParams">cholinium percent = </span><input placeholder="value" name='common' type='text' id="common_cholinium_percent" value='0.42'/>+/-
+          <input placeholder="error" name='common' type='text' id="common_error_cholinium_percent" value='0.0'/><br/>
+        <span class="commonParams">etoh distribution truck = </span><input placeholder="value" name='common' type='text' id="common_etoh_distribution_truck" value='50'/>+/-
+          <input placeholder="error" name='common' type='text' id="common_error_etoh_distribution_truck" value='0.1'/><br/>
+        <span class="commonParams">etoh distribution rail = </span><input placeholder="value" name='common' type='text' id="common_etoh_distribution_rail" value='135'/>+/-
+          <input placeholder="error" name='common' type='text' id="common_error_etoh_distribution_rail" value='0.1'/><br/>
+        <span class="commonParams">chlys rail = </span><input placeholder="value" type='text' name='common' id="common_chlys_rail_mt_km" value='160'/>+/-
+          <input placeholder="error" name='common' type='text' id="common_error_chlys_rail_mt_km" value='0.0'/><br/>
+        <span class="commonParams">chlys flatbedtruck = </span><input placeholder="value" name='common' type='text' id="common_chlys_flatbedtruck_mt_km" value='80'/>+/-
+          <input placeholder="error" name='common' type='text' id="common_error_chlys_flatbedtruck_mt_km" value='0.0'/><br/></div>
 
       <div id="waterwashbox"><h4>Waterwash Parameters</h4>
-        <span class="waterwashParams">chlys amount = </span><input class="value" type='text' id="waterwash_chlys_amount" value='0.17'/><br/>
-        <span class="waterwashParams">feedstock =</span><input class="value" type='text' id="waterwash_feedstock" value='5.47'/><br/>
-        <span class="waterwashParams">csl = </span><input class="value" type='text' id="waterwash_csl.kg" value='0.06' /><br/>
-        <span class="waterwashParams">dap = </span><input class="value" type='text' id="waterwash_dap.kg" value='0.01'/><br/>
-        <span class="waterwashParams">hcl = </span><input class="value" type='text' id="waterwash_hcl.kg" value='0'/><br/>
-        <span class="waterwashParams">h2so4 = </span><input class="value" type='text' id="waterwash_h2so4.kg" value='0.002'/><br/>
-        <span class="waterwashParams">ng input stream = </span><input class="value" type='text' id="waterwash_ng_input_stream_mass_ww_kg" value='1.31'/><br/>
-        <span class="waterwashParams">electricity requirements = </span><input class="value" type='text' id="waterwash_electricity_requirements" value='1.4'/><br/>
-        <span class="waterwashParams">electricity credit = </span><input class="value" type='text' id="waterwash_electricity_credit" value='0'/><br/></div>
+        <span class="waterwashParams">chlys amount = </span><input placeholder="value" name='waterwash' type='text' id="waterwash_chlys_amount" value='0.17'/>+/-
+          <input placeholder="error" name='waterwash' type='text' id="waterwash_error_chlys_amount" value='0.1'/><br/>
+        <span class="waterwashParams">feedstock =</span><input placeholder="value" name='waterwash' type='text' id="waterwash_feedstock" value='5.47'/>+/-
+          <input placeholder="error" name='waterwash' type='text' id="waterwash_error_feedstock" value='0.1'/><br/>
+        <span class="waterwashParams">csl = </span><input placeholder="value" name='waterwash' type='text' id="waterwash_csl.kg" value='0.06' />+/-
+          <input placeholder="error" name='waterwash' type='text' id="waterwash_error_csl.kg" value='0.0'/><br/>
+        <span class="waterwashParams">dap = </span><input placeholder="value" name='waterwash' type='text' id="waterwash_dap.kg" value='0.01'/>+/-
+          <input placeholder="error" name='waterwash' type='text' id="waterwash_error_dap.kg" value='0.0'/><br/>
+        <span class="waterwashParams">hcl = </span><input placeholder="value" name='waterwash' type='text' id="waterwash_hcl.kg" value='0.0'/>+/-
+          <input placeholder="error" name='waterwash' type='text' id="waterwash_error_hcl.kg" value='0.0'/><br/>
+        <span class="waterwashParams">h2so4 = </span><input placeholder="value" name='waterwash' type='text' id="waterwash_h2so4.kg" value='0.002'/>+/-
+          <input placeholder="error" name='waterwash' type='text' id="waterwash_error_h2so4.kg" value='0.0'/><br/>
+        <span class="waterwashParams">ng input stream = </span><input placeholder="value" name='waterwash' type='text' id="waterwash_ng_input_stream_mass_ww_kg" value='1.31'/>+/-
+          <input placeholder="error" name='waterwash' type='text' id="waterwash_error_ng_input_stream_mass_ww_kg" value='0.1'/><br/>
+        <span class="waterwashParams">electricity = </span><input placeholder="value" name='waterwash' type='text' id="waterwash_electricity_requirements" value='1.4'/>+/-
+          <input placeholder="error" name='waterwash' type='text' id="waterwash_error_electricity_requirements" value='0.1'/><br/>
+        <span class="waterwashParams">electricity credit = </span><input placeholder="value" name='waterwash' type='text' id="waterwash_electricity_credit" value='0.0'/>+/-
+          <input placeholder="error" name='waterwash' type='text' id="waterwash_error_electricity_credit" value='0.0'/><br/></div>
 
-      <div id="currentbox"><h4>Waterwash Parameters</h4>
-        <span class="currentParams">chlys amount = </span><input class="value" type='text' id="waterwash_chlys_amount" value='0.17'/><br/>
-        <span class="currentParams">feedstock =</span><input class="value" type='text' id="waterwash_feedstock" value='5.47'/><br/>
-        <span class="currentParams">csl = </span><input class="value" type='text' id="waterwash_csl.kg" value='0.06' /><br/>
-        <span class="currentParams">dap = </span><input class="value" type='text' id="waterwash_dap.kg" value='0.01'/><br/>
-        <span class="currentParams">hcl = </span><input class="value" type='text' id="waterwash_hcl.kg" value='0'/><br/>
-        <span class="currentParams">h2so4 = </span><input class="value" type='text' id="waterwash_h2so4.kg" value='0.002'/><br/>
-        <span class="currentParams">ng input stream = </span><input class="value" type='text' id="waterwash_ng_input_stream_mass_ww_kg" value='1.31'/><br/>
-        <span class="currentParams">electricity requirements = </span><input class="value" type='text' id="waterwash_electricity_requirements" value='1.4'/><br/>
-        <span class="currentParams">electricity credit = </span><input class="value" type='text' id="waterwash_electricity_credit" value='0'/><br/></div>
+      <div id="currentbox"><h4>iHR Current Parameters</h4>
+        <span class="currentParams">chlys amount = </span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_chlys_amount" value='0.16'/>+/-
+          <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_chlys_amount" value='0.1'/><br/>
+        <span class="currentParams">feedstock =</span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_feedstock" value='4.7'/>+/-
+          <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_feedstock" value='0.1'/><br/>
+        <span class="currentParams">csl = </span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_csl.kg" value='0.05' />+/-
+          <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_csl.kg" value='0.0'/><br/>
+        <span class="currentParams">dap = </span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_dap.kg" value='0.01'/>+/-
+          <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_dap.kg" value='0.0'/><br/>
+        <span class="currentParams">hcl = </span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_hcl.kg" value='0.18'/>+/-
+          <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_hcl.kg" value='0.1'/><br/>
+        <span class="currentParams">h2so4 = </span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_h2so4.kg" value='0.0'/>+/-
+          <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_h2so4.kg" value='0.0'/><br/>
+        <span class="currentParams">ng input stream = </span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_ng_input_stream_mass_ww_kg" value='0.0'/>+/-
+          <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_ng_input_stream_mass_ww_kg" value='0.0'/><br/>
+        <span class="currentParams">electricity = </span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_electricity_requirements" value='0.0'/>+/-
+          <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_electricity_requirements" value='0.0'/><br/>
+        <span class="currentParams">electricity credit = </span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_electricity_credit" value='0.85'/>+/-
+          <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_electricity_credit" value='0.1'/><br/></div>
 
-      <div id="projectedbox"><h4>Waterwash Parameters</h4>
-        <span class="projectedParams">chlys amount = </span><input class="value" type='text' id="waterwash_chlys_amount" value='0.17'/><br/>
-        <span class="projectedParams">feedstock =</span><input class="value" type='text' id="waterwash_feedstock" value='5.47'/><br/>
-        <span class="projectedParams">csl = </span><input class="value" type='text' id="waterwash_csl.kg" value='0.06' /><br/>
-        <span class="projectedParams">dap = </span><input class="value" type='text' id="waterwash_dap.kg" value='0.01'/><br/>
-        <span class="projectedParams">hcl = </span><input class="value" type='text' id="waterwash_hcl.kg" value='0'/><br/>
-        <span class="projectedParams">h2so4 = </span><input class="value" type='text' id="waterwash_h2so4.kg" value='0.002'/><br/>
-        <span class="projectedParams">ng input stream = </span><input class="value" type='text' id="waterwash_ng_input_stream_mass_ww_kg" value='1.31'/><br/>
-        <span class="projectedParams">electricity requirements = </span><input class="value" type='text' id="waterwash_electricity_requirements" value='1.4'/><br/>
-        <span class="projectedParams">electricity credit = </span><input class="value" type='text' id="waterwash_electricity_credit" value='0'/><br/></div>
+      <div id="projectedbox"><h4>iHR Projected Parameters</h4>
+        <span class="projectedParams">chlys amount = </span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_chlys_amount" value='0.03'/>+/-
+          <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_chlys_amount" value='0.1'/><br/>
+        <span class="projectedParams">feedstock =</span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_feedstock" value='4.7'/>+/-
+          <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_feedstock" value='0.1'/><br/>
+        <span class="projectedParams">csl = </span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_csl.kg" value='0.06' />+/-
+          <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_csl.kg" value='0.0'/><br/>
+        <span class="projectedParams">dap = </span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_dap.kg" value='0.017'/>+/-
+          <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_dap.kg" value='0.0'/><br/>
+        <span class="projectedParams">hcl = </span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_hcl.kg" value='0.0'/>+/-
+          <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_hcl.kg" value='0.0'/><br/>
+        <span class="projectedParams">h2so4 = </span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_h2so4.kg" value='0.0'/>+/-
+          <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_h2so4.kg" value='0.0'/><br/>
+        <span class="projectedParams">ng input stream = </span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_ng_input_stream_mass_ww_kg" value='0.0'/>+/-
+          <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_ng_input_stream_mass_ww_kg" value='0'/><br/>
+        <span class="projectedParams">electricity = </span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_electricity_requirements" value='0.0'/>+/-
+          <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_electricity_requirements" value='0.0'/><br/>
+        <span class="projectedParams">electricity credit = </span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_electricity_credit" value='0.0'/>+/-
+          <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_electricity_credit" value='0.0'/><br/></div>
 
-      <div id="button">
-      <div id="controlTextEnergy">Run Model</div></div>
+      <div id="chart"></div>
+      <div id="buttonGHG">
+      <div class="controlText">Run GHG Model</div></div>
+      <div id="buttonWater">
+      <div class="controlText">Run Water Model</div></div>
+      
   </div>
-    <script type="text/javascript" src="all.js"></script>
-    async defer></script>
-    <script type="text/javascript">RunModel()</script>
+    <script type="text/javascript" src="static/all.js"></script>
   </body>
 </html>
