@@ -18,15 +18,10 @@ def root():
 @app.route("/ParametersList", methods = ['POST'])
 def get_results2():
   all_data = request.get_json()
-  return flask.jsonify(getMyPlotJSON(all_data['common_params'], all_data['other_params']))
+  return flask.jsonify(getMyPlotJSON(all_data['common_params'], all_data['other_params'], all_data['time_horizon'], all_data['facility_electricity'], all_data['combustion_direct_ghg']))
 
-# @app.route("/ParametersList2", methods = ['POST'])
-# def get_results():
-#   all_data = request.get_json()
-#   return flask.jsonify({'plot_html': getMyPlotHtml(all_data['common_params'], all_data['other_params'])})
-
-def getMyPlotJSON(common_params, other_params):
-  data = FinalGHGModel(common_params, other_params)
+def getMyPlotJSON(common_params, other_params, time_horizon, facility_electricity, combustion_direct_ghg):
+  data = FinalGHGModel(common_params, other_params, time_horizon, facility_electricity, combustion_direct_ghg)
   return data.to_dict()
 
 

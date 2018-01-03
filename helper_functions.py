@@ -178,7 +178,7 @@ def IOSolutionPhysicalUnits(A, y, cost):
     return total_inputs
 
 
-def TotalGHGEmissions(io_data, y, cost, biorefinery_direct_ghg, combustion_direct_ghg):
+def TotalGHGEmissions(io_data, y, cost, biorefinery_direct_ghg, combustion_direct_ghg, time_horizon):
     # Returns a vector of of all GHG emissions in the form of kg CO2e
     #
     # Args:
@@ -205,7 +205,7 @@ def TotalGHGEmissions(io_data, y, cost, biorefinery_direct_ghg, combustion_direc
         y_array.append(y[item])
         cost_array.append(cost[item])
 
-    io_ghg_results_kg = IOSolutionPhysicalUnits(A, y_array, cost_array) * GHGImpactVectorSum(P.time_horizon)
+    io_ghg_results_kg = IOSolutionPhysicalUnits(A, y_array, cost_array) * GHGImpactVectorSum(time_horizon)
     io_ghg_results_kg = np.append(io_ghg_results_kg,[biorefinery_direct_ghg, combustion_direct_ghg])
     rownames = np.append(io_data.products.values, ['direct', 'combustion'])
     io_ghg_results_kg_df = pd.DataFrame(io_ghg_results_kg, columns = ['ghg_results_kg'])
