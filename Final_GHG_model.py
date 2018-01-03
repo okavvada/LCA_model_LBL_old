@@ -1,12 +1,13 @@
 import pandas as pd
 import numpy as np
 import parameters as P
-import sensitivity_parameters as SP
 import helper_functions as hf
 import matplotlib.pyplot as plt
 
 io_data = pd.read_csv(P.io_table_dollars_path)
 cost = hf.csv_dict_list(P.cost_impact_path)
+# Ethanol produciton functional unit (1 kg of ethanol)
+etoh_feed_stream_mass_kg = 1 
 
 y = {}
 for item in cost.keys():
@@ -17,7 +18,7 @@ for scenario in P.scenario_range:
     new_data = np.zeros([7,3])
     m2[scenario] = pd.DataFrame(new_data, columns=P.selectivity, index=P.processes)
 
-def FinalGHGModel(SP_common_params=SP.common_params, SP_other_params=SP.other_params):
+def FinalGHGModel(SP_common_params, SP_other_params, time_horizon, facility_electricity, combustion_direct_ghg):
 	m = dict(m2)
 	for selectivity in P.selectivity:
 	    for scenario in P.scenario_range:
@@ -38,14 +39,14 @@ def FinalGHGModel(SP_common_params=SP.common_params, SP_other_params=SP.other_pa
 			y["rail.mt_km"] = (cost["rail.mt_km"] * (SP_other_params[selectivity]['chlys_amount'][scenario]/1000) * 
 							SP_common_params['chlys_rail_mt_km'][scenario] +
 			                	cost["rail.mt_km"] * (
-			                    	P.etoh_feed_stream_mass_kg/1000 * SP_common_params['etoh_distribution_rail'][scenario])) 
+			                    	etoh_feed_stream_mass_kg/1000 * SP_common_params['etoh_distribution_rail'][scenario])) 
 			y["flatbedtruck.mt_km"] = (cost["flatbedtruck.mt_km"] * (
 			        (SP_other_params[selectivity]['chlys_amount'][scenario]/1000) * 
 			        	SP_common_params['chlys_flatbedtruck_mt_km'][scenario]) +
-			        		cost["flatbedtruck.mt_km"] * (P.etoh_feed_stream_mass_kg/1000 * (
+			        		cost["flatbedtruck.mt_km"] * (etoh_feed_stream_mass_kg/1000 * (
 			        			SP_common_params['etoh_distribution_truck'][scenario])))
-			y["electricity.{}.kWh".format(P.facility_electricity)] = (
-			    cost["electricity.{}.kWh".format(P.facility_electricity)] * (
+			y["electricity.{}.kWh".format(facility_electricity)] = (
+			    cost["electricity.{}.kWh".format(facility_electricity)] * (
 			        SP_other_params[selectivity]['electricity_requirements'][scenario]))
 			y["hcl.kg"] = cost["hcl.kg"] * SP_other_params[selectivity]['hcl.kg'][scenario]
 
@@ -54,30 +55,13 @@ def FinalGHGModel(SP_common_params=SP.common_params, SP_other_params=SP.other_pa
 
 
 			results_kg_co2e = hf.TotalGHGEmissions(io_data, y, cost, 
-			                                       biorefinery_direct_ghg, P.combustion_direct_ghg)
+			                                       biorefinery_direct_ghg, combustion_direct_ghg, time_horizon)
 
 			results_kg_co2e_dict = results_kg_co2e.set_index('products')['ghg_results_kg'].to_dict()
 
 			hf.AggregateResults(m, results_kg_co2e_dict, selectivity, scenario)
 
 			m[scenario][selectivity] = m[scenario][selectivity] * 1000/27 # converting kg per kg results to g per MJ
-
-	# n = {} 
-	# for scenario in P.scenario_range:
-	#     n_new_data = np.zeros([3,3])
-	#     n = pd.DataFrame(n_new_data, columns=P.selectivity, index=P.scenario_range)
-	        
-	# biorefinery_direct_ghg = 0
-	# for selectivity in P.selectivity:
-	#     for scenario in P.scenario_range:
-	#         y["electricity.{}.kWh".format(P.facility_electricity)] = (
-	#                 -cost["electricity.{}.kWh".format(P.facility_electricity)] * (
-	#                     SP_other_params[selectivity]['electricity_credit'][scenario]))
-	        
-	#         results_kg_co2e = hf.TotalGHGEmissions(io_data, y, cost, 
-	#                                                biorefinery_direct_ghg, P.combustion_direct_ghg)
-	#         results_kg_co2e_dict = results_kg_co2e.set_index('products')['ghg_results_kg'].to_dict()
-	#         n[selectivity][scenario] = results_kg_co2e_dict["electricity.US.kWh"]
 
 
 	aggregated_data_avg = m['avg'][['waterwash', 'iHG-Current', 'iHG-Projected']].T
@@ -98,6 +82,7 @@ def FinalGHGModel(SP_common_params=SP.common_params, SP_other_params=SP.other_pa
 
 	aggregated_data_avg_plot['error_bars_min'] = error_min
 	aggregated_data_avg_plot['error_bars_max'] = error_max
+
 	return aggregated_data_avg_plot
 
 
