@@ -15,8 +15,11 @@
   <body>
     <div id="map">
       <div id="commonbox"><h4>Common Parameters</h4>
-        <span class="commonParams"><span class="tooltip-wrap">time horizon = <span class="tooltip-content">[y] lifetime for assessment</span></span>
-          <input placeholder="value" name='common' type='text' id="common_time_horizon" value='100'/><br/>
+        <form><span class="tooltip-wrap">time horizon = <span class="tooltip-content">[y] GHG lifetime for assessment</span></span>
+          <select id="myVals" onchange="lifetimeSelect()">
+                <option value="100">100</option>
+                <option value="20">20</option>
+          </select></form>
           <!-- <span class="commonParams"><span class="tooltip-wrap">facility electricity = <span class="tooltip-content">[region] of electricity production</span></span> -->
           <form><span class="tooltip-wrap">facility electricity<span class="tooltip-content">[region] of electricity production</span></span>
             <select id="myList" onchange="electricitySelect()">

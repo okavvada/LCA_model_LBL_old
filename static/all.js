@@ -191,6 +191,7 @@ var other_params = {
     }
 };
 
+var processes = ["electricity_credit", "Electricity", "Chemicals_And_Fertilizers", "Petroleum", "Transportation", "Farming", "Direct", "Other"]
 
 var input_dict = {};
 input_dict.other_params = other_params;
@@ -200,7 +201,12 @@ input_dict.analysis_params = analysis_params;
 
 function electricitySelect() {
   var myList=document.getElementById("myList");
-  input_dict.facility_electricity = myList.options[myList.selectedIndex].value;
+  input_dict.analysis_params.facility_electricity = myList.options[myList.selectedIndex].value;
+}
+
+function lifetimeSelect() {
+  var myList=document.getElementById("myVals");
+  input_dict.analysis_params.time_horizon = myList.options[myList.selectedIndex].value;
 }
 
 $("input").change(function(event) {
@@ -259,9 +265,8 @@ run_water_button.addEventListener('mouseout', function() {
 });
 
 
-
 run_GHG_button.addEventListener('click', function() {
-    console.log(input_dict);
+    var plot_data = [];
     $.ajax({
       url: "/ParametersList",
       type: 'POST',
@@ -269,66 +274,23 @@ run_GHG_button.addEventListener('click', function() {
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
       success: function(data) {
-        var trace2 = {
+        for (i=0; i<processes.length; i++){
+          if (processes[i] != 'Other') {
+          var trace = {
             x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
-            y: [data.Chemicals_And_Fertilizers['waterwash'],
-                data.Chemicals_And_Fertilizers['iHG-Current'],
-                data.Chemicals_And_Fertilizers['iHG-Projected']],
-            name: 'Chemicals_And_Fertilizers',
+            y: [data[processes[i]]['waterwash'],
+                data[processes[i]]['iHG-Current'],
+                data[processes[i]]['iHG-Projected']],
+            name: processes[i],
             type: 'bar'
-          };
-
-        var trace3 = {
+          }}
+          else {
+            var trace = {
             x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
-            y: [data.Farming['waterwash'],
-                data.Farming['iHG-Current'],
-                data.Farming['iHG-Projected']],
-            name: 'Farming',
-            type: 'bar'
-          };
-
-        var trace4 = {
-            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
-            y: [data.Electricity['waterwash'],
-                data.Electricity['iHG-Current'],
-                data.Electricity['iHG-Projected']],
-            name: 'Electricity',
-            type: 'bar'
-          };
-
-        var trace5 = {
-            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
-            y: [data.Petroleum['waterwash'],
-                data.Petroleum['iHG-Current'],
-                data.Petroleum['iHG-Projected']],
-            name: 'Petroleum',
-            type: 'bar'
-          };
-
-        var trace6 = {
-            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
-            y: [data.Transportation['waterwash'],
-                data.Transportation['iHG-Current'],
-                data.Transportation['iHG-Projected']],
-            name: 'Transportation',
-            type: 'bar'
-          };
-
-        var trace7 = {
-            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
-            y: [data.Direct['waterwash'],
-                data.Direct['iHG-Current'],
-                data.Direct['iHG-Projected']],
-            name: 'Direct',
-            type: 'bar'
-          };
-
-        var trace8 = {
-            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
-            y: [data.Other['waterwash'],
-                data.Other['iHG-Current'],
-                data.Other['iHG-Projected']],
-            name: 'Other',
+            y: [data[processes[i]]['waterwash'],
+                data[processes[i]]['iHG-Current'],
+                data[processes[i]]['iHG-Projected']],
+            name: processes[i],
             type: 'bar',
             error_y: {
               type: 'data',
@@ -339,28 +301,17 @@ run_GHG_button.addEventListener('click', function() {
               arrayminus: [data.error_bars_min['waterwash'], 
                            data.error_bars_min['iHG-Current'], 
                            data.error_bars_min['iHG-Projected']]
-            },
-          };
+            }
+          }}
 
-        var trace1 = {
-            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
-            y: [data.electricity_credit['waterwash'],
-                data.electricity_credit['iHG-Current'],
-                data.electricity_credit['iHG-Projected']],
-            name: 'electricity_credit',
-            type: 'bar'
-          };
+          plot_data.push(trace);
+        }
 
-        console.log(data.error_bars_max['waterwash']);
-
-        var data = [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8];
-
-        var layout = {barmode: 'relative', height: 400, width: 700, margin: {
-                                                                              l: 50,
-                                                                              r: 50,
-                                                                              b: 50,
-                                                                              t: 50,
-                                                                              pad: 2},
+        var layout = {barmode: 'relative', height: 400, width: 700, margin: {l: 50,
+                                                                             r: 50,
+                                                                             b: 50,
+                                                                             t: 50,
+                                                                             pad: 2},
                       yaxis: {title: 'kg CO2 / kg ethanol',
                               titlefont: {
                                 family: 'Arial, sans-serif',
@@ -369,8 +320,7 @@ run_GHG_button.addEventListener('click', function() {
                               }}
       };
 
-          Plotly.newPlot('chart', data, layout);
+          Plotly.newPlot('chart', plot_data, layout);
 
           }});
     });
-
