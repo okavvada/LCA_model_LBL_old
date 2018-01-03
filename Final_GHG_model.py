@@ -18,7 +18,7 @@ for scenario in P.scenario_range:
     new_data = np.zeros([7,3])
     m2[scenario] = pd.DataFrame(new_data, columns=P.selectivity, index=P.processes)
 
-def FinalGHGModel(SP_common_params, SP_other_params, time_horizon, facility_electricity, combustion_direct_ghg):
+def FinalGHGModel(SP_common_params, SP_other_params, SP_analysis_params):
 	m = dict(m2)
 	for selectivity in P.selectivity:
 	    for scenario in P.scenario_range:
@@ -45,8 +45,8 @@ def FinalGHGModel(SP_common_params, SP_other_params, time_horizon, facility_elec
 			        	SP_common_params['chlys_flatbedtruck_mt_km'][scenario]) +
 			        		cost["flatbedtruck.mt_km"] * (etoh_feed_stream_mass_kg/1000 * (
 			        			SP_common_params['etoh_distribution_truck'][scenario])))
-			y["electricity.{}.kWh".format(facility_electricity)] = (
-			    cost["electricity.{}.kWh".format(facility_electricity)] * (
+			y["electricity.{}.kWh".format(SP_analysis_params['facility_electricity'])] = (
+			    cost["electricity.{}.kWh".format(SP_analysis_params['facility_electricity'])] * (
 			        SP_other_params[selectivity]['electricity_requirements'][scenario]))
 			y["hcl.kg"] = cost["hcl.kg"] * SP_other_params[selectivity]['hcl.kg'][scenario]
 
@@ -55,7 +55,7 @@ def FinalGHGModel(SP_common_params, SP_other_params, time_horizon, facility_elec
 
 
 			results_kg_co2e = hf.TotalGHGEmissions(io_data, y, cost, 
-			                                       biorefinery_direct_ghg, combustion_direct_ghg, time_horizon)
+			                                       biorefinery_direct_ghg, SP_analysis_params['combustion_direct_ghg'], SP_analysis_params['time_horizon'])
 
 			results_kg_co2e_dict = results_kg_co2e.set_index('products')['ghg_results_kg'].to_dict()
 
