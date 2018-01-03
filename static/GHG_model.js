@@ -209,6 +209,7 @@ function lifetimeSelect() {
   input_dict.analysis_params.time_horizon = myList.options[myList.selectedIndex].value;
 }
 
+
 $("input").change(function(event) {
     to_replace = event.target.name + '_';
     if (event.target.placeholder == "value") {
@@ -251,18 +252,46 @@ $("input").change(function(event) {
 
 var run_GHG_button = document.getElementById('buttonGHG');
 run_GHG_button.addEventListener('mouseover', function() {
-    run_GHG_button.style['background-color'] = '#e6e9ed';
+    run_GHG_button.style['background-color'] = '#ccc';
 });
 run_GHG_button.addEventListener('mouseout', function() {
-    run_GHG_button.style['background-color'] = '#fff';
+    run_GHG_button.style['background-color'] = '#eee';
 });
-var run_water_button = document.getElementById('buttonWater');
+var run_water_button = document.getElementById('buttonWithWater');
 run_water_button.addEventListener('mouseover', function() {
-    run_water_button.style['background-color'] = '#e6e9ed';
+    run_water_button.style['background-color'] = '#ccc';
 });
 run_water_button.addEventListener('mouseout', function() {
-    run_water_button.style['background-color'] = '#fff';
+    run_water_button.style['background-color'] = '#eee';
 });
+
+var run_cons_water_button = document.getElementById('buttonConsWater');
+run_cons_water_button.addEventListener('mouseover', function() {
+    run_cons_water_button.style['background-color'] = '#ccc';
+});
+run_cons_water_button.addEventListener('mouseout', function() {
+    run_cons_water_button.style['background-color'] = '#eee';
+});
+
+
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+        /* Toggle between adding and removing the "active" class,
+        to highlight the button that controls the panel */
+        this.classList.toggle("active");
+
+        /* Toggle between hiding and showing the active panel */
+        var panel = this.nextElementSibling;
+        if (panel.style.display === "block") {
+            panel.style.display = "none";
+        } else {
+            panel.style.display = "block";
+        }
+    });
+}
 
 
 run_GHG_button.addEventListener('click', function() {
@@ -319,7 +348,7 @@ run_GHG_button.addEventListener('click', function() {
                                 color: 'black'
                               }},
                       legend: {traceorder: 'reversed'}
-
+                              
       };
 
           Plotly.newPlot('chart', plot_data, layout);

@@ -4,7 +4,7 @@
     <title>LCA Model Ionic Liquids</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-    <link rel="stylesheet" href="static/stylesheets/styles.css">
+    <link rel="stylesheet" href="static/stylesheets/styles2.css">
     <script type="text/javascript" src="static/jquery.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -17,8 +17,17 @@
   <body>
     <div id="map">
 
-      <div id="commonbox"><h4>Common Parameters</h4>
-        <form><span class="tooltip-wrap">time horizon = <span class="tooltip-content">[y] GHG lifetime for assessment</span></span>
+      <div id="buttonGHG">
+      <div class="controlText">Run GHG Model</div></div>
+      <div id="buttonWithWater">
+      <div class="controlText">Run Consumption Water Model</div></div>
+      <div id="buttonConsWater">
+      <div class="controlText">Run Withdrawal Water Model</div></div>
+
+
+      <button class="accordion">Common Parameters</button>
+      <div class="panel">
+  <form><span class="tooltip-wrap">time horizon = <span class="tooltip-content">[y] GHG lifetime for assessment</span></span>
           <select id="myVals" onchange="lifetimeSelect()">
                 <option value="100">100</option>
                 <option value="20">20</option>
@@ -62,9 +71,12 @@
           <input placeholder="error" name='common' type='text' id="common_error_chlys_rail_mt_km" value='0.0'/><br/>
         <span class="commonParams"><span class="tooltip-wrap">chlys flatbedtruck = <span class="tooltip-content">[km] for lysine truck distribution per kg ethanol produced</span></span>
           <input placeholder="value" name='common' type='text' id="common_chlys_flatbedtruck_mt_km" value='80'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
-          <input placeholder="error" name='common' type='text' id="common_error_chlys_flatbedtruck_mt_km" value='0.0'/><br/></div>
+          <input placeholder="error" name='common' type='text' id="common_error_chlys_flatbedtruck_mt_km" value='0.0'/><br/>
+</div><br/>
 
-      <div id="waterwashbox"><h4>Waterwash Parameters</h4>
+
+      <button class="accordion">Waterwash Parameters</button>
+      <div class="panel">
         <span class="waterwashParams"><span class="tooltip-wrap">chlys amount = <span class="tooltip-content">[kg] of cellulase per kg ethanol produced</span></span>
           <input placeholder="value" name='waterwash' type='text' id="waterwash_chlys_amount" value='0.17'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='waterwash' type='text' id="waterwash_error_chlys_amount" value='0.1'/><br/>
@@ -91,9 +103,13 @@
           <input placeholder="error" name='waterwash' type='text' id="waterwash_error_electricity_requirements" value='0.1'/><br/>
         <span class="waterwashParams"><span class="tooltip-wrap">electricity credit = <span class="tooltip-content">[kWh] of electricity gained per kg ethanol produced</span></span>
           <input placeholder="value" name='waterwash' type='text' id="waterwash_electricity_credit" value='0.0'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
-          <input placeholder="error" name='waterwash' type='text' id="waterwash_error_electricity_credit" value='0.0'/><br/></div>
+          <input placeholder="error" name='waterwash' type='text' id="waterwash_error_electricity_credit" value='0.0'/><br/>
 
-      <div id="currentbox"><h4>iHR Current Parameters</h4>
+</div><br/>
+
+
+      <button class="accordion">Current Parameters</button>
+      <div class="panel">
         <span class="currentParams"><span class="tooltip-wrap">chlys amount = <span class="tooltip-content">[kg] of cellulase per kg ethanol produced</span></span>
           <input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_chlys_amount" value='0.16'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_chlys_amount" value='0.1'/><br/>
@@ -120,9 +136,12 @@
           <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_electricity_requirements" value='0.0'/><br/>
         <span class="currentParams"><span class="tooltip-wrap">electricity credit = <span class="tooltip-content">[kWh] of electricity gained per kg ethanol produced</span></span>
           <input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_electricity_credit" value='0.85'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
-          <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_electricity_credit" value='0.1'/><br/></div>
+          <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_electricity_credit" value='0.1'/><br/>
+  
+  </div><br/>
 
-      <div id="projectedbox"><h4>iHR Projected Parameters</h4>
+      <button class="accordion">Projected Parameters</button>
+      <div class="panel">
         <span class="projectedParams"><span class="tooltip-wrap">chlys amount = <span class="tooltip-content">[kg] of cellulase per kg ethanol produced</span></span>
           <input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_chlys_amount" value='0.03'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_chlys_amount" value='0.1'/><br/>
@@ -149,13 +168,11 @@
           <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_electricity_requirements" value='0.0'/><br/>
         <span class="projectedParams"><span class="tooltip-wrap">electricity credit = <span class="tooltip-content">[kWh] of electricity gained per kg ethanol produced</span></span>
           <input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_electricity_credit" value='0.0'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
-          <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_electricity_credit" value='0.0'/><br/></div>
+          <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_electricity_credit" value='0.0'/><br/>
+
+    </div><br/>
 
       <div id="chart"></div>
-      <div id="buttonGHG">
-      <div class="controlText">Run GHG Model</div></div>
-      <div id="buttonWater">
-      <div class="controlText">Run Consumption Water Model</div></div>
       
   </div>
     <script type="text/javascript" src="static/GHG_model.js"></script>

@@ -8,63 +8,13 @@
         padding: 0;
       }
 
-    #waterwashbox {
-        font-family: Arial, sans-serif;
-        background: #fff;
-        font-size: 14px;
-        padding: 5px;
-        border: 1px solid #000;
-        position: absolute;
-        top: 70px;
-        left: 310px;
-        width: 250px;
-        height: 230px;
-      }
-
-    #commonbox {
-        font-family: Arial, sans-serif;
-        background: #fff;
-        font-size: 14px;
-        padding: 5px;
-        border: 1px solid #000;
-        position: absolute;
-        top: 70px;
-        left: 10px;
-        width: 280px;
-        height: 255px;
-      }
-
-    #currentbox {
-        font-family: Arial, sans-serif;
-        background: #fff;
-        font-size: 14px;
-        padding: 5px;
-        border: 1px solid #000;
-        position: absolute;
-        top: 70px;
-        left: 580px;
-        width: 250px;
-        height: 230px;
-      }
-
-    #projectedbox {
-        font-family: Arial, sans-serif;
-        background: #fff;
-        font-size: 14px;
-        padding: 5px;
-        border: 1px solid #000;
-        position: absolute;
-        top: 70px;
-        left: 850px;
-        width: 250px;
-        height: 230px;
-      }
-
     #buttonGHG {
-      position: relative;
-      top: 6px;
-      left: 420px;
-      background-color: #fff;
+      position: absolute;
+      top: 8px;
+      left: 350px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      background-color: #eee;
       border: 2px solid #e6e9ed;
       border-radius: 10px;
       margin-top: 1px;
@@ -72,13 +22,14 @@
       cursor: pointer;
       text-align: center;
       width: 160px;
+      transition: 0.4s;
     }
 
-    #buttonWater {
+    #buttonConsWater {
       position: absolute;
-      top: 6px;
-      left: 600px;
-      background-color: #fff;
+      top: 8px;
+      left: 530px;
+      background-color: #eee;
       border: 2px solid #e6e9ed;
       border-radius: 10px;
       margin-top: 1px;
@@ -86,12 +37,28 @@
       cursor: pointer;
       text-align: center;
       width: 160px;
+      transition: 0.4s;
+    }
+
+    #buttonWithWater {
+      position: absolute;
+      top: 8px;
+      left: 710px;
+      background-color: #eee;
+      border: 2px solid #e6e9ed;
+      border-radius: 10px;
+      margin-top: 1px;
+      box-shadow: 1px 2px 2px #a1a4a8;
+      cursor: pointer;
+      text-align: center;
+      width: 160px;
+      transition: 0.4s;
     }
 
     #chart {
       position: absolute;
-      top: 340px;
-      left: 150px;
+      top: 65px;
+      left: 400px;
     }
 
     .controlText {
@@ -134,7 +101,7 @@
     .tooltip-content {
       display: none;
       position: absolute;
-      background-color: #d7c7e0;
+      background-color: #d7afed;
       padding: .5em;
       float:left;
       z-index: 99;
@@ -151,3 +118,36 @@
     }
 
 
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+    position: relative;
+    top: 70px;
+    left: 10px;
+    background-color: #eee;
+    outline: 1px solid #707070;
+    color: #444;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px;
+    width: 310px;
+    text-align: left;
+    transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .accordion:hover {
+    background-color: #ccc;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+    position: relative;
+    top: 70px;
+    left: 10px;
+    padding: 10px;
+    background-color: white;
+    outline: 1px solid #707070;
+    width: 290px;
+    display: none;
+}
