@@ -245,6 +245,8 @@ run_water_button.addEventListener('mouseout', function() {
     run_water_button.style['background-color'] = '#fff';
 });
 
+
+
 run_GHG_button.addEventListener('click', function() {
     console.log(input_dict);
     $.ajax({
@@ -345,7 +347,13 @@ run_GHG_button.addEventListener('click', function() {
                                                                               r: 50,
                                                                               b: 50,
                                                                               t: 50,
-                                                                              pad: 2}
+                                                                              pad: 2},
+                      yaxis: {title: 'kg CO2 / kg ethanol',
+                              titlefont: {
+                                family: 'Arial, sans-serif',
+                                size: 16,
+                                color: 'black'
+                              }}
       };
 
           Plotly.newPlot('chart', data, layout);
@@ -353,21 +361,3 @@ run_GHG_button.addEventListener('click', function() {
           }});
     });
 
-
-// run_button.addEventListener('click', function() {
-//   console.log(a)
-
-// });
-// element = document.getElementById('map');
-
-// element.addEventListener('click', function(event) {
-
-// 		$.getJSON("/ParametersList", {
-// 			a: a,
-// 			b: b,
-// 			c: c,
-// 			d: d,
-// 			direct: direct
-// 		}
-
-// 	}); 

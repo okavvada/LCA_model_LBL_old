@@ -1,0 +1,147 @@
+#map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+    #waterwashbox {
+        font-family: Arial, sans-serif;
+        background: #fff;
+        font-size: 14px;
+        padding: 5px;
+        border: 1px solid #000;
+        position: absolute;
+        top: 55px;
+        left: 310px;
+        width: 250px;
+        height: 230px;
+      }
+
+    #commonbox {
+        font-family: Arial, sans-serif;
+        background: #fff;
+        font-size: 14px;
+        padding: 5px;
+        border: 1px solid #000;
+        position: absolute;
+        top: 55px;
+        left: 10px;
+        width: 280px;
+        height: 200px;
+      }
+
+    #currentbox {
+        font-family: Arial, sans-serif;
+        background: #fff;
+        font-size: 14px;
+        padding: 5px;
+        border: 1px solid #000;
+        position: absolute;
+        top: 55px;
+        left: 580px;
+        width: 250px;
+        height: 230px;
+      }
+
+    #projectedbox {
+        font-family: Arial, sans-serif;
+        background: #fff;
+        font-size: 14px;
+        padding: 5px;
+        border: 1px solid #000;
+        position: absolute;
+        top: 55px;
+        left: 850px;
+        width: 250px;
+        height: 230px;
+      }
+
+    #buttonGHG {
+      position: relative;
+      top: 6px;
+      left: 420px;
+      background-color: #fff;
+      border: 2px solid #e6e9ed;
+      border-radius: 10px;
+      margin-top: 1px;
+      box-shadow: 1px 2px 2px #a1a4a8;
+      cursor: pointer;
+      text-align: center;
+      width: 160px;
+    }
+
+    #buttonWater {
+      position: absolute;
+      top: 6px;
+      left: 600px;
+      background-color: #fff;
+      border: 2px solid #e6e9ed;
+      border-radius: 10px;
+      margin-top: 1px;
+      box-shadow: 1px 2px 2px #a1a4a8;
+      cursor: pointer;
+      text-align: center;
+      width: 160px;
+    }
+
+    #chart {
+      position: absolute;
+      top: 300px;
+      left: 150px;
+    }
+
+    .controlText {
+      color: #2F3030;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 25px;
+      width: 160px;
+    }
+
+
+    h3 {
+      margin:0px;
+    }
+
+    h4 {
+      margin:2px;
+      text-align: center;
+      text-decoration: underline;
+    }
+
+    input {
+      width: 35px;
+      margin-right:10px;
+      margin-bottom:5px;
+      padding-left: 3px;
+    }
+
+    #set_value{
+      border: 1px solid #abadb2;
+    }
+
+    .tooltip-wrap {
+      position: relative;
+    }
+    .tooltip-content {
+      display: none;
+      position: absolute;
+      background-color: #d7c7e0;
+      padding: .5em;
+      float:left;
+      z-index: 99;
+      margin-right:-45em;
+      margin-left:1em;
+      color: #000;
+      border: 1px solid #000;
+      
+    }
+
+    .tooltip-wrap:hover .tooltip-content {
+      display: block;
+      border-radius:10px;
+    }

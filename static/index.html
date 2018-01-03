@@ -4,137 +4,7 @@
     <title>LCA Model Ionic Liquids</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-    #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-
-    #waterwashbox {
-        font-family: Arial, sans-serif;
-        background: #fff;
-        font-size: 14px;
-        padding: 5px;
-        border: 1px solid #000;
-        position: absolute;
-        top: 55px;
-        left: 310px;
-        width: 250px;
-        height: 230px;
-      }
-
-    #commonbox {
-        font-family: Arial, sans-serif;
-        background: #fff;
-        font-size: 14px;
-        padding: 5px;
-        border: 1px solid #000;
-        position: absolute;
-        top: 55px;
-        left: 10px;
-        width: 280px;
-        height: 200px;
-      }
-
-    #currentbox {
-        font-family: Arial, sans-serif;
-        background: #fff;
-        font-size: 14px;
-        padding: 5px;
-        border: 1px solid #000;
-        position: absolute;
-        top: 55px;
-        left: 580px;
-        width: 250px;
-        height: 230px;
-      }
-
-    #projectedbox {
-        font-family: Arial, sans-serif;
-        background: #fff;
-        font-size: 14px;
-        padding: 5px;
-        border: 1px solid #000;
-        position: absolute;
-        top: 55px;
-        left: 850px;
-        width: 250px;
-        height: 230px;
-      }
-
-    #buttonGHG {
-      position: relative;
-      top: 6px;
-      left: 420px;
-      background-color: #fff;
-      border: 2px solid #e6e9ed;
-      border-radius: 10px;
-      margin-top: 1px;
-      box-shadow: 1px 2px 2px #a1a4a8;
-      cursor: pointer;
-      text-align: center;
-      width: 160px;
-    }
-
-    #buttonWater {
-      position: absolute;
-      top: 6px;
-      left: 600px;
-      background-color: #fff;
-      border: 2px solid #e6e9ed;
-      border-radius: 10px;
-      margin-top: 1px;
-      box-shadow: 1px 2px 2px #a1a4a8;
-      cursor: pointer;
-      text-align: center;
-      width: 160px;
-    }
-
-    #chart {
-      position: absolute;
-      top: 300px;
-      left: 150px;
-    }
-
-    .controlText {
-      color: #2F3030;
-      font-weight: bold;
-      font-size: 18px;
-      line-height: 25px;
-      width: 160px;
-    }
-
-
-    h3 {
-      margin:0px;
-    }
-
-    h4 {
-      margin:2px;
-      text-align: center;
-      text-decoration: underline;
-    }
-
-    input {
-      width: 35px;
-      margin-right:10px;
-      margin-bottom:5px;
-      padding-left: 3px;
-    }
-
-    #set_value{
-      border: 1px solid #abadb2;
-    }
-
-
-    </style>
+    <link rel="stylesheet" href="static/stylesheets/styles.css">
     <script type="text/javascript" src="static/jquery.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -145,79 +15,113 @@
   <body>
     <div id="map">
       <div id="commonbox"><h4>Common Parameters</h4>
-        <span class="commonParams">enzyme = </span><input placeholder="value" name='common' type='text' id="common_enzyme" value='0.03'/>+/-
+        <span class="commonParams"><span class="tooltip-wrap">enzyme = <span class="tooltip-content">[kg] of cellulase per kg ethanol produced</span></span>
+          <input placeholder="value" name='common' type='text' id="common_enzyme" value='0.03'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='common' type='text' id="common_error_enzyme" value='0.1'/><br/>
-        <span class="commonParams">chlys percent = </span><input placeholder="value" name='common' type='text' id="common_chlys_percent" value='0.58'/>+/-
+        <span class="commonParams"><span class="tooltip-wrap">chlys percent = <span class="tooltip-content">[%] Stochiometry % of lysine per kg ethanol produced</span></span>
+          <input placeholder="value" name='common' type='text' id="common_chlys_percent" value='0.58'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='common' type='text' id="common_error_chlys_percent" value='0.0'/><br/>
-        <span class="commonParams">cholinium percent = </span><input placeholder="value" name='common' type='text' id="common_cholinium_percent" value='0.42'/>+/-
+        <span class="commonParams"><span class="tooltip-wrap">cholinium percent = <span class="tooltip-content">[%] Stochiometry % of ChOH per kg ethanol produced</span></span>
+          <input placeholder="value" name='common' type='text' id="common_cholinium_percent" value='0.42'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='common' type='text' id="common_error_cholinium_percent" value='0.0'/><br/>
-        <span class="commonParams">etoh distribution truck = </span><input placeholder="value" name='common' type='text' id="common_etoh_distribution_truck" value='50'/>+/-
+        <span class="commonParams"><span class="tooltip-wrap">etoh distribution truck = <span class="tooltip-content">[km] for ethanol truck distribution per kg ethanol produced</span></span>
+          <input placeholder="value" name='common' type='text' id="common_etoh_distribution_truck" value='50'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='common' type='text' id="common_error_etoh_distribution_truck" value='0.1'/><br/>
-        <span class="commonParams">etoh distribution rail = </span><input placeholder="value" name='common' type='text' id="common_etoh_distribution_rail" value='135'/>+/-
+        <span class="commonParams"><span class="tooltip-wrap">etoh distribution rail = <span class="tooltip-content">[km] for ethanol rail distribution per kg ethanol produced</span></span>
+          <input placeholder="value" name='common' type='text' id="common_etoh_distribution_rail" value='135'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='common' type='text' id="common_error_etoh_distribution_rail" value='0.1'/><br/>
-        <span class="commonParams">chlys rail = </span><input placeholder="value" type='text' name='common' id="common_chlys_rail_mt_km" value='160'/>+/-
+        <span class="commonParams"><span class="tooltip-wrap">chlys rail = <span class="tooltip-content">[km] for lysine rail distribution per kg ethanol produced</span></span>
+          <input placeholder="value" type='text' name='common' id="common_chlys_rail_mt_km" value='160'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='common' type='text' id="common_error_chlys_rail_mt_km" value='0.0'/><br/>
-        <span class="commonParams">chlys flatbedtruck = </span><input placeholder="value" name='common' type='text' id="common_chlys_flatbedtruck_mt_km" value='80'/>+/-
+        <span class="commonParams"><span class="tooltip-wrap">chlys flatbedtruck = <span class="tooltip-content">[km] for lysine truck distribution per kg ethanol produced</span></span>
+          <input placeholder="value" name='common' type='text' id="common_chlys_flatbedtruck_mt_km" value='80'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='common' type='text' id="common_error_chlys_flatbedtruck_mt_km" value='0.0'/><br/></div>
 
       <div id="waterwashbox"><h4>Waterwash Parameters</h4>
-        <span class="waterwashParams">chlys amount = </span><input placeholder="value" name='waterwash' type='text' id="waterwash_chlys_amount" value='0.17'/>+/-
+        <span class="waterwashParams"><span class="tooltip-wrap">chlys amount = <span class="tooltip-content">[kg] of cellulase per kg ethanol produced</span></span>
+          <input placeholder="value" name='waterwash' type='text' id="waterwash_chlys_amount" value='0.17'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='waterwash' type='text' id="waterwash_error_chlys_amount" value='0.1'/><br/>
-        <span class="waterwashParams">feedstock =</span><input placeholder="value" name='waterwash' type='text' id="waterwash_feedstock" value='5.47'/>+/-
+        <span class="waterwashParams"><span class="tooltip-wrap">feedstock =<span class="tooltip-content">[kg] of farmedstover per kg ethanol produced</span></span>
+          <input placeholder="value" name='waterwash' type='text' id="waterwash_feedstock" value='5.47'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='waterwash' type='text' id="waterwash_error_feedstock" value='0.1'/><br/>
-        <span class="waterwashParams">csl = </span><input placeholder="value" name='waterwash' type='text' id="waterwash_csl.kg" value='0.06' />+/-
+        <span class="waterwashParams"><span class="tooltip-wrap">csl = <span class="tooltip-content">[kg] of csl per kg ethanol produced</span></span>
+          <input placeholder="value" name='waterwash' type='text' id="waterwash_csl.kg" value='0.06' /><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='waterwash' type='text' id="waterwash_error_csl.kg" value='0.0'/><br/>
-        <span class="waterwashParams">dap = </span><input placeholder="value" name='waterwash' type='text' id="waterwash_dap.kg" value='0.01'/>+/-
+        <span class="waterwashParams"><span class="tooltip-wrap">dap = <span class="tooltip-content">[kg] of dap per kg ethanol produced</span></span>
+          <input placeholder="value" name='waterwash' type='text' id="waterwash_dap.kg" value='0.01'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='waterwash' type='text' id="waterwash_error_dap.kg" value='0.0'/><br/>
-        <span class="waterwashParams">hcl = </span><input placeholder="value" name='waterwash' type='text' id="waterwash_hcl.kg" value='0.0'/>+/-
+        <span class="waterwashParams"><span class="tooltip-wrap">hcl = <span class="tooltip-content">[kg] of HCl per kg ethanol produced</span></span>
+          <input placeholder="value" name='waterwash' type='text' id="waterwash_hcl.kg" value='0.0'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='waterwash' type='text' id="waterwash_error_hcl.kg" value='0.0'/><br/>
-        <span class="waterwashParams">h2so4 = </span><input placeholder="value" name='waterwash' type='text' id="waterwash_h2so4.kg" value='0.002'/>+/-
+        <span class="waterwashParams"><span class="tooltip-wrap">h2so4 = <span class="tooltip-content">[kg] of H2SO4 per kg ethanol produced</span></span>
+          <input placeholder="value" name='waterwash' type='text' id="waterwash_h2so4.kg" value='0.002'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='waterwash' type='text' id="waterwash_error_h2so4.kg" value='0.0'/><br/>
-        <span class="waterwashParams">ng input stream = </span><input placeholder="value" name='waterwash' type='text' id="waterwash_ng_input_stream_mass_ww_kg" value='1.31'/>+/-
+        <span class="waterwashParams"><span class="tooltip-wrap">ng input stream = <span class="tooltip-content">[kg or L] of natural gas per kg ethanol produced</span></span>
+          <input placeholder="value" name='waterwash' type='text' id="waterwash_ng_input_stream_mass_ww_kg" value='1.31'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='waterwash' type='text' id="waterwash_error_ng_input_stream_mass_ww_kg" value='0.1'/><br/>
-        <span class="waterwashParams">electricity = </span><input placeholder="value" name='waterwash' type='text' id="waterwash_electricity_requirements" value='1.4'/>+/-
+        <span class="waterwashParams"><span class="tooltip-wrap">electricity = <span class="tooltip-content">[kWh] of electricity per kg ethanol produced</span></span>
+          <input placeholder="value" name='waterwash' type='text' id="waterwash_electricity_requirements" value='1.4'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='waterwash' type='text' id="waterwash_error_electricity_requirements" value='0.1'/><br/>
-        <span class="waterwashParams">electricity credit = </span><input placeholder="value" name='waterwash' type='text' id="waterwash_electricity_credit" value='0.0'/>+/-
+        <span class="waterwashParams"><span class="tooltip-wrap">electricity credit = <span class="tooltip-content">[kWh] of electricity gained per kg ethanol produced</span></span>
+          <input placeholder="value" name='waterwash' type='text' id="waterwash_electricity_credit" value='0.0'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='waterwash' type='text' id="waterwash_error_electricity_credit" value='0.0'/><br/></div>
 
       <div id="currentbox"><h4>iHR Current Parameters</h4>
-        <span class="currentParams">chlys amount = </span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_chlys_amount" value='0.16'/>+/-
+        <span class="currentParams"><span class="tooltip-wrap">chlys amount = <span class="tooltip-content">[kg] of cellulase per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_chlys_amount" value='0.16'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_chlys_amount" value='0.1'/><br/>
-        <span class="currentParams">feedstock =</span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_feedstock" value='4.7'/>+/-
+        <span class="currentParams"><span class="tooltip-wrap">feedstock =<span class="tooltip-content">[kg] of farmedstover per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_feedstock" value='4.7'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_feedstock" value='0.1'/><br/>
-        <span class="currentParams">csl = </span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_csl.kg" value='0.05' />+/-
+        <span class="currentParams"><span class="tooltip-wrap">csl = <span class="tooltip-content">[kg] of csl per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_csl.kg" value='0.05' /><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_csl.kg" value='0.0'/><br/>
-        <span class="currentParams">dap = </span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_dap.kg" value='0.01'/>+/-
+        <span class="currentParams"><span class="tooltip-wrap">dap = <span class="tooltip-content">[kg] of dap per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_dap.kg" value='0.01'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_dap.kg" value='0.0'/><br/>
-        <span class="currentParams">hcl = </span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_hcl.kg" value='0.18'/>+/-
+        <span class="currentParams"><span class="tooltip-wrap">hcl = <span class="tooltip-content">[kg] of HCl per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_hcl.kg" value='0.18'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_hcl.kg" value='0.1'/><br/>
-        <span class="currentParams">h2so4 = </span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_h2so4.kg" value='0.0'/>+/-
+        <span class="currentParams"><span class="tooltip-wrap">h2so4 = <span class="tooltip-content">[kg] of H2SO4 per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_h2so4.kg" value='0.0'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_h2so4.kg" value='0.0'/><br/>
-        <span class="currentParams">ng input stream = </span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_ng_input_stream_mass_ww_kg" value='0.0'/>+/-
+        <span class="currentParams"><span class="tooltip-wrap">ng input stream = <span class="tooltip-content">[kg or L] of natural gas per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_ng_input_stream_mass_ww_kg" value='0.0'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_ng_input_stream_mass_ww_kg" value='0.0'/><br/>
-        <span class="currentParams">electricity = </span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_electricity_requirements" value='0.0'/>+/-
+        <span class="currentParams"><span class="tooltip-wrap">electricity = <span class="tooltip-content">[kWh] of electricity per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_electricity_requirements" value='0.0'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_electricity_requirements" value='0.0'/><br/>
-        <span class="currentParams">electricity credit = </span><input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_electricity_credit" value='0.85'/>+/-
+        <span class="currentParams"><span class="tooltip-wrap">electricity credit = <span class="tooltip-content">[kWh] of electricity gained per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Current' type='text' id="iHG-Current_electricity_credit" value='0.85'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Current' type='text' id="iHG-Current_error_electricity_credit" value='0.1'/><br/></div>
 
       <div id="projectedbox"><h4>iHR Projected Parameters</h4>
-        <span class="projectedParams">chlys amount = </span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_chlys_amount" value='0.03'/>+/-
+        <span class="projectedParams"><span class="tooltip-wrap">chlys amount = <span class="tooltip-content">[kg] of cellulase per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_chlys_amount" value='0.03'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_chlys_amount" value='0.1'/><br/>
-        <span class="projectedParams">feedstock =</span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_feedstock" value='4.7'/>+/-
+        <span class="projectedParams"><span class="tooltip-wrap">feedstock =<span class="tooltip-content">[kg] of farmedstover per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_feedstock" value='4.7'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_feedstock" value='0.1'/><br/>
-        <span class="projectedParams">csl = </span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_csl.kg" value='0.06' />+/-
+        <span class="projectedParams"><span class="tooltip-wrap">csl = <span class="tooltip-content">[kg] of csl per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_csl.kg" value='0.06' /><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_csl.kg" value='0.0'/><br/>
-        <span class="projectedParams">dap = </span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_dap.kg" value='0.017'/>+/-
+        <span class="projectedParams"><span class="tooltip-wrap">dap = <span class="tooltip-content">[kg] of dap per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_dap.kg" value='0.017'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_dap.kg" value='0.0'/><br/>
-        <span class="projectedParams">hcl = </span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_hcl.kg" value='0.0'/>+/-
+        <span class="projectedParams"><span class="tooltip-wrap">hcl = <span class="tooltip-content">[kg] of HCl per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_hcl.kg" value='0.0'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_hcl.kg" value='0.0'/><br/>
-        <span class="projectedParams">h2so4 = </span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_h2so4.kg" value='0.0'/>+/-
+        <span class="projectedParams"><span class="tooltip-wrap">h2so4 = <span class="tooltip-content">[kg] of H2SO4 per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_h2so4.kg" value='0.0'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_h2so4.kg" value='0.0'/><br/>
-        <span class="projectedParams">ng input stream = </span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_ng_input_stream_mass_ww_kg" value='0.0'/>+/-
+        <span class="projectedParams"><span class="tooltip-wrap">ng input stream = <span class="tooltip-content">[kg or L] of natural gas per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_ng_input_stream_mass_ww_kg" value='0.0'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_ng_input_stream_mass_ww_kg" value='0'/><br/>
-        <span class="projectedParams">electricity = </span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_electricity_requirements" value='0.0'/>+/-
+        <span class="projectedParams"><span class="tooltip-wrap">electricity = <span class="tooltip-content">[kWh] of electricity per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_electricity_requirements" value='0.0'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_electricity_requirements" value='0.0'/><br/>
-        <span class="projectedParams">electricity credit = </span><input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_electricity_credit" value='0.0'/>+/-
+        <span class="projectedParams"><span class="tooltip-wrap">electricity credit = <span class="tooltip-content">[kWh] of electricity gained per kg ethanol produced</span></span>
+          <input placeholder="value" name='iHG-Projected' type='text' id="iHG-Projected_electricity_credit" value='0.0'/><span class="tooltip-wrap">+/-<span class="tooltip-content">uncertainty percentage</span></span>
           <input placeholder="error" name='iHG-Projected' type='text' id="iHG-Projected_error_electricity_credit" value='0.0'/><br/></div>
 
       <div id="chart"></div>
