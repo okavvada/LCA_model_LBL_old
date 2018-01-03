@@ -1,3 +1,9 @@
+var analysis_params = {
+    'time_horizon': 100,
+    'facility_electricity': 'US',
+    'combustion_direct_ghg': 0
+    }
+
 var common_params = {
     'etoh_distribution_truck': {
         'low': 45,
@@ -189,6 +195,13 @@ var other_params = {
 var input_dict = {};
 input_dict.other_params = other_params;
 input_dict.common_params = common_params;
+input_dict.analysis_params = analysis_params;
+
+
+function electricitySelect() {
+  var myList=document.getElementById("myList");
+  input_dict.facility_electricity = myList.options[myList.selectedIndex].value;
+}
 
 $("input").change(function(event) {
     to_replace = event.target.name + '_';
@@ -200,18 +213,18 @@ $("input").change(function(event) {
         common_params[key]['low'] = (1 - parseFloat(document.getElementById(error_id).value)) * common_params[key]['avg'];
         common_params[key]['high'] = (1 + parseFloat(document.getElementById(error_id).value)) * common_params[key]['avg'];
       }
+      else if (key in analysis_params){
+        analysis_params[key] = parseFloat(document.getElementById(event.target.id).value);
+      }
       else {
         other_params[event.target.name][key]['avg'] = parseFloat(document.getElementById(event.target.id).value);
         error_id = event.target.name + '_error_' + key
         other_params[event.target.name][key]['low'] = (1 - parseFloat(document.getElementById(error_id).value)) * other_params[event.target.name][key]['avg'];
         other_params[event.target.name][key]['high'] = (1 + parseFloat(document.getElementById(error_id).value)) * other_params[event.target.name][key]['avg'];
       }}
-
-    else {
+    else if (event.target.placeholder == "error") {
       to_replace = event.target.name + '_error_';
       key = event.target.id.replace(to_replace, '');
-      console.log(key);
-      console.log('error');
       if (key in common_params) {
         error_id = 'common_error_' + key
         target_id = error_id.replace('_error', '')
@@ -227,8 +240,7 @@ $("input").change(function(event) {
 
     input_dict.other_params = other_params;
     input_dict.common_params = common_params;
-
-    return input_dict 
+    input_dict.analysis_params = analysis_params;
   });
 
 var run_GHG_button = document.getElementById('buttonGHG');

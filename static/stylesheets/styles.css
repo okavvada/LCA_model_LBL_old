@@ -31,7 +31,7 @@
         top: 55px;
         left: 10px;
         width: 280px;
-        height: 200px;
+        height: 255px;
       }
 
     #currentbox {
@@ -90,7 +90,7 @@
 
     #chart {
       position: absolute;
-      top: 300px;
+      top: 330px;
       left: 150px;
     }
 
@@ -120,6 +120,10 @@
       padding-left: 3px;
     }
 
+    form {
+      padding-bottom: .2em;
+    }
+
     #set_value{
       border: 1px solid #abadb2;
     }
@@ -145,3 +149,6 @@
       display: block;
       border-radius:10px;
     }
+
+
+   
