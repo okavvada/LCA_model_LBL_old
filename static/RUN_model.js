@@ -88,6 +88,16 @@ var other_params = {
             'low': 0,
             'avg': 0,
             'high': 0
+        },
+        'biorefinery_direct_withdrawal': {
+            'low': 5.31,
+            'avg': 5.9,
+            'high': 6.49
+        },
+        'biorefinery_direct_consumption': {
+            'low': 5.76,
+            'avg': 6.4,
+            'high': 7.04
         }
     },
     "iHG-Current": {
@@ -107,9 +117,9 @@ var other_params = {
             'high': 5.17
         },
         'hcl.kg': {
-            'low': 0.16,
+            'low': 0.18,
             'avg': 0.18,
-            'high': 0.2
+            'high': 0.18
         },
         'electricity_credit': {
             'low': 0.8,
@@ -135,6 +145,16 @@ var other_params = {
             'low': 0,
             'avg': 0,
             'high': 0
+        },
+        'biorefinery_direct_withdrawal': {
+            'low': 5.76,
+            'avg': 6.4,
+            'high': 7.04
+        },
+        'biorefinery_direct_consumption': {
+            'low': 5.76,
+            'avg': 6.4,
+            'high': 7.04
         }
     },
     "waterwash": {
@@ -187,6 +207,16 @@ var other_params = {
             'low': 0,
             'avg': 0,
             'high': 0
+        },
+        'biorefinery_direct_withdrawal': {
+            'low': 0.9,
+            'avg': 1.3,
+            'high': 1.7
+        },
+        'biorefinery_direct_consumption': {
+            'low': 0.9,
+            'avg': 1.3,
+            'high': 1.7
         }
     }
 };
@@ -293,10 +323,12 @@ for (i = 0; i < acc.length; i++) {
     });
 }
 
-// RUN FOR GHG EMISSIONS
 
-run_GHG_button.addEventListener('click', function() {
+$("var").click(function(event) {
+
     var plot_data = [];
+    input_dict.model = event.target.id
+    console.log(event.target.id)
     $.ajax({
       url: "/ParametersList",
       type: 'POST',
@@ -336,13 +368,21 @@ run_GHG_button.addEventListener('click', function() {
 
           plot_data.push(trace);
         }
+        if (input_dict.model == 'buttonGHG'){
+            y_axis_label = 'kg CO<sub>2</sub>(eq) per MJ';
+        }
+
+        else{
+            y_axis_label = 'Water Consumption [liters per MJ]';
+        }
+
 
         var layout = {barmode: 'relative', height: 400, width: 700, margin: {l: 50,
                                                                              r: 50,
                                                                              b: 50,
                                                                              t: 50,
                                                                              pad: 2},
-                      yaxis: {title: 'kg CO2 / kg ethanol',
+                      yaxis: {title: y_axis_label,
                               titlefont: {
                                 family: 'Arial, sans-serif',
                                 size: 16,

@@ -12,8 +12,8 @@
       position: absolute;
       top: 8px;
       left: 350px;
-      padding-top: 12px;
-      padding-bottom: 12px;
+      padding-top: 16px;
+      padding-bottom: 15px;
       background-color: #eee;
       border: 2px solid #e6e9ed;
       border-radius: 10px;
@@ -22,6 +22,8 @@
       cursor: pointer;
       text-align: center;
       width: 160px;
+      font-weight: bold;
+      font-size: 18px;
       transition: 0.4s;
     }
 
@@ -34,9 +36,13 @@
       border-radius: 10px;
       margin-top: 1px;
       box-shadow: 1px 2px 2px #a1a4a8;
+      padding-top: 5px;
+      padding-bottom: 5px;
       cursor: pointer;
       text-align: center;
       width: 160px;
+      font-weight: bold;
+      font-size: 18px;
       transition: 0.4s;
     }
 
@@ -44,6 +50,8 @@
       position: absolute;
       top: 8px;
       left: 710px;
+      padding-top: 5px;
+      padding-bottom: 5px;
       background-color: #eee;
       border: 2px solid #e6e9ed;
       border-radius: 10px;
@@ -52,21 +60,15 @@
       cursor: pointer;
       text-align: center;
       width: 160px;
+      font-weight: bold;
+      font-size: 18px;
       transition: 0.4s;
     }
 
     #chart {
-      position: absolute;
-      top: 65px;
-      left: 400px;
-    }
-
-    .controlText {
-      color: #2F3030;
-      font-weight: bold;
-      font-size: 18px;
-      line-height: 25px;
-      width: 160px;
+      position: fixed;
+      top: 120px;
+      left: 430px;
     }
 
 
