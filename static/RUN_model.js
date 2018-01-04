@@ -344,7 +344,8 @@ $("var").click(function(event) {
                 data[processes[i]]['iHG-Current'],
                 data[processes[i]]['iHG-Projected']],
             name: processes[i],
-            type: 'bar'
+            type: 'bar',
+            width: 0.7
           }}
           else {
             var trace = {
@@ -354,6 +355,7 @@ $("var").click(function(event) {
                 data[processes[i]]['iHG-Projected']],
             name: processes[i],
             type: 'bar',
+            width: 0.7,
             error_y: {
               type: 'data',
               symmetric: false,
@@ -372,7 +374,7 @@ $("var").click(function(event) {
             y_axis_label = 'kg CO<sub>2</sub>(eq) per MJ';
         }
 
-        else{
+        else {
             y_axis_label = 'Water Consumption [liters per MJ]';
         }
 
@@ -380,9 +382,14 @@ $("var").click(function(event) {
         var layout = {barmode: 'relative', height: 400, width: 700, margin: {l: 50,
                                                                              r: 50,
                                                                              b: 50,
-                                                                             t: 50,
-                                                                             pad: 2},
+                                                                             t: 20},
                       yaxis: {title: y_axis_label,
+                              titlefont: {
+                                family: 'Arial, sans-serif',
+                                size: 16,
+                                color: 'black'
+                              }},
+                      xaxis: {title: 'Pretreatment methods',
                               titlefont: {
                                 family: 'Arial, sans-serif',
                                 size: 16,
@@ -390,7 +397,7 @@ $("var").click(function(event) {
                               }},
                       legend: {traceorder: 'reversed'}
                               
-      };
+            };
 
           Plotly.newPlot('chart', plot_data, layout);
 
