@@ -1,155 +1,155 @@
 #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
+  height: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
-    #buttonGHG {
-      position: absolute;
-      top: 8px;
-      left: 350px;
-      padding-top: 16px;
-      padding-bottom: 15px;
-      background-color: #eee;
-      border: 2px solid #e6e9ed;
-      border-radius: 10px;
-      margin-top: 1px;
-      box-shadow: 1px 2px 2px #a1a4a8;
-      cursor: pointer;
-      text-align: center;
-      width: 160px;
-      font-weight: bold;
-      font-size: 18px;
-      transition: 0.4s;
-    }
+#buttonGHG {
+  position: absolute;
+  top: 8px;
+  left: 350px;
+  padding-top: 16px;
+  padding-bottom: 15px;
+  background-color: #eee;
+  border: 2px solid #e6e9ed;
+  border-radius: 10px;
+  margin-top: 1px;
+  box-shadow: 1px 2px 2px #a1a4a8;
+  cursor: pointer;
+  text-align: center;
+  width: 160px;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.4s;
+}
 
-    #buttonConsWater {
-      position: absolute;
-      top: 8px;
-      left: 530px;
-      background-color: #eee;
-      border: 2px solid #e6e9ed;
-      border-radius: 10px;
-      margin-top: 1px;
-      box-shadow: 1px 2px 2px #a1a4a8;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      cursor: pointer;
-      text-align: center;
-      width: 160px;
-      font-weight: bold;
-      font-size: 18px;
-      transition: 0.4s;
-    }
+#buttonConsWater {
+  position: absolute;
+  top: 8px;
+  left: 530px;
+  background-color: #eee;
+  border: 2px solid #e6e9ed;
+  border-radius: 10px;
+  margin-top: 1px;
+  box-shadow: 1px 2px 2px #a1a4a8;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+  text-align: center;
+  width: 160px;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.4s;
+}
 
-    #buttonWithWater {
-      position: absolute;
-      top: 8px;
-      left: 710px;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      background-color: #eee;
-      border: 2px solid #e6e9ed;
-      border-radius: 10px;
-      margin-top: 1px;
-      box-shadow: 1px 2px 2px #a1a4a8;
-      cursor: pointer;
-      text-align: center;
-      width: 160px;
-      font-weight: bold;
-      font-size: 18px;
-      transition: 0.4s;
-    }
+#buttonWithWater {
+  position: absolute;
+  top: 8px;
+  left: 710px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: #eee;
+  border: 2px solid #e6e9ed;
+  border-radius: 10px;
+  margin-top: 1px;
+  box-shadow: 1px 2px 2px #a1a4a8;
+  cursor: pointer;
+  text-align: center;
+  width: 160px;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.4s;
+}
 
-    #chart {
-      position: fixed;
-      top: 120px;
-      left: 430px;
-    }
-
-
-    h3 {
-      margin:0px;
-    }
-
-    h4 {
-      margin:2px;
-      text-align: center;
-      text-decoration: underline;
-    }
-
-    input {
-      width: 35px;
-      margin-right:10px;
-      margin-bottom:5px;
-      padding-left: 3px;
-    }
-
-    form {
-      padding-bottom: .2em;
-    }
-
-    #set_value{
-      border: 1px solid #abadb2;
-    }
-
-    .tooltip-wrap {
-      position: relative;
-    }
-    .tooltip-content {
-      display: none;
-      position: absolute;
-      background-color: #d7afed;
-      padding: .5em;
-      float:left;
-      z-index: 99;
-      margin-right:-45em;
-      margin-left:1em;
-      color: #000;
-      border: 1px solid #000;
-      
-    }
-
-    .tooltip-wrap:hover .tooltip-content {
-      display: block;
-      border-radius:10px;
-    }
+#chart {
+  position: fixed;
+  top: 120px;
+  left: 430px;
+}
 
 
-    /* Style the buttons that are used to open and close the accordion panel */
-    .accordion {
-        position: relative;
-        top: 70px;
-        left: 10px;
-        background-color: #eee;
-        outline: 1px solid #707070;
-        color: #444;
-        font-size: 14px;
-        font-weight: bold;
-        cursor: pointer;
-        padding: 10px;
-        width: 310px;
-        text-align: left;
-        transition: 0.4s;
-    }
+h3 {
+  margin:0px;
+}
 
-    /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-    .active, .accordion:hover {
-        background-color: #ccc;
-    }
+h4 {
+  margin:2px;
+  text-align: center;
+  text-decoration: underline;
+}
 
-    /* Style the accordion panel. Note: hidden by default */
-    .panel {
-        position: relative;
-        top: 70px;
-        left: 10px;
-        padding: 10px;
-        background-color: white;
-        outline: 1px solid #707070;
-        width: 290px;
-        display: none;
-    }
+input {
+  width: 35px;
+  margin-right:10px;
+  margin-bottom:5px;
+  padding-left: 3px;
+}
+
+form {
+  padding-bottom: .2em;
+}
+
+#set_value{
+  border: 1px solid #abadb2;
+}
+
+.tooltip-wrap {
+  position: relative;
+}
+.tooltip-content {
+  display: none;
+  position: absolute;
+  background-color: #d7afed;
+  padding: .5em;
+  float:left;
+  z-index: 99;
+  margin-right:-45em;
+  margin-left:1em;
+  color: #000;
+  border: 1px solid #000;
+  
+}
+
+.tooltip-wrap:hover .tooltip-content {
+  display: block;
+  border-radius:10px;
+}
+
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+  position: relative;
+  top: 70px;
+  left: 10px;
+  background-color: #eee;
+  outline: 1px solid #707070;
+  color: #444;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px;
+  width: 310px;
+  text-align: left;
+  transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .accordion:hover {
+  background-color: #ccc;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+  position: relative;
+  top: 70px;
+  left: 10px;
+  padding: 10px;
+  background-color: white;
+  outline: 1px solid #707070;
+  width: 290px;
+  display: none;
+}
