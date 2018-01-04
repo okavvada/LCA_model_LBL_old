@@ -120,36 +120,36 @@
     }
 
 
-/* Style the buttons that are used to open and close the accordion panel */
-.accordion {
-    position: relative;
-    top: 70px;
-    left: 10px;
-    background-color: #eee;
-    outline: 1px solid #707070;
-    color: #444;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 10px;
-    width: 310px;
-    text-align: left;
-    transition: 0.4s;
-}
+    /* Style the buttons that are used to open and close the accordion panel */
+    .accordion {
+        position: relative;
+        top: 70px;
+        left: 10px;
+        background-color: #eee;
+        outline: 1px solid #707070;
+        color: #444;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 10px;
+        width: 310px;
+        text-align: left;
+        transition: 0.4s;
+    }
 
-/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.active, .accordion:hover {
-    background-color: #ccc;
-}
+    /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+    .active, .accordion:hover {
+        background-color: #ccc;
+    }
 
-/* Style the accordion panel. Note: hidden by default */
-.panel {
-    position: relative;
-    top: 70px;
-    left: 10px;
-    padding: 10px;
-    background-color: white;
-    outline: 1px solid #707070;
-    width: 290px;
-    display: none;
-}
+    /* Style the accordion panel. Note: hidden by default */
+    .panel {
+        position: relative;
+        top: 70px;
+        left: 10px;
+        padding: 10px;
+        background-color: white;
+        outline: 1px solid #707070;
+        width: 290px;
+        display: none;
+    }
