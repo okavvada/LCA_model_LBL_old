@@ -6,7 +6,7 @@ from sys import stderr
 # FLASK_DEBUG=1 FLASK_APP=server.py flask run
 import flask
 from flask import Flask, request
-from Final_GHG_model import *
+from Final_Impact_Model import *
 
 
 app = Flask(__name__)
@@ -18,10 +18,10 @@ def root():
 @app.route("/ParametersList", methods = ['POST'])
 def get_results2():
   all_data = request.get_json()
-  return flask.jsonify(getMyPlotJSON(all_data['common_params'], all_data['other_params'], all_data['analysis_params']))
+  return flask.jsonify(getMyPlotJSON(all_data['common_params'], all_data['other_params'], all_data['analysis_params'], all_data['model']))
 
-def getMyPlotJSON(common_params, other_params, analysis_params):
-  data = FinalGHGModel(common_params, other_params, analysis_params)
+def getMyPlotJSON(common_params, other_params, analysis_params, model):
+  data = FinalImpactModel(common_params, other_params, analysis_params, model)
   return data.to_dict()
 
 

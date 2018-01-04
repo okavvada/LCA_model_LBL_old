@@ -213,6 +213,37 @@ def TotalGHGEmissions(io_data, y, cost, biorefinery_direct_ghg, combustion_direc
     return io_ghg_results_kg_df
 
 
+def TotalWaterImpacts(io_data, y, cost, water_consumption, biorefinery_direct_consumption): 
+    # Returns a vector of of all water consumption in the form of liters of water
+    #
+    # Args:
+    #  A: input-output vector in dollar ratios
+    #  y: direct requirements vector in dollars
+    #  water.consumption.filepath: filepath to csv file containing liters 
+    #   water consumed/kg output for each sector
+    #  biorefinery.direct.water.consumption: liters water consumed directy at the 
+    #   biorefinery
+    # Returns:
+    #  The net water consumption (liters water) for the product life cycle by sector
+    A = io_data.drop(['products'],1).values.T
+    y_array = []
+    cost_array = []
+    water_consumption_array = []
+    for item in io_data['products']:
+        y_array.append(y[item])
+        cost_array.append(cost[item])
+        water_consumption_array.append(water_consumption[item])
+
+    io_water_consumption_results_kg = IOSolutionPhysicalUnits(A, y_array, cost_array) * water_consumption_array
+
+    results_liter_water_consumption = np.append(io_water_consumption_results_kg, biorefinery_direct_consumption)
+    rownames = np.append(io_data.products.values, 'direct')
+    io_water_results_kg_df = pd.DataFrame(results_liter_water_consumption, columns = ['liter_results_kg'])
+    io_water_results_kg_df['products'] = rownames
+
+    return io_water_results_kg_df
+
+
 def AggregateResults(m, results_kg_co2e, selectivity, scenario):
     # Category 1 : "Farming" 
     m[scenario][selectivity].loc['Farming'] = results_kg_co2e["farmedstover.kg"]
