@@ -25,6 +25,18 @@ Cellulosic biofuels are a promising option to meet a fraction of the liquid tran
 
 ## Input Data
 
+###Greenhouse Gas Model
+- input-output cost data (`io_table_dollars.csv`)
+- cost data (`impact_vectors/cost_impact.csv`)
+- GHG emission impacts (`impact_vectors/co2_impact.csv`, `impact_vectors/ch4_impact.csv`, `impact_vectors/n2o_impact.csv`)
+
+###Water Model
+- input-output cost data (`io_table_dollars.csv`)
+- cost data (`impact_vectors_water/cost_impact.csv`)
+- Water consumption impacts (`impact_vectors_water/water_consumption.csv`)
+- Water withdrawal (`impact_vectors_water/water_withdrawal.csv`)
+
+## Modeling Parameters
 
 
 ## Algorithmic Process
