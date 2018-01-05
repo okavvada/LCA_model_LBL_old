@@ -15,3 +15,23 @@ To run a local instance of the webtool:
 - flask
 - pandas
 - numpy
+
+
+## Background
+
+
+
+## Input Data
+
+
+
+## Algorithmic Process
+
+
+
+## Outputs
+
+
+
+## Webtool
+
