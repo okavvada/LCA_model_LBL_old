@@ -11,10 +11,15 @@ To run a local instance of the webtool:
 - Navigate to `localhost:5000`
 - and Done! Easy!
 
-## Dependencies
-- flask
-- pandas
-- numpy
+## Model Dependencies
+
+The core of the LCA-TEA model is written in Python 2.7. Below are the dependencies for the core model that can be easily installed using `pip install`.
+
+- [Python](https://www.python.org/download/releases/2.7/)
+- [Numpy](https://docs.scipy.org/doc/numpy-1.10.1/user/install.html)
+- [Pandas](http://pandas.pydata.org/pandas-docs/stable/install.html)
+- [Flask](http://flask.pocoo.org/docs/0.12/installation/)
+
 
 
 ## Background
