@@ -119,15 +119,13 @@ def FinalImpactModel(SP_common_params, SP_other_params, SP_analysis_params, mode
 	aggregated_data_avg = m['avg'][['waterwash', 'iHG-Current', 'iHG-Projected']].T
 	aggregated_data_low = m['low'][['waterwash', 'iHG-Current', 'iHG-Projected']].T
 	aggregated_data_high = m['high'][['waterwash', 'iHG-Current', 'iHG-Projected']].T
+
 	aggregated_data_avg_pos = aggregated_data_avg.drop(['electricity_credit'],1)
-	# aggregated_data_low_pos = aggregated_data_low.drop(['electricity_credit'],1)
-	# aggregated_data_high_pos = aggregated_data_high.drop(['electricity_credit'],1)
 
 	aggregated_data_avg_plot = aggregated_data_avg[list(reversed(aggregated_data_avg.columns.values))]
 
-	error_min = (aggregated_data_avg_pos.sum(axis=1).values - aggregated_data_low.sum(axis=1))
+	error_min = (aggregated_data_low.sum(axis=1) - aggregated_data_avg_pos.sum(axis=1).values)*(-1)
 	error_max = (aggregated_data_high.sum(axis=1) - aggregated_data_avg_pos.sum(axis=1)).values
-	plt_errors = [error_min, error_max]
 
 	aggregated_data_avg_plot['error_bars_min'] = error_min
 	aggregated_data_avg_plot['error_bars_max'] = error_max
