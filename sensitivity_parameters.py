@@ -60,9 +60,9 @@ other_params = {
             'high': 5.17
         },
         'electricity_credit': {
-            'low': 0,
-            'avg': 0,
-            'high': 0
+            'low': 1.4,
+            'avg': 0.85,
+            'high': 0.1
         },
         'csl.kg': {
             'low': 0.06,
@@ -122,9 +122,9 @@ other_params = {
             'high': 0.18
         },
         'electricity_credit': {
-            'low': 0.8,
-            'avg': 0.85,
-            'high': 0.9
+            'low': 0.1,
+            'avg': 0.1,
+            'high': 0.1
         },
         'csl.kg': {
             'low': 0.05,

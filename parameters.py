@@ -5,7 +5,7 @@ cost_impact_water_path = "io_tables/impact_vectors_water/cost_impact.csv"
 selectivity = ["iHG-Projected", "iHG-Current", "waterwash"]
 # Three ranges for sensitivity:  (a) low; (b) avg; and (c) high  
 scenario_range = ["low", "avg", 'high']
-processes = ["Farming", "Transportation", "Petroleum", "Electricity", "Chemicals_And_Fertilizers", "Direct", "Other"]
+processes = ["electricity_credit", "Farming", "Transportation", "Petroleum", "Electricity", "Chemicals_And_Fertilizers", "Direct", "Other"]
 energy_content_path = "unit_conversions_and_mw/energy_content_by_mass_and_volume.csv"
 fuel_aliases_path = "unit_conversions_and_mw/fuel_aliases.csv"
 co2_filepath = "io_tables/impact_vectors/co2_impact.csv"

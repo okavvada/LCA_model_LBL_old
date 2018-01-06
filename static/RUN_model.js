@@ -60,9 +60,9 @@ var other_params = {
             'high': 5.17
         },
         'electricity_credit': {
-            'low': 0,
-            'avg': 0,
-            'high': 0
+            'low': 1.4,
+            'avg': 0.85,
+            'high': 0.1
         },
         'csl.kg': {
             'low': 0.06,
@@ -122,9 +122,9 @@ var other_params = {
             'high': 0.18
         },
         'electricity_credit': {
-            'low': 0.8,
-            'avg': 0.85,
-            'high': 0.9
+            'low': 0.5,
+            'avg': 0.1,
+            'high': 0.01
         },
         'csl.kg': {
             'low': 0.05,
@@ -202,11 +202,6 @@ var other_params = {
             'low': 0.002,
             'avg': 0.002,
             'high': 0.002
-        },
-        'electricity_credit': {
-            'low': 0,
-            'avg': 0,
-            'high': 0
         },
         'biorefinery_direct_withdrawal': {
             'low': 0.9,
@@ -374,8 +369,12 @@ $("var").click(function(event) {
             y_axis_label = 'kg CO<sub>2</sub>(eq) per MJ';
         }
 
-        else {
-            y_axis_label = 'Water Consumption [liters per MJ]';
+        else if (input_dict.model == 'buttonConsWater'){
+            y_axis_label = 'Water Consumption [Liters per MJ]';
+        }
+
+        else if (input_dict.model == 'buttonWithWater'){
+            y_axis_label = 'Water Withdrawal [Liters per MJ]';
         }
 
 

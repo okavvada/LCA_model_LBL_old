@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import parameters as P
 import helper_functions as hf
-import matplotlib.pyplot as plt
+
 
 io_data_GHG = pd.read_csv(P.io_table_dollars_path)
 cost_GHG = hf.csv_dict_list(P.cost_impact_path)
@@ -15,7 +15,7 @@ etoh_feed_stream_mass_kg = 1
 
 m2 = {} 
 for scenario in P.scenario_range:
-    new_data = np.zeros([7,3])
+    new_data = np.zeros([8,3])
     m2[scenario] = pd.DataFrame(new_data, columns=P.selectivity, index=P.processes)
 
 def FinalImpactModel(SP_common_params, SP_other_params, SP_analysis_params, model):
@@ -29,8 +29,10 @@ def FinalImpactModel(SP_common_params, SP_other_params, SP_analysis_params, mode
 
 	m = dict(m2)
 	y = {}
+	y_cred = {}
 	for item in cost.keys():
 	    y.update({item:0})
+	    y_cred.update({item:0})
 
 	for selectivity in P.selectivity:
 	    for scenario in P.scenario_range:
@@ -62,6 +64,10 @@ def FinalImpactModel(SP_common_params, SP_other_params, SP_analysis_params, mode
 			        SP_other_params[selectivity]['electricity_requirements'][scenario]))
 			y["hcl.kg"] = cost["hcl.kg"] * SP_other_params[selectivity]['hcl.kg'][scenario]
 
+			y_cred["electricity.{}.kWh".format(SP_analysis_params['facility_electricity'])] = -(
+							            cost["electricity.{}.kWh".format(SP_analysis_params['facility_electricity'])] * (
+											SP_other_params[selectivity]['electricity_credit'][scenario]))
+
 			biorefinery_direct_ghg = hf.FuelCO2kg(hf.FuelConvertMJ(
 			        SP_other_params[selectivity]['ng_input_stream_mass_ww_kg'][scenario],"naturalgas","kg"), "naturalgas")
 
@@ -69,13 +75,16 @@ def FinalImpactModel(SP_common_params, SP_other_params, SP_analysis_params, mode
 
 				results_kg_co2e = hf.TotalGHGEmissions(io_data, y, cost, 
 				                                       biorefinery_direct_ghg, SP_analysis_params['combustion_direct_ghg'], SP_analysis_params['time_horizon'])
+        
+				results_kg_co2e_credit = hf.TotalGHGEmissions(io_data, y_cred, cost, 
+		                                                      biorefinery_direct_ghg, SP_analysis_params['combustion_direct_ghg'],
+		                                                      SP_analysis_params['time_horizon'])
 
 				results_kg_co2e_dict = results_kg_co2e.set_index('products')['ghg_results_kg'].to_dict()
 				hf.AggregateResults(m, results_kg_co2e_dict, selectivity, scenario)
 				m[scenario][selectivity] = m[scenario][selectivity] * 1000/27 # converting kg per kg results to g per MJ
-				eletricity_creds_avg = [0, -1.25, -15.22]
-				eletricity_creds_low = [0, -9.5, -25.54]
-				eletricity_creds_high = [0, -0.78, -2.1]
+				m[scenario][selectivity].loc['electricity_credit'] = (results_kg_co2e_credit[results_kg_co2e_credit['products'] == 
+                                                						'electricity.US.kWh']['ghg_results_kg'].iloc[0] * 1000/27)
 
 
 			elif model == 'buttonConsWater':
@@ -83,39 +92,40 @@ def FinalImpactModel(SP_common_params, SP_other_params, SP_analysis_params, mode
 				results_kg_co2e = hf.TotalWaterImpacts(io_data, y, cost, 
 			                                       water_consumption, SP_other_params[selectivity]['biorefinery_direct_consumption'][scenario])
 
+				results_kg_co2e_credit = hf.TotalWaterImpacts(io_data, y_cred, cost, 
+		                                                      water_consumption, SP_other_params[selectivity]['biorefinery_direct_consumption'][scenario])
+
 				results_kg_co2e_dict = results_kg_co2e.set_index('products')['liter_results_kg'].to_dict()
 				hf.AggregateResults(m, results_kg_co2e_dict, selectivity, scenario)
 				m[scenario][selectivity] = m[scenario][selectivity]/27 # converting kg per kg results to g per MJ
-				eletricity_creds_avg = [0, -0.006, -0.08]
-				eletricity_creds_low = [0, -0.009, -0.09]
-				eletricity_creds_high = [0, -0.005, -0.06]
+				m[scenario][selectivity].loc['electricity_credit'] = (results_kg_co2e_credit[results_kg_co2e_credit['products'] == 
+                                                						'electricity.US.kWh']['liter_results_kg'].iloc[0]/27)
 
 			elif model == 'buttonWithWater':
 
 				results_kg_co2e = hf.TotalWaterImpacts(io_data, y, cost, 
 			                                       water_withdrawal, SP_other_params[selectivity]['biorefinery_direct_withdrawal'][scenario])
 
+				results_kg_co2e_credit = hf.TotalWaterImpacts(io_data, y_cred, cost, 
+		                                                      water_consumption, SP_other_params[selectivity]['biorefinery_direct_consumption'][scenario])
+
 				results_kg_co2e_dict = results_kg_co2e.set_index('products')['liter_results_kg'].to_dict()
 				hf.AggregateResults(m, results_kg_co2e_dict, selectivity, scenario)
 				m[scenario][selectivity] = m[scenario][selectivity]/27 # converting kg per kg results to g per MJ
-				eletricity_creds_avg = [0, -0.017, -0.22]
-				eletricity_creds_low = [0, -0.022, -0.23]
-				eletricity_creds_high = [0, -0.01, -0.20]
+				m[scenario][selectivity].loc['electricity_credit'] = (results_kg_co2e_credit[results_kg_co2e_credit['products'] == 
+                                                						'electricity.US.kWh']['liter_results_kg'].iloc[0]/27)
 
 
 	aggregated_data_avg = m['avg'][['waterwash', 'iHG-Current', 'iHG-Projected']].T
 	aggregated_data_low = m['low'][['waterwash', 'iHG-Current', 'iHG-Projected']].T
 	aggregated_data_high = m['high'][['waterwash', 'iHG-Current', 'iHG-Projected']].T
-	aggregated_data_avg['electricity_credit'] = eletricity_creds_avg
-	aggregated_data_low['electricity_credit'] = eletricity_creds_low
-	aggregated_data_high['electricity_credit'] = eletricity_creds_high
 	aggregated_data_avg_pos = aggregated_data_avg.drop(['electricity_credit'],1)
-	aggregated_data_low_pos = aggregated_data_low.drop(['electricity_credit'],1)
-	aggregated_data_high_pos = aggregated_data_high.drop(['electricity_credit'],1)
+	# aggregated_data_low_pos = aggregated_data_low.drop(['electricity_credit'],1)
+	# aggregated_data_high_pos = aggregated_data_high.drop(['electricity_credit'],1)
 
 	aggregated_data_avg_plot = aggregated_data_avg[list(reversed(aggregated_data_avg.columns.values))]
 
-	error_min = (aggregated_data_low.sum(axis=1) - aggregated_data_avg_pos.sum(axis=1)).values*(-1)
+	error_min = (aggregated_data_avg_pos.sum(axis=1).values - aggregated_data_low.sum(axis=1))
 	error_max = (aggregated_data_high.sum(axis=1) - aggregated_data_avg_pos.sum(axis=1)).values
 	plt_errors = [error_min, error_max]
 
