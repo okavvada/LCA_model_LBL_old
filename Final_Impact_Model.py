@@ -17,6 +17,21 @@ for scenario in P.scenario_range:
     m2[scenario] = pd.DataFrame(new_data, columns=P.selectivity, index=P.processes)
 
 def FinalImpactModel(SP_common_params, SP_other_params, SP_analysis_params, model):
+	# Returns a dataframe of of all GHG emissions in the form of kg CO2e per MJ enthanol  or 
+	# water impacts in the form of Liters per MJ enthanol per process
+    #
+    # Args:
+    #  SP_common_params: common parameters dictionary
+    #  SP_other_params: process specific parameters dictionary
+    #  SP_analysis_params: analysis parameters dictionary
+    #  model: string refering to whether the GHG model or the water model is run. Options are:
+    #  'buttonGHG', 'buttonConsWater', 'buttonWithWater' for the GHG model, the water consumption model and
+    #  the withdrawal model respectively
+    
+    # Returns:
+    #  The net GHG emissions (kg CO2e) for the product life cycle by sector for model = 'buttonGHG'
+    #  The net consumption water impacts (liters) for the product life cycle by sector for model = 'buttonConsWater'
+    #  The net withdrawal water impacts (liters) for the product life cycle by sector for model = 'buttonWithWater'
 	if model == 'buttonGHG':
 		io_data = io_data_GHG
 
