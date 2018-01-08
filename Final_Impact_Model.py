@@ -116,7 +116,7 @@ def FinalImpactModel(SP_common_params, SP_other_params, SP_analysis_params, mode
 
 				results_water_dict = results_water.set_index('products')['liter_results_kg'].to_dict()
 				hf.AggregateResults(m, results_water_dict, selectivity, scenario)
-				m[scenario][selectivity] = m[scenario][selectivity]/27 # converting kg per kg results to g per MJ
+				m[scenario][selectivity] = m[scenario][selectivity]/27 # converting Liters per kg results to Liters per MJ
 				m[scenario][selectivity].loc['electricity_credit'] = (results_kg_co2e_credit[results_kg_co2e_credit['products'] == 
                                                 						'electricity.US.kWh']['liter_results_kg'].iloc[0]/27)
 
