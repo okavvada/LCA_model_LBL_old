@@ -1,7 +1,5 @@
-io_table_dollars_path = "io_tables/io_table_dollars.csv"
-io_table_dollars_water_path = "io_tables/impact_vectors_water/io_table_dollars_water.csv"
-cost_impact_path = "io_tables/impact_vectors/cost_impact.csv"
-cost_impact_water_path = "io_tables/impact_vectors_water/cost_impact.csv"
+io_table_physicalunits_path = "io_tables/io_table_physicalunits.csv"
+io_table_physicalunits_water_path = "io_tables/io_table_physicalunits_water.csv"
 selectivity = ["iHG-Projected", "iHG-Current", "waterwash"]
 # Three ranges for sensitivity:  (a) low; (b) avg; and (c) high  
 scenario_range = ["low", "avg", 'high']

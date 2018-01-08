@@ -148,7 +148,7 @@ def GHGImpactVectorSum(time_horizon):
     return ghg_total_kg
 
 
-def IOSolutionCost(A, y):
+def IOSolution(A, y):
     # Solves for total requirements from each sector in cost
     #
     # Args:
@@ -163,22 +163,20 @@ def IOSolutionCost(A, y):
     return solution
 
 
-def IOSolutionPhysicalUnits(A, y, cost):
+def IOSolutionPhysicalUnits(A, y):
     # Solves for total requirements from each "sector" in physical units
     # 
     # Args:
     #  A: input-output vector
     #  y: direct requiremets vector
-    #  cost.vector.filepath: path to csv file containing cost vector
     #
     # Returns:
     #  The total (direct + indirect) requirements by sector in physical units
-    total_cost = IOSolutionCost(A, y)
-    total_inputs = total_cost / cost
+    total_inputs = IOSolution(A, y)
     return total_inputs
 
 
-def TotalGHGEmissions(io_data, y, cost, biorefinery_direct_ghg, combustion_direct_ghg, time_horizon):
+def TotalGHGEmissions(io_data, y, biorefinery_direct_ghg, combustion_direct_ghg, time_horizon):
     # Returns a vector of of all GHG emissions in the form of kg CO2e
     #
     # Args:
@@ -198,14 +196,13 @@ def TotalGHGEmissions(io_data, y, cost, biorefinery_direct_ghg, combustion_direc
     #   or there is net biogenic carbon sequestration
     # Returns:
     #  The net GHG emissions (kg CO2e) for the product life cycle by sector
+
     A = io_data.drop(['products'],1).values.T
     y_array = []
-    cost_array = []
     for item in io_data['products']:
         y_array.append(y[item])
-        cost_array.append(cost[item])
 
-    io_ghg_results_kg = IOSolutionPhysicalUnits(A, y_array, cost_array) * GHGImpactVectorSum(time_horizon)
+    io_ghg_results_kg = IOSolutionPhysicalUnits(A, y_array) * GHGImpactVectorSum(time_horizon)
     io_ghg_results_kg = np.append(io_ghg_results_kg,[biorefinery_direct_ghg, combustion_direct_ghg])
     rownames = np.append(io_data.products.values, ['direct', 'combustion'])
     io_ghg_results_kg_df = pd.DataFrame(io_ghg_results_kg, columns = ['ghg_results_kg'])
@@ -213,7 +210,7 @@ def TotalGHGEmissions(io_data, y, cost, biorefinery_direct_ghg, combustion_direc
     return io_ghg_results_kg_df
 
 
-def TotalWaterImpacts(io_data, y, cost, water_consumption, biorefinery_direct_consumption): 
+def TotalWaterImpacts(io_data, y, water_consumption, biorefinery_direct_consumption): 
     # Returns a vector of of all water consumption in the form of liters of water
     #
     # Args:
@@ -227,14 +224,12 @@ def TotalWaterImpacts(io_data, y, cost, water_consumption, biorefinery_direct_co
     #  The net water consumption (liters water) for the product life cycle by sector
     A = io_data.drop(['products'],1).values.T
     y_array = []
-    cost_array = []
     water_consumption_array = []
     for item in io_data['products']:
         y_array.append(y[item])
-        cost_array.append(cost[item])
         water_consumption_array.append(water_consumption[item])
 
-    io_water_consumption_results_kg = IOSolutionPhysicalUnits(A, y_array, cost_array) * water_consumption_array
+    io_water_consumption_results_kg = IOSolutionPhysicalUnits(A, y_array) * water_consumption_array
 
     results_liter_water_consumption = np.append(io_water_consumption_results_kg, biorefinery_direct_consumption)
     rownames = np.append(io_data.products.values, 'direct')
