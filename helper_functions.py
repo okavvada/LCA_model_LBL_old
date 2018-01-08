@@ -148,40 +148,27 @@ def GHGImpactVectorSum(time_horizon):
     return ghg_total_kg
 
 
-def IOSolution(A, y):
-    # Solves for total requirements from each sector in cost
+def IOSolutionPhysicalUnits(A, y):
+    # Solves for total requirements from each sector in in physical units
     #
     # Args:
-    #  A: input-output vector
+    #  A: input-output vector in physical units
     #  y: direct requirements vector
     # 
     # Returns:
-    #  The total (direct + indirect) monetary requirements by sector
+    #  The total (direct + indirect) requirements by sector
     num_sectors = A.shape[1] 
     I = np.eye(A.shape[1])
     solution = np.linalg.solve((I - A), y)
     return solution
 
 
-def IOSolutionPhysicalUnits(A, y):
-    # Solves for total requirements from each "sector" in physical units
-    # 
-    # Args:
-    #  A: input-output vector
-    #  y: direct requiremets vector
-    #
-    # Returns:
-    #  The total (direct + indirect) requirements by sector in physical units
-    total_inputs = IOSolution(A, y)
-    return total_inputs
-
-
 def TotalGHGEmissions(io_data, y, biorefinery_direct_ghg, combustion_direct_ghg, time_horizon):
     # Returns a vector of of all GHG emissions in the form of kg CO2e
     #
     # Args:
-    #  A: input-output vector in dollar ratios
-    #  y: direct requirements vector in dollars
+    #  A: input-output vector in physical units ratios
+    #  y: direct requirements vector in physical units
     #  co2.filepath: filepath to csv file containing kg CO2/kg output for 
     #   each sector
     #  ch4.filepath: filepath to csv file containing kg CH4/kg output for 
@@ -214,8 +201,8 @@ def TotalWaterImpacts(io_data, y, water_consumption, biorefinery_direct_consumpt
     # Returns a vector of of all water consumption in the form of liters of water
     #
     # Args:
-    #  A: input-output vector in dollar ratios
-    #  y: direct requirements vector in dollars
+    #  A: input-output vector in in physical units ratios
+    #  y: direct requirements vector in in physical units
     #  water.consumption.filepath: filepath to csv file containing liters 
     #   water consumed/kg output for each sector
     #  biorefinery.direct.water.consumption: liters water consumed directy at the 

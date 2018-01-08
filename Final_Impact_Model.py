@@ -34,10 +34,8 @@ def FinalImpactModel(SP_common_params, SP_other_params, SP_analysis_params, mode
 	    for scenario in P.scenario_range:
 			y["lysine.us.kg"] = (SP_other_params[selectivity]['chlys_amount'][scenario] * 
 								SP_common_params['chlys_percent'][scenario]) 
-			# 58% lysine + 42% ChOH for Chylys production (Stoichiometry) 
 			y["cholinium.hydroxide.kg"] = (SP_other_params[selectivity]['chlys_amount'][scenario] * 
 			                               SP_common_params['cholinium_percent'][scenario])  
-			# 58% lysine + 42% ChOH for Chylys production (Stoichiometry) 
 			y["cellulase.kg"] = SP_common_params['enzyme'][scenario]
 			y["csl.kg"] = SP_other_params[selectivity]['csl.kg'][scenario]
 			y["farmedstover.kg"] = SP_other_params[selectivity]['feedstock'][scenario]  
@@ -99,7 +97,7 @@ def FinalImpactModel(SP_common_params, SP_other_params, SP_analysis_params, mode
 			                                       water_withdrawal, SP_other_params[selectivity]['biorefinery_direct_withdrawal'][scenario])
 
 				results_kg_co2e_credit = hf.TotalWaterImpacts(io_data, y_cred,
-		                                                      water_consumption, SP_other_params[selectivity]['biorefinery_direct_consumption'][scenario])
+		                                                      water_withdrawal, SP_other_params[selectivity]['biorefinery_direct_consumption'][scenario])
 
 				results_water_dict = results_water.set_index('products')['liter_results_kg'].to_dict()
 				hf.AggregateResults(m, results_water_dict, selectivity, scenario)
