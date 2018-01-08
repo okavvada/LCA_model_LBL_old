@@ -129,7 +129,7 @@ def GHGImpactVectorSum(time_horizon):
     #  time.horizon: number of years used for time horizon of IPCC factors - 
     #   default is 100 years, can also to 20
     # Returns:
-    #  The total kg co2e/dollar for each sector in a vector form
+    #  The total kg co2e for each sector in a vector form
     filepaths = [P.co2_filepath, P.ch4_filepath, P.n2o_filepath]
     # IPCC 100-year multipliers for different GHGs to normalize to CO2e
     ipcc_values = {'ipcc_ch4_100': 28,  
