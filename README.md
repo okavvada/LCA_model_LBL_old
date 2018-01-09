@@ -3,17 +3,21 @@
 Refer to the [publication](http://pubs.acs.org/doi/abs/10.1021/acssuschemeng.7b02116) for more details on the modeling and life-cycle accounting process.
 
 ## Model Dependencies
-The core of the LCA-TEA model is written in Python 2.7. Below are the dependencies for the core model that can be easily installed using `pip`.
+The core of the LCA-TEA model is written in Python 2.7. The model can be run through docker. Docker will take care of the dependencies and will create an instance of the tool locally on your computer. Please install docker to be able to run the model.
 
+[Docker](https://docs.docker.com/docker-for-mac/install/)
+
+Below are the dependencies for the core model. You do not need to install them separately as they are installed for you through docker.
 - [Python](https://www.python.org/download/releases/2.7/)
 - [Numpy](https://docs.scipy.org/doc/numpy-1.10.1/user/install.html)
 - [Pandas](http://pandas.pydata.org/pandas-docs/stable/install.html)
 - [Flask](http://flask.pocoo.org/docs/0.12/installation/)
 
 ## Start a local instance
-After you have installed the dependencies you can run a local instance of the webtool. Follow these steps:
+The tool can be run through docker. After you have installed the dependencies you can run a local instance of the webtool. Follow these steps:
 - Clone the repo
 - Navigate your command prompt inside the repo
+- After you have installed docker, run `docker build -t flask-sample-one:latest .` and `docker run -d -p 5000:5000 flask-sample-one` in your command prompt
 - Start the server by running `FLASK_DEBUG=1 FLASK_APP=server.py flask run`
 - Navigate to `localhost:5000`
 - and Done! Easy!
@@ -25,13 +29,11 @@ Cellulosic biofuels are a promising option to meet a fraction of the liquid tran
 
 ## Input Data
 #### Greenhouse Gas Model
-- input-output cost data (`io_table_dollars.csv`)
-- cost data (`impact_vectors/cost_impact.csv`)
+- input-output data in physical units (`io_table_physicalunits.csv`)
 - GHG emission impacts (`impact_vectors/co2_impact.csv`, `impact_vectors/ch4_impact.csv`, `impact_vectors/n2o_impact.csv`)
 
 #### Water Model
-- input-output cost data (`io_table_dollars_water.csv`)
-- cost data (`impact_vectors_water/cost_impact.csv`)
+- input-output data in physical units (`io_table_physicalunits_water.csv`)
 - Water consumption impacts (`impact_vectors_water/water_consumption.csv`)
 - Water withdrawal impacts (`impact_vectors_water/water_withdrawal.csv`)
 
