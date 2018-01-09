@@ -216,7 +216,51 @@ var other_params = {
     }
 };
 
-var processes = ["electricity_credit", "Electricity", "Chemicals_And_Fertilizers", "Petroleum", "Transportation", "Farming", "Direct", "Other"]
+var processes = ["electricity_credit", "Electricity", "Chemicals_And_Fertilizers", "Petroleum", "Transportation", "Farming", "Direct", "Other"];
+
+$.getJSON( "static/data.js", function(input_json) {
+  console.log(input_json);
+ });
+
+document.getElementById("common_combustion_direct_ghg").value = analysis_params.combustion_direct_ghg;
+document.getElementById("common_enzyme").value = common_params.enzyme['avg'];
+document.getElementById("common_chlys_percent").value = common_params.chlys_percent['avg'];
+document.getElementById("common_cholinium_percent").value = common_params.cholinium_percent['avg'];
+document.getElementById("common_etoh_distribution_truck").value = common_params.etoh_distribution_truck['avg'];
+document.getElementById("common_etoh_distribution_rail").value = common_params.etoh_distribution_rail['avg'];
+document.getElementById("common_chlys_rail_mt_km").value = common_params.chlys_rail_mt_km['avg'];
+document.getElementById("common_chlys_flatbedtruck_mt_km").value = common_params.chlys_flatbedtruck_mt_km['avg'];
+
+document.getElementById("waterwash_chlys_amount").value = other_params['waterwash']['chlys_amount']['avg'];
+document.getElementById("waterwash_feedstock").value = other_params['waterwash']['feedstock']['avg'];
+document.getElementById("waterwash_csl.kg").value = other_params['waterwash']['csl.kg']['avg'];
+document.getElementById("waterwash_dap.kg").value = other_params['waterwash']['dap.kg']['avg'];
+document.getElementById("waterwash_hcl.kg").value = other_params['waterwash']['hcl.kg']['avg'];
+document.getElementById("waterwash_h2so4.kg").value = other_params['waterwash']['h2so4.kg']['avg'];
+document.getElementById("waterwash_ng_input_stream_mass_ww_kg").value = other_params['waterwash']['ng_input_stream_mass_ww_kg']['avg'];
+document.getElementById("waterwash_electricity_requirements").value = other_params['waterwash']['electricity_requirements']['avg'];
+document.getElementById("waterwash_electricity_credit").value = other_params['waterwash']['electricity_credit']['avg'];
+
+document.getElementById("iHG-Current_chlys_amount").value = other_params['iHG-Current']['chlys_amount']['avg'];
+document.getElementById("iHG-Current_feedstock").value = other_params['iHG-Current']['feedstock']['avg'];
+document.getElementById("iHG-Current_csl.kg").value = other_params['iHG-Current']['csl.kg']['avg'];
+document.getElementById("iHG-Current_dap.kg").value = other_params['iHG-Current']['dap.kg']['avg'];
+document.getElementById("iHG-Current_hcl.kg").value = other_params['iHG-Current']['hcl.kg']['avg'];
+document.getElementById("iHG-Current_h2so4.kg").value = other_params['iHG-Current']['h2so4.kg']['avg'];
+document.getElementById("iHG-Current_ng_input_stream_mass_ww_kg").value = other_params['iHG-Current']['ng_input_stream_mass_ww_kg']['avg'];
+document.getElementById("iHG-Current_electricity_requirements").value = other_params['iHG-Current']['electricity_requirements']['avg'];
+document.getElementById("iHG-Current_electricity_credit").value = other_params['iHG-Current']['electricity_credit']['avg'];
+
+document.getElementById("iHG-Projected_chlys_amount").value = other_params['iHG-Projected']['chlys_amount']['avg'];
+document.getElementById("iHG-Projected_feedstock").value = other_params['iHG-Projected']['feedstock']['avg'];
+document.getElementById("iHG-Projected_csl.kg").value = other_params['iHG-Projected']['csl.kg']['avg'];
+document.getElementById("iHG-Projected_dap.kg").value = other_params['iHG-Projected']['dap.kg']['avg'];
+document.getElementById("iHG-Projected_hcl.kg").value = other_params['iHG-Projected']['hcl.kg']['avg'];
+document.getElementById("iHG-Projected_h2so4.kg").value = other_params['iHG-Projected']['h2so4.kg']['avg'];
+document.getElementById("iHG-Projected_ng_input_stream_mass_ww_kg").value = other_params['iHG-Projected']['ng_input_stream_mass_ww_kg']['avg'];
+document.getElementById("iHG-Projected_electricity_requirements").value = other_params['iHG-Projected']['electricity_requirements']['avg'];
+document.getElementById("iHG-Projected_electricity_credit").value = other_params['iHG-Projected']['electricity_credit']['avg'];
+
 
 var input_dict = {};
 input_dict.other_params = other_params;
@@ -232,8 +276,7 @@ function electricitySelect() {
 function lifetimeSelect() {
   var myList=document.getElementById("myVals");
   input_dict.analysis_params.time_horizon = myList.options[myList.selectedIndex].value;
-}
-
+}     
 
 $("input").change(function(event) {
     to_replace = event.target.name + '_';
@@ -323,7 +366,6 @@ $("var").click(function(event) {
 
     var plot_data = [];
     input_dict.model = event.target.id
-    console.log(event.target.id)
     $.ajax({
       url: "/ParametersList",
       type: 'POST',
@@ -343,7 +385,6 @@ $("var").click(function(event) {
             width: 0.7
           }}
           else {
-            console.log(data)
             var trace = {
             x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
             y: [data[processes[i]]['waterwash'],
