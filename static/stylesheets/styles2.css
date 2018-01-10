@@ -117,23 +117,23 @@ form {
 .tooltip-wrap {
   position: relative;
 }
+
 .tooltip-content {
   display: none;
   position: absolute;
-  background-color: #d7afed;
-  padding: .5em;
-  float:left;
+  background-color: #c8b3e0;
+  padding: 0.2em;
   z-index: 99;
-  margin-right:-45em;
-  margin-left:1em;
   color: #000;
   border: 1px solid #000;
+  font-size: 14px;
   
 }
 
 .tooltip-wrap:hover .tooltip-content {
-  display: block;
-  border-radius:10px;
+  display: inline-block;
+  border-radius:2px;
+  position: absolute;
 }
 
 

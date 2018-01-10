@@ -14,14 +14,16 @@ $.getJSON( "static/defaultParams.js", function(default_params) {
         for (item in default_params[pre_process]) {
             var span_class = document.createElement("span");
             span_class.className = pre_process+"Params";
-            html_text = ("<span class='tooltip-wrap'>" + item + " = " + "<span class='tooltip-content'>" + "[kg]" + "</span></span><input placeholder='value' name=" + pre_process + 
-                " type='text' id=" + pre_process + "_" + item + " value=" + default_params[pre_process][item]['avg'] + " /><span>+/-</span><input placeholder='error' name=" + pre_process + " type='text' value='0'/></span><br/>")
+            html_text = ("<span class='tooltip-wrap'>" + item + " = " + "<span class='tooltip-content'>" + "[" + default_params[pre_process][item]['units'] + "]" + 
+                        "</span></span><input placeholder='value' name=" + pre_process + 
+                        " type='text' id=" + pre_process + "_" + item + " value=" + default_params[pre_process][item]['avg'] + 
+                        " /><span>+/-</span><input placeholder='error' name=" + pre_process + 
+                        " type='text' value='0'/></span><br/>")
             span_class.insertAdjacentHTML("afterbegin", html_text)
             parent = document.getElementById(parent_id);
             parent.appendChild(span_class)
-    }
-
-};
+        }
+    };
 
     input_dict.params = default_params;
     input_dict.params.analysis_params = analysis_params;
