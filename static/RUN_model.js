@@ -1,321 +1,80 @@
 var analysis_params = {
     'time_horizon': 100,
     'facility_electricity': 'US',
-    'combustion_direct_ghg': 0
     }
-
-var common_params = {
-    'etoh_distribution_truck': {
-        'low': 45,
-        'avg': 50,
-        'high': 55
-    },
-    'etoh_distribution_rail': {
-        'low': 120,
-        'avg': 135,
-        'high': 150
-    },
-    'enzyme': {
-        'low': 0.027,
-        'avg': 0.03,
-        'high': 0.033
-    },
-    'chlys_percent': {
-        'low': 0.58,
-        'avg': 0.58,
-        'high': 0.58
-    },
-    'cholinium_percent': {
-        'low': 0.42,
-        'avg': 0.42,
-        'high': 0.42
-    },
-    'chlys_rail_mt_km': {
-        'low': 160,
-        'avg': 160,
-        'high': 160
-    },
-    'chlys_flatbedtruck_mt_km': {
-        'low': 80,
-        'avg': 80,
-        'high': 80
-    }
-};
-
-var other_params = {
-    "iHG-Projected": {
-        'chlys_amount': {
-            'low': 0.027,
-            'avg': 0.03,
-            'high': 0.033
-        },
-        'electricity_requirements': {
-            'low': 0,
-            'avg': 0,
-            'high': 0
-        },
-        'feedstock': {
-            'low': 4.23,
-            'avg': 4.7,
-            'high': 5.17
-        },
-        'electricity_credit': {
-            'low': 1.4,
-            'avg': 0.85,
-            'high': 0.1
-        },
-        'csl.kg': {
-            'low': 0.06,
-            'avg': 0.06,
-            'high': 0.06
-        },
-        'dap.kg': {
-            'low': 0.017,
-            'avg': 0.017,
-            'high': 0.017
-        },
-        'h2so4.kg': {
-            'low': 0,
-            'avg': 0,
-            'high': 0
-        },
-        'hcl.kg': {
-            'low': 0,
-            'avg': 0,
-            'high': 0
-        },
-        'ng_input_stream_mass_ww_kg': {
-            'low': 0,
-            'avg': 0,
-            'high': 0
-        },
-        'biorefinery_direct_withdrawal': {
-            'low': 5.31,
-            'avg': 5.9,
-            'high': 6.49
-        },
-        'biorefinery_direct_consumption': {
-            'low': 5.76,
-            'avg': 6.4,
-            'high': 7.04
-        }
-    },
-    "iHG-Current": {
-        'chlys_amount': {
-            'low': 0.14,
-            'avg': 0.16,
-            'high': 0.18
-        },
-        'electricity_requirements': {
-            'low': 0,
-            'avg': 0,
-            'high': 0
-        },
-        'feedstock': {
-            'low': 4.23,
-            'avg': 4.7,
-            'high': 5.17
-        },
-        'hcl.kg': {
-            'low': 0.18,
-            'avg': 0.18,
-            'high': 0.18
-        },
-        'electricity_credit': {
-            'low': 0.5,
-            'avg': 0.1,
-            'high': 0.01
-        },
-        'csl.kg': {
-            'low': 0.05,
-            'avg': 0.05,
-            'high': 0.05
-        },
-        'dap.kg': {
-            'low': 0.01,
-            'avg': 0.01,
-            'high': 0.01
-        },
-        'h2so4.kg': {
-            'low': 0,
-            'avg': 0,
-            'high': 0
-        },
-        'ng_input_stream_mass_ww_kg': {
-            'low': 0,
-            'avg': 0,
-            'high': 0
-        },
-        'biorefinery_direct_withdrawal': {
-            'low': 5.76,
-            'avg': 6.4,
-            'high': 7.04
-        },
-        'biorefinery_direct_consumption': {
-            'low': 5.76,
-            'avg': 6.4,
-            'high': 7.04
-        }
-    },
-    "waterwash": {
-        'chlys_amount': {
-            'low': 0.15,
-            'avg': 0.17,
-            'high': 0.18
-        },
-        'electricity_requirements': {
-            'low': 1.26,
-            'avg': 1.4,
-            'high': 1.54
-        },
-        'feedstock': {
-            'low': 4.9,
-            'avg': 5.47,
-            'high': 6.01
-        },
-        'ng_input_stream_mass_ww_kg': {
-            'low': 1.1,
-            'avg': 1.31,
-            'high': 1.4
-        },
-        'electricity_credit': {
-            'low': 0,
-            'avg': 0,
-            'high': 0
-        },
-        'csl.kg': {
-            'low': 0.06,
-            'avg': 0.06,
-            'high': 0.06
-        },
-        'dap.kg': {
-            'low': 0.01,
-            'avg': 0.01,
-            'high': 0.01
-        },
-        'hcl.kg': {
-            'low': 0,
-            'avg': 0,
-            'high': 0
-        },
-        'h2so4.kg': {
-            'low': 0.002,
-            'avg': 0.002,
-            'high': 0.002
-        },
-        'biorefinery_direct_withdrawal': {
-            'low': 0.9,
-            'avg': 1.3,
-            'high': 1.7
-        },
-        'biorefinery_direct_consumption': {
-            'low': 0.9,
-            'avg': 1.3,
-            'high': 1.7
-        }
-    }
-};
 
 var processes = ["electricity_credit", "Electricity", "Chemicals_And_Fertilizers", "Petroleum", "Transportation", "Farming", "Direct", "Other"];
 
-$.getJSON( "static/data.js", function(input_json) {
-  console.log(input_json);
- });
 
-document.getElementById("common_combustion_direct_ghg").value = analysis_params.combustion_direct_ghg;
-document.getElementById("common_enzyme").value = common_params.enzyme['avg'];
-document.getElementById("common_chlys_percent").value = common_params.chlys_percent['avg'];
-document.getElementById("common_cholinium_percent").value = common_params.cholinium_percent['avg'];
-document.getElementById("common_etoh_distribution_truck").value = common_params.etoh_distribution_truck['avg'];
-document.getElementById("common_etoh_distribution_rail").value = common_params.etoh_distribution_rail['avg'];
-document.getElementById("common_chlys_rail_mt_km").value = common_params.chlys_rail_mt_km['avg'];
-document.getElementById("common_chlys_flatbedtruck_mt_km").value = common_params.chlys_flatbedtruck_mt_km['avg'];
-
-document.getElementById("waterwash_chlys_amount").value = other_params['waterwash']['chlys_amount']['avg'];
-document.getElementById("waterwash_feedstock").value = other_params['waterwash']['feedstock']['avg'];
-document.getElementById("waterwash_csl.kg").value = other_params['waterwash']['csl.kg']['avg'];
-document.getElementById("waterwash_dap.kg").value = other_params['waterwash']['dap.kg']['avg'];
-document.getElementById("waterwash_hcl.kg").value = other_params['waterwash']['hcl.kg']['avg'];
-document.getElementById("waterwash_h2so4.kg").value = other_params['waterwash']['h2so4.kg']['avg'];
-document.getElementById("waterwash_ng_input_stream_mass_ww_kg").value = other_params['waterwash']['ng_input_stream_mass_ww_kg']['avg'];
-document.getElementById("waterwash_electricity_requirements").value = other_params['waterwash']['electricity_requirements']['avg'];
-document.getElementById("waterwash_electricity_credit").value = other_params['waterwash']['electricity_credit']['avg'];
-
-document.getElementById("iHG-Current_chlys_amount").value = other_params['iHG-Current']['chlys_amount']['avg'];
-document.getElementById("iHG-Current_feedstock").value = other_params['iHG-Current']['feedstock']['avg'];
-document.getElementById("iHG-Current_csl.kg").value = other_params['iHG-Current']['csl.kg']['avg'];
-document.getElementById("iHG-Current_dap.kg").value = other_params['iHG-Current']['dap.kg']['avg'];
-document.getElementById("iHG-Current_hcl.kg").value = other_params['iHG-Current']['hcl.kg']['avg'];
-document.getElementById("iHG-Current_h2so4.kg").value = other_params['iHG-Current']['h2so4.kg']['avg'];
-document.getElementById("iHG-Current_ng_input_stream_mass_ww_kg").value = other_params['iHG-Current']['ng_input_stream_mass_ww_kg']['avg'];
-document.getElementById("iHG-Current_electricity_requirements").value = other_params['iHG-Current']['electricity_requirements']['avg'];
-document.getElementById("iHG-Current_electricity_credit").value = other_params['iHG-Current']['electricity_credit']['avg'];
-
-document.getElementById("iHG-Projected_chlys_amount").value = other_params['iHG-Projected']['chlys_amount']['avg'];
-document.getElementById("iHG-Projected_feedstock").value = other_params['iHG-Projected']['feedstock']['avg'];
-document.getElementById("iHG-Projected_csl.kg").value = other_params['iHG-Projected']['csl.kg']['avg'];
-document.getElementById("iHG-Projected_dap.kg").value = other_params['iHG-Projected']['dap.kg']['avg'];
-document.getElementById("iHG-Projected_hcl.kg").value = other_params['iHG-Projected']['hcl.kg']['avg'];
-document.getElementById("iHG-Projected_h2so4.kg").value = other_params['iHG-Projected']['h2so4.kg']['avg'];
-document.getElementById("iHG-Projected_ng_input_stream_mass_ww_kg").value = other_params['iHG-Projected']['ng_input_stream_mass_ww_kg']['avg'];
-document.getElementById("iHG-Projected_electricity_requirements").value = other_params['iHG-Projected']['electricity_requirements']['avg'];
-document.getElementById("iHG-Projected_electricity_credit").value = other_params['iHG-Projected']['electricity_credit']['avg'];
-
-
+// Set parameter values
 var input_dict = {};
-input_dict.other_params = other_params;
-input_dict.common_params = common_params;
-input_dict.analysis_params = analysis_params;
+$.getJSON( "static/defaultParams.js", function(default_params) {
+    for (pre_process in default_params) {
+        parent_id = pre_process + "_params"
+        for (item in default_params[pre_process]) {
+            var span_class = document.createElement("span");
+            span_class.className = pre_process+"Params";
+            html_text = ("<span class='tooltip-wrap'>" + item + " = " + "<span class='tooltip-content'>" + "[kg]" + "</span></span><input placeholder='value' name=" + pre_process + 
+                " type='text' id=" + pre_process + "_" + item + " value=" + default_params[pre_process][item]['avg'] + " /><span>+/-</span><input placeholder='error' name=" + pre_process + " type='text' value='0'/></span><br/>")
+            span_class.insertAdjacentHTML("afterbegin", html_text)
+            parent = document.getElementById(parent_id);
+            parent.appendChild(span_class)
+    }
+
+};
+
+    input_dict.params = default_params;
+    input_dict.params.analysis_params = analysis_params;
+});
+
+// select by class
+// $(".var").click(function(event) {
 
 
 function electricitySelect() {
   var myList=document.getElementById("myList");
-  input_dict.analysis_params.facility_electricity = myList.options[myList.selectedIndex].value;
+  input_dict.params.analysis_params.facility_electricity = myList.options[myList.selectedIndex].value;
 }
 
 function lifetimeSelect() {
   var myList=document.getElementById("myVals");
-  input_dict.analysis_params.time_horizon = myList.options[myList.selectedIndex].value;
+  input_dict.params.analysis_params.time_horizon = myList.options[myList.selectedIndex].value;
 }     
 
 $("input").change(function(event) {
     to_replace = event.target.name + '_';
     if (event.target.placeholder == "value") {
       key = event.target.id.replace(to_replace, '');
-      if (key in common_params) {
-        common_params[key]['avg'] = parseFloat(document.getElementById(event.target.id).value);
+      if (key in input_dict.params.common) {
+        input_dict.params.common[key]['avg'] = parseFloat(document.getElementById(event.target.id).value);
         error_id = 'common_error_' + key
-        common_params[key]['low'] = (1 - parseFloat(document.getElementById(error_id).value)) * common_params[key]['avg'];
-        common_params[key]['high'] = (1 + parseFloat(document.getElementById(error_id).value)) * common_params[key]['avg'];
+        input_dict.params.common[key]['low'] = (1 - parseFloat(document.getElementById(error_id).value)) * input_dict.params.common[key]['avg'];
+        input_dict.params.common[key]['high'] = (1 + parseFloat(document.getElementById(error_id).value)) * input_dict.params.common[key]['avg'];
       }
-      else if (key in analysis_params){
-        analysis_params[key] = parseFloat(document.getElementById(event.target.id).value);
+      else if (key in input_dict.params.analysis_params){
+        input_dict.params.analysis_params[key] = parseFloat(document.getElementById(event.target.id).value);
       }
       else {
-        other_params[event.target.name][key]['avg'] = parseFloat(document.getElementById(event.target.id).value);
+        input_dict.params[event.target.name][key]['avg'] = parseFloat(document.getElementById(event.target.id).value);
         error_id = event.target.name + '_error_' + key
-        other_params[event.target.name][key]['low'] = (1 - parseFloat(document.getElementById(error_id).value)) * other_params[event.target.name][key]['avg'];
-        other_params[event.target.name][key]['high'] = (1 + parseFloat(document.getElementById(error_id).value)) * other_params[event.target.name][key]['avg'];
+        input_dict.params[event.target.name][key]['low'] = (1 - parseFloat(document.getElementById(error_id).value)) * input_dict.params[event.target.name][key]['avg'];
+        input_dict.params[event.target.name][key]['high'] = (1 + parseFloat(document.getElementById(error_id).value)) * input_dict.params[event.target.name][key]['avg'];
       }}
     else if (event.target.placeholder == "error") {
       to_replace = event.target.name + '_error_';
       key = event.target.id.replace(to_replace, '');
-      if (key in common_params) {
+      if (key in input_dict.params.common) {
         error_id = 'common_error_' + key
         target_id = error_id.replace('_error', '')
-        common_params[key]['low'] = (1 - parseFloat(document.getElementById(error_id).value)) * common_params[key]['avg'];
-        common_params[key]['high'] = (1 + parseFloat(document.getElementById(error_id).value)) * common_params[key]['avg'];
+        input_dict.params.common[key]['low'] = (1 - parseFloat(document.getElementById(error_id).value)) * input_dict.params.common[key]['avg'];
+        input_dict.params.common[key]['high'] = (1 + parseFloat(document.getElementById(error_id).value)) * input_dict.params.common[key]['avg'];
       }
       else {
         error_id = event.target.name + '_error_' + key
         target_id = error_id.replace('_error', '')
-        other_params[event.target.name][key]['low'] = (1 - parseFloat(document.getElementById(error_id).value)) * other_params[event.target.name][key]['avg'];
-        other_params[event.target.name][key]['high'] = (1 + parseFloat(document.getElementById(error_id).value)) * other_params[event.target.name][key]['avg'];
+        input_dict.params[event.target.name][key]['low'] = (1 - parseFloat(document.getElementById(error_id).value)) * input_dict.params[event.target.name][key]['avg'];
+        input_dict.params[event.target.name][key]['high'] = (1 + parseFloat(document.getElementById(error_id).value)) * input_dict.params[event.target.name][key]['avg'];
       }}
-
-    input_dict.other_params = other_params;
-    input_dict.common_params = common_params;
-    input_dict.analysis_params = analysis_params;
   });
 
 var run_GHG_button = document.getElementById('buttonGHG');

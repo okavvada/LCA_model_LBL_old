@@ -8,6 +8,23 @@ html, body {
   padding: 0;
 }
 
+.buttonSuperPro {
+  position: relative;
+  top: -5px;
+  left: 210px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: #4c035e;
+  border-radius: 10px;
+  margin-top: 1px;
+  cursor: pointer;
+  text-align: center;
+  color: #fff;
+  width: 140px;
+  font-size: 14px;
+  transition: 0.4s;
+}
+
 #buttonGHG {
   position: absolute;
   top: 8px;
@@ -123,7 +140,7 @@ form {
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
   position: relative;
-  top: 70px;
+  top: 100px;
   left: 10px;
   background-color: #eee;
   outline: 1px solid #707070;
@@ -132,7 +149,7 @@ form {
   font-weight: bold;
   cursor: pointer;
   padding: 10px;
-  width: 310px;
+  width: 370px;
   text-align: left;
   transition: 0.4s;
 }
@@ -145,11 +162,11 @@ form {
 /* Style the accordion panel. Note: hidden by default */
 .panel {
   position: relative;
-  top: 70px;
+  top: 100px;
   left: 10px;
   padding: 10px;
   background-color: white;
   outline: 1px solid #707070;
-  width: 290px;
+  width: 350px;
   display: none;
 }
