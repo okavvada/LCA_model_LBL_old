@@ -16,7 +16,7 @@ for scenario in P.scenario_range:
     new_data = np.zeros([8,3])
     m2[scenario] = pd.DataFrame(new_data, columns=P.selectivity, index=P.processes)
 
-def FinalImpactModel(SP_common_params, SP_other_params, SP_analysis_params, model):
+def FinalImpactModel(SP_params, model):
 	# Returns a dataframe of of all GHG emissions in the form of kg CO2e per MJ enthanol  or 
 	# water impacts in the form of Liters per MJ enthanol per process
     #
@@ -47,43 +47,47 @@ def FinalImpactModel(SP_common_params, SP_other_params, SP_analysis_params, mode
 
 	for selectivity in P.selectivity:
 	    for scenario in P.scenario_range:
-			y["lysine.us.kg"] = (SP_other_params[selectivity]['chlys_amount'][scenario] * 
-								SP_common_params['chlys_percent'][scenario]) 
-			y["cholinium.hydroxide.kg"] = (SP_other_params[selectivity]['chlys_amount'][scenario] * 
-			                               SP_common_params['cholinium_percent'][scenario])  
-			y["cellulase.kg"] = SP_common_params['enzyme'][scenario]
-			y["csl.kg"] = SP_other_params[selectivity]['csl.kg'][scenario]
-			y["farmedstover.kg"] = SP_other_params[selectivity]['feedstock'][scenario]  
-			y["dap.kg"] = SP_other_params[selectivity]['dap.kg'][scenario] 
-			y["h2so4.kg"] = SP_other_params[selectivity]['h2so4.kg'][scenario]
+			y["lysine.us.kg"] = (SP_params[selectivity]['chlys_amount'][scenario] * 
+								SP_params['common']['chlys_percent'][scenario]) 
+			y["cholinium.hydroxide.kg"] = (SP_params[selectivity]['chlys_amount'][scenario] * 
+			                               SP_params['common']['cholinium_percent'][scenario])  
+			y["cellulase.kg"] = SP_params['common']['enzyme'][scenario]
+			y["csl.kg"] = SP_params[selectivity]['csl.kg'][scenario]
+			y["farmedstover.kg"] = SP_params[selectivity]['feedstock'][scenario]  
+			y["dap.kg"] = SP_params[selectivity]['dap.kg'][scenario] 
+			y["h2so4.kg"] = SP_params[selectivity]['h2so4.kg'][scenario]
 			y["naturalgas.MJ"] = (hf.FuelConvertMJ(
-			        			SP_other_params[selectivity]['ng_input_stream_mass_ww_kg'][scenario], "naturalgas","kg"))
-			y["rail.mt_km"] = ((SP_other_params[selectivity]['chlys_amount'][scenario]/1000) * 
-							SP_common_params['chlys_rail_mt_km'][scenario] +
-			                	(etoh_feed_stream_mass_kg/1000 * SP_common_params['etoh_distribution_rail'][scenario])) 
+			        			SP_params[selectivity]['ng_input_stream_mass_ww_kg'][scenario], "naturalgas","kg"))
+			y["gasoline.MJ"] = (hf.FuelConvertMJ(
+			        			SP_params[selectivity]['octane_ltr'][scenario], "octane","liter"))
+			y["rail.mt_km"] = ((SP_params[selectivity]['chlys_amount'][scenario]/1000) * 
+							SP_params['common']['chlys_rail_mt_km'][scenario] +
+			                	(etoh_feed_stream_mass_kg/1000 * SP_params['common']['etoh_distribution_rail'][scenario])) 
 			y["flatbedtruck.mt_km"] = ((
-			        (SP_other_params[selectivity]['chlys_amount'][scenario]/1000) * 
-			        	SP_common_params['chlys_flatbedtruck_mt_km'][scenario]) +
+			        (SP_params[selectivity]['chlys_amount'][scenario]/1000) * 
+			        	SP_params['common']['chlys_flatbedtruck_mt_km'][scenario]) +
 			        		(etoh_feed_stream_mass_kg/1000 * (
-			        			SP_common_params['etoh_distribution_truck'][scenario])))
-			y["electricity.{}.kWh".format(SP_analysis_params['facility_electricity'])] = (
-			    (SP_other_params[selectivity]['electricity_requirements'][scenario]))
-			y["hcl.kg"] = SP_other_params[selectivity]['hcl.kg'][scenario]
+			        			SP_params['common']['etoh_distribution_truck'][scenario])))
+			y["electricity.{}.kWh".format(SP_params['analysis_params']['facility_electricity'])] = (
+			    (SP_params[selectivity]['electricity_requirements'][scenario]))
+			y["hcl.kg"] = SP_params[selectivity]['hcl.kg'][scenario]
 
-			y_cred["electricity.{}.kWh".format(SP_analysis_params['facility_electricity'])] = -(
-							            (SP_other_params[selectivity]['electricity_credit'][scenario]))
+			y_cred["electricity.{}.kWh".format(SP_params['analysis_params']['facility_electricity'])] = -(
+							            (SP_params[selectivity]['electricity_credit'][scenario]))
 
 			biorefinery_direct_ghg = hf.FuelCO2kg(hf.FuelConvertMJ(
-			        SP_other_params[selectivity]['ng_input_stream_mass_ww_kg'][scenario],"naturalgas","kg"), "naturalgas")
+			        	SP_params[selectivity]['ng_input_stream_mass_ww_kg'][scenario],"naturalgas","kg"), "naturalgas") + (
+					hf.FuelCO2kg(hf.FuelConvertMJ(
+			        	SP_params[selectivity]['octane_ltr'][scenario],"octane","liter"), "gasoline"))
 
 			if model == 'buttonGHG':
 
 				results_kg_co2e = hf.TotalGHGEmissions(io_data, y,
-				                                       biorefinery_direct_ghg, SP_analysis_params['combustion_direct_ghg'], SP_analysis_params['time_horizon'])
+				                                       biorefinery_direct_ghg, SP_params['common']['combustion_direct_ghg']['avg'], SP_params['analysis_params']['time_horizon'])
         
 				results_kg_co2e_credit = hf.TotalGHGEmissions(io_data, y_cred, 
-		                                                      biorefinery_direct_ghg, SP_analysis_params['combustion_direct_ghg'],
-		                                                      SP_analysis_params['time_horizon'])
+		                                                      biorefinery_direct_ghg, SP_params['common']['combustion_direct_ghg']['avg'],
+		                                                      SP_params['analysis_params']['time_horizon'])
 
 				results_kg_co2e_dict = results_kg_co2e.set_index('products')['ghg_results_kg'].to_dict()
 				hf.AggregateResults(m, results_kg_co2e_dict, selectivity, scenario)
@@ -95,10 +99,10 @@ def FinalImpactModel(SP_common_params, SP_other_params, SP_analysis_params, mode
 			elif model == 'buttonConsWater':
 
 				results_water = hf.TotalWaterImpacts(io_data, y, 
-			                                       water_consumption, SP_other_params[selectivity]['biorefinery_direct_consumption'][scenario])
+			                                       water_consumption, SP_params[selectivity]['biorefinery_direct_consumption'][scenario])
 
 				results_water_credit = hf.TotalWaterImpacts(io_data, y_cred,
-		                                                      water_consumption, SP_other_params[selectivity]['biorefinery_direct_consumption'][scenario])
+		                                                      water_consumption, SP_params[selectivity]['biorefinery_direct_consumption'][scenario])
 
 				results_water_dict = results_water.set_index('products')['liter_results_kg'].to_dict()
 				hf.AggregateResults(m, results_water_dict, selectivity, scenario)
@@ -109,10 +113,10 @@ def FinalImpactModel(SP_common_params, SP_other_params, SP_analysis_params, mode
 			elif model == 'buttonWithWater':
 
 				results_water = hf.TotalWaterImpacts(io_data, y, 
-			                                       water_withdrawal, SP_other_params[selectivity]['biorefinery_direct_withdrawal'][scenario])
+			                                       water_withdrawal, SP_params[selectivity]['biorefinery_direct_withdrawal'][scenario])
 
 				results_kg_co2e_credit = hf.TotalWaterImpacts(io_data, y_cred,
-		                                                      water_withdrawal, SP_other_params[selectivity]['biorefinery_direct_consumption'][scenario])
+		                                                      water_withdrawal, SP_params[selectivity]['biorefinery_direct_consumption'][scenario])
 
 				results_water_dict = results_water.set_index('products')['liter_results_kg'].to_dict()
 				hf.AggregateResults(m, results_water_dict, selectivity, scenario)

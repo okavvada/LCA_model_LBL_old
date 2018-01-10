@@ -18,10 +18,10 @@ def root():
 @app.route("/ParametersList", methods = ['POST'])
 def get_results2():
   all_data = request.get_json()
-  return flask.jsonify(getMyPlotJSON(all_data['common_params'], all_data['other_params'], all_data['analysis_params'], all_data['model']))
+  return flask.jsonify(getMyPlotJSON(all_data['params'], all_data['model']))
 
-def getMyPlotJSON(common_params, other_params, analysis_params, model):
-  data = FinalImpactModel(common_params, other_params, analysis_params, model)
+def getMyPlotJSON(params, model):
+  data = FinalImpactModel(params, model)
   return data.to_dict()
 
 
