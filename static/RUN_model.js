@@ -13,12 +13,18 @@ $.getJSON( "static/defaultParams.js", function(default_params) {
         parent_id = pre_process + "_params"
         for (item in default_params[pre_process]) {
             var span_class = document.createElement("span");
-            span_class.className = pre_process+"Params";
-            html_text = ("<span class='tooltip-wrap'>" + item + " = " + "<span class='tooltip-content'>" + "[" + default_params[pre_process][item]['units'] + "]" + 
-                        "</span></span><input placeholder='value' name=" + pre_process + 
-                        " type='text' id=" + pre_process + "_" + item + " value=" + default_params[pre_process][item]['avg'] + 
-                        " /><span>+/-</span><input placeholder='error' name=" + pre_process + 
-                        " type='text' value='0'/></span><br/>")
+            span_class.className = "tooltip-wrap";
+            if (default_params[pre_process][item]['avg'] == default_params[pre_process][item]['low']){
+                error_value = 0;
+            }
+            else {
+                error_value = Math.round(((default_params[pre_process][item]['avg'] - default_params[pre_process][item]['low'])/default_params[pre_process][item]['avg'])*10)/10
+            }
+            html_text = (item + " = " + "<span class='tooltip-content'>" + "[" + default_params[pre_process][item]['units'] + "]" + 
+                        "</span><input placeholder='value' name=" + pre_process + 
+                        " type='text' id=" + pre_process + "_" + item + " value=" + default_params[pre_process][item]['avg'] + ">"+
+                        "<span>+/-</span><input placeholder='error' name=" + pre_process + 
+                        " type='text' id=" + pre_process + "_error_" + item +" value=" + error_value +" ><br/>")
             span_class.insertAdjacentHTML("afterbegin", html_text)
             parent = document.getElementById(parent_id);
             parent.appendChild(span_class)
@@ -43,7 +49,8 @@ function lifetimeSelect() {
   input_dict.params.analysis_params.time_horizon = myList.options[myList.selectedIndex].value;
 }     
 
-$("input").change(function(event) {
+// $("input").change(function(event) {
+$("body").on("change", "input", function(){
     to_replace = event.target.name + '_';
     if (event.target.placeholder == "value") {
       key = event.target.id.replace(to_replace, '');

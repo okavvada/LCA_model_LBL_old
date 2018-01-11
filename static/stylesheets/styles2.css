@@ -131,7 +131,7 @@ form {
 }
 
 .tooltip-wrap:hover .tooltip-content {
-  display: inline-block;
+  display: block;
   border-radius:2px;
   position: absolute;
 }
