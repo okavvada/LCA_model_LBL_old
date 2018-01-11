@@ -5,7 +5,6 @@ var analysis_params = {
 
 var processes = ["electricity_credit", "Electricity", "Chemicals_And_Fertilizers", "Petroleum", "Transportation", "Farming", "Direct", "Other"];
 
-
 // Set parameter values
 var input_dict = {};
 $.getJSON( "static/defaultParams.js", function(default_params) {
@@ -35,8 +34,36 @@ $.getJSON( "static/defaultParams.js", function(default_params) {
     input_dict.params.analysis_params = analysis_params;
 });
 
-// select by class
-// $(".var").click(function(event) {
+
+$(".buttonSuperPro").click(function(event) {
+    target_id_super = event.target.id.replace("SuperPro_", '')
+    $.getJSON( "static/test.js", function(super_params) {
+        for (item in input_dict.params[target_id_super]) {
+            if (input_dict.params[pre_process][item]['avg'] == input_dict.params[pre_process][item]['low']){
+                error_value = 0;
+            }
+            else {
+                error_value = Math.round(((input_dict.params[pre_process][item]['avg'] - input_dict.params[pre_process][item]['low'])/input_dict.params[pre_process][item]['avg'])*10)/10
+            }
+            if (item in super_params){
+                input_dict.params[target_id_super][item]['avg'] = super_params[item]
+                input_dict.params[target_id_super][item]['low'] = super_params[item] * (1 - error_value)
+                input_dict.params[target_id_super][item]['high'] = super_params[item] * (1 + error_value)
+            }
+            else {
+                input_dict.params[target_id_super][item]['avg'] = 0
+                input_dict.params[target_id_super][item]['low'] = 0
+                input_dict.params[target_id_super][item]['high'] = 0
+            }
+        }
+    console.log(input_dict)
+    for (item in input_dict.params[target_id_super]){
+        input_val_id = target_id_super + "_" + item;
+        input_val = document.getElementById(input_val_id);
+        input_val.value = input_dict.params[target_id_super][item]['avg']
+    }
+    });
+});
 
 
 function electricitySelect() {
@@ -49,7 +76,6 @@ function lifetimeSelect() {
   input_dict.params.analysis_params.time_horizon = myList.options[myList.selectedIndex].value;
 }     
 
-// $("input").change(function(event) {
 $("body").on("change", "input", function(){
     to_replace = event.target.name + '_';
     if (event.target.placeholder == "value") {
@@ -84,6 +110,7 @@ $("body").on("change", "input", function(){
         input_dict.params[event.target.name][key]['low'] = (1 - parseFloat(document.getElementById(error_id).value)) * input_dict.params[event.target.name][key]['avg'];
         input_dict.params[event.target.name][key]['high'] = (1 + parseFloat(document.getElementById(error_id).value)) * input_dict.params[event.target.name][key]['avg'];
       }}
+      console.log(input_dict)
   });
 
 var run_GHG_button = document.getElementById('buttonGHG');
