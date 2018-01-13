@@ -47,11 +47,13 @@ def FuelConvertMJ(num, fuel_name, unit):
     if unit != "kg" and unit != "liter":
         print("Invalid unit entered. Please use only kg or liters") 
         return
+
     #
     # Pull official fuel name from list of aliases and lookup energy content to 
     # calculate final HHV in MJ
     # Takes any number of potential fuel aliases from user input and returns 
     # official fuel name for calculations
+    unit = unit+"_hhv"
     if fuel_name in aliases.keys():
         fuel =  aliases[fuel_name]
     elif fuel_name in aliases.values():
@@ -59,6 +61,7 @@ def FuelConvertMJ(num, fuel_name, unit):
     else:
         print ("fuel not found")
         return
+
     content_MJ = energy_content[energy_content['Fuel'] == fuel][unit].iloc[0]
     if content_MJ == "N/A":
         print ("Invalid unit entered. You may not enter a unit of volume for solid fuels")
@@ -163,7 +166,7 @@ def IOSolutionPhysicalUnits(A, y):
     return solution
 
 
-def TotalGHGEmissions(io_data, y, biorefinery_direct_ghg, combustion_direct_ghg, time_horizon):
+def TotalGHGEmissions(io_data, y, biorefinery_direct_ghg, time_horizon):
     # Returns a vector of of all GHG emissions in the form of kg CO2e
     #
     # Args:
@@ -190,8 +193,8 @@ def TotalGHGEmissions(io_data, y, biorefinery_direct_ghg, combustion_direct_ghg,
         y_array.append(y[item])
 
     io_ghg_results_kg = IOSolutionPhysicalUnits(A, y_array) * GHGImpactVectorSum(time_horizon)
-    io_ghg_results_kg = np.append(io_ghg_results_kg,[biorefinery_direct_ghg, combustion_direct_ghg])
-    rownames = np.append(io_data.products.values, ['direct', 'combustion'])
+    io_ghg_results_kg = np.append(io_ghg_results_kg,[biorefinery_direct_ghg])
+    rownames = np.append(io_data.products.values, ['direct'])
     io_ghg_results_kg_df = pd.DataFrame(io_ghg_results_kg, columns = ['ghg_results_kg'])
     io_ghg_results_kg_df['products'] = rownames
     return io_ghg_results_kg_df
