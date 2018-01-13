@@ -1,0 +1,20 @@
+{ 
+    "IL_rail_km": "<strong> ionic liquid rail transport </strong> [km]", 
+    "etoh_distribution_rail": "<strong> ethanol rail transport </strong> [km]", 
+    "etoh_distribution_truck": "<strong> ethanol truck transport </strong> [km]", 
+    "IL_flatbedtruck_mt_km": "<strong> ionic liquid truck transport </strong> [km]", 
+    "feedstock_distribution_rail": "<strong> feedstock rail transport </strong> [km]", 
+    "feedstock_distribution_truck": "<strong> feedstock truck transport </strong> [km]", 
+    "cellulase_amount": "<strong> cellulase amount </strong> <br />[kg per kg cellulose]",
+    "acid.kg": "<strong> acid </strong> [kg per kg ionic liquid]", 
+    "biorefinery_direct_consumption": "<strong> biorefinery water consumption </strong> <br /> [liters per kg ethanol]", 
+    "ionicLiquid_amount": "<strong> ionic liquid amount </strong> <br /> [kg per kg feedstock]", 
+    "ng_input_stream_MJ": "<strong> natural gas </strong> [MJ per MJ ethanol]", 
+    "octane_ltr": "<strong> octane </strong> [liters per liter of ethanol]",
+    "electricity_requirements": "<strong> electricity </strong> [kWh per liter of ethanol]",
+    "electricity_credit": "<strong> electricity credit </strong> <br />[kWh per liter of ethanol]", 
+    "dap.kg": "<strong> diammonium phosphate </strong> <br /> [g per kg fermentable sugars]",   
+    "csl.kg": "<strong> corn liquor </strong> <br /> [g per kg fermentable sugars]", 
+    "feedstock": "<strong> feedstock amount </strong> [kg per kg ethanol]",
+    "biorefinery_direct_withdrawal": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]"
+}

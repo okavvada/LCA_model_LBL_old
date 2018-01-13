@@ -11,7 +11,7 @@ html, body {
 .buttonSuperPro {
   position: relative;
   top: -5px;
-  left: 210px;
+  left: 230px;
   padding-top: 5px;
   padding-bottom: 5px;
   background-color: #4c035e;
@@ -85,7 +85,7 @@ html, body {
 #chart {
   position: fixed;
   top: 120px;
-  left: 430px;
+  left: 460px;
 }
 
 
@@ -108,10 +108,6 @@ input {
 
 form {
   padding-bottom: .2em;
-}
-
-#set_value{
-  border: 1px solid #abadb2;
 }
 
 .tooltip-wrap {
@@ -149,7 +145,7 @@ form {
   font-weight: bold;
   cursor: pointer;
   padding: 10px;
-  width: 370px;
+  width: 410px;
   text-align: left;
   transition: 0.4s;
 }
@@ -167,6 +163,18 @@ form {
   padding: 10px;
   background-color: white;
   outline: 1px solid #707070;
-  width: 350px;
+  width: 390px;
   display: none;
+}
+
+.thumb {
+    height: 75px;
+    border: 1px solid #000;
+    margin: 10px 5px 0 0;
+  }
+
+#files{
+  position:absolute;
+  top: 500px;
+  left: 50px;
 }

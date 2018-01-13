@@ -1,37 +1,91 @@
 var analysis_params = {
     'time_horizon': 100,
     'facility_electricity': 'US',
+    'ionic_liquid': 'chlys',
+    'feedstock': 'corn_stover'
     }
 
 var processes = ["electricity_credit", "Electricity", "Chemicals_And_Fertilizers", "Petroleum", "Transportation", "Farming", "Direct", "Other"];
 
+
+//     function ReadFile(event) {
+//         var reader = new FileReader();
+//         reader.onload = onReaderLoad;
+//         reader.readAsText(event.target.files[0]);
+//     }
+
+//     function onReaderLoad(event){
+//         console.log(event.target.result);
+//         var obj = JSON.parse(event.target.result);
+//         console.log(obj);
+//     }
+
+
+// $(".buttonSuperPro").click(function(event) {
+//     target_id_super = event.target.id.replace("SuperPro_", '')
+//     file = ReadFile(event)
+//     console.log(file)
+
+    // $.getJSON( "static/test.js", function(super_params) {
+    //     for (item in input_dict.params[target_id_super]) {
+    //         if (input_dict.params[pre_process][item]['avg'] == input_dict.params[pre_process][item]['low']){
+    //             error_value = 0;
+    //         }
+    //         else {
+    //             error_value = Math.round(((input_dict.params[pre_process][item]['avg'] - input_dict.params[pre_process][item]['low'])/input_dict.params[pre_process][item]['avg'])*10)/10
+    //         }
+    //         if (item in super_params){
+    //             input_dict.params[target_id_super][item]['avg'] = super_params[item]
+    //             input_dict.params[target_id_super][item]['low'] = super_params[item] * (1 - error_value)
+    //             input_dict.params[target_id_super][item]['high'] = super_params[item] * (1 + error_value)
+    //         }
+    //         else {
+    //             input_dict.params[target_id_super][item]['avg'] = 0
+    //             input_dict.params[target_id_super][item]['low'] = 0
+    //             input_dict.params[target_id_super][item]['high'] = 0
+    //         }
+    //     }
+    // for (item in input_dict.params[target_id_super]){
+    //     input_val_id = target_id_super + "_" + item;
+    //     input_val = document.getElementById(input_val_id);
+    //     input_val.value = input_dict.params[target_id_super][item]['avg']
+    // }
+//    });
+// });
+
 // Set parameter values
 var input_dict = {};
-$.getJSON( "static/defaultParams.js", function(default_params) {
-    for (pre_process in default_params) {
-        parent_id = pre_process + "_params"
-        for (item in default_params[pre_process]) {
-            var span_class = document.createElement("span");
-            span_class.className = "tooltip-wrap";
-            if (default_params[pre_process][item]['avg'] == default_params[pre_process][item]['low']){
-                error_value = 0;
-            }
-            else {
-                error_value = Math.round(((default_params[pre_process][item]['avg'] - default_params[pre_process][item]['low'])/default_params[pre_process][item]['avg'])*10)/10
-            }
-            html_text = (item + " = " + "<span class='tooltip-content'>" + "[" + default_params[pre_process][item]['units'] + "]" + 
-                        "</span><input placeholder='value' name=" + pre_process + 
-                        " type='text' id=" + pre_process + "_" + item + " value=" + default_params[pre_process][item]['avg'] + ">"+
-                        "<span>+/-</span><input placeholder='error' name=" + pre_process + 
-                        " type='text' id=" + pre_process + "_error_" + item +" value=" + error_value +" ><br/>")
-            span_class.insertAdjacentHTML("afterbegin", html_text)
-            parent = document.getElementById(parent_id);
-            parent.appendChild(span_class)
-        }
-    };
+$.getJSON( "static/parameter_names.js", function(params_alias) {
+    $.getJSON( "static/defaultParams.js", function(default_params) {
+        for (pre_process in default_params) {
+            parent_id = pre_process + "_params"
+            for (item in default_params[pre_process]) {
+                if (item == 'acid'){
+                    continue
+                }
+                else {
+                    var span_class = document.createElement("span");
+                    span_class.className = "tooltip-wrap";
+                    if (default_params[pre_process][item]['avg'] == default_params[pre_process][item]['low']){
+                        error_value = 0;
+                    }
+                    else {
+                        error_value = Math.round(((default_params[pre_process][item]['avg'] - default_params[pre_process][item]['low'])/default_params[pre_process][item]['avg'])*10)/10
+                    }
+                    html_text = (params_alias[item] + " = " + 
+                                "</span><input placeholder='value' name=" + pre_process + 
+                                " type='text' id=" + pre_process + "_" + item + " value=" + default_params[pre_process][item]['avg'] + ">"+
+                                "<span>+/-</span><input placeholder='error' name=" + pre_process + 
+                                " type='text' id=" + pre_process + "_error_" + item +" value=" + error_value +" ><br/>")
+                    span_class.insertAdjacentHTML("afterbegin", html_text)
+                    parent = document.getElementById(parent_id);
+                    parent.appendChild(span_class)
+            }}
+        };
 
-    input_dict.params = default_params;
-    input_dict.params.analysis_params = analysis_params;
+        input_dict.params = default_params;
+        input_dict.params.analysis_params = analysis_params;
+    });
 });
 
 
@@ -56,7 +110,6 @@ $(".buttonSuperPro").click(function(event) {
                 input_dict.params[target_id_super][item]['high'] = 0
             }
         }
-    console.log(input_dict)
     for (item in input_dict.params[target_id_super]){
         input_val_id = target_id_super + "_" + item;
         input_val = document.getElementById(input_val_id);
@@ -74,7 +127,23 @@ function electricitySelect() {
 function lifetimeSelect() {
   var myList=document.getElementById("myVals");
   input_dict.params.analysis_params.time_horizon = myList.options[myList.selectedIndex].value;
-}     
+}  
+
+function feedstockSelect() {
+  var myList=document.getElementById("myFeedstock");
+  input_dict.params.analysis_params.feedstock = myList.options[myList.selectedIndex].value;
+}   
+
+function ionicLiquidSelect() {
+  var myList=document.getElementById("myILs");
+  input_dict.params.analysis_params.ionic_liquid = myList.options[myList.selectedIndex].value;
+}   
+
+function acidSelect(id) {
+  var myList=document.getElementById(id);
+  process_key = id.replace('_acid', '')
+  input_dict.params[process_key]['acid'] = myList.options[myList.selectedIndex].value;
+}   
 
 $("body").on("change", "input", function(){
     to_replace = event.target.name + '_';
@@ -110,7 +179,6 @@ $("body").on("change", "input", function(){
         input_dict.params[event.target.name][key]['low'] = (1 - parseFloat(document.getElementById(error_id).value)) * input_dict.params[event.target.name][key]['avg'];
         input_dict.params[event.target.name][key]['high'] = (1 + parseFloat(document.getElementById(error_id).value)) * input_dict.params[event.target.name][key]['avg'];
       }}
-      console.log(input_dict)
   });
 
 var run_GHG_button = document.getElementById('buttonGHG');
@@ -161,6 +229,7 @@ $("var").click(function(event) {
 
     var plot_data = [];
     input_dict.model = event.target.id
+    console.log(input_dict)
     $.ajax({
       url: "/ParametersList",
       type: 'POST',
@@ -227,7 +296,7 @@ $("var").click(function(event) {
 
         plot_data.push(trace_marker);
         if (input_dict.model == 'buttonGHG'){
-            y_axis_label = 'kg CO<sub>2</sub>(eq) per MJ';
+            y_axis_label = 'g CO<sub>2</sub>(eq) per MJ';
         }
 
         else if (input_dict.model == 'buttonConsWater'){

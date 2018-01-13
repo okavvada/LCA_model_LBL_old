@@ -16,18 +16,20 @@
   <body>
     <div id="map">
 
+<!-- <input id="file" type="file" /> -->
+
       <var id="buttonGHG" >Run GHG Model</var>
       <var id="buttonConsWater" >Run Consumption Water Model</var>
       <var id="buttonWithWater" >Run Withdrawal Water Model</var>
 
       <button class="accordion">Common Parameters</button>
       <div id = 'common_params' class="panel">
-  <form><span class="tooltip-wrap">time horizon = <span class="tooltip-content">[y] GHG lifetime for assessment</span></span>
+    <form><span class="tooltip-wrap"><strong>GWP time horizon [years] = </strong></span>
           <select id="myVals" onchange="lifetimeSelect()">
                 <option value="100">100</option>
                 <option value="20">20</option>
           </select></form>
-          <form><span class="tooltip-wrap">facility electricity<span class="tooltip-content">[region] of electricity production</span></span>
+    <form><span class="tooltip-wrap"><strong>biorefinary electricity source [region] </strong></span>
             <select id="myList" onchange="electricitySelect()">
                 <option value="US">US</option>
                 <option value="NG">NG</option>
@@ -35,30 +37,53 @@
                 <option value="NG">Coal</option>
                 <option value="Lignin">Lignin</option>
                 <option value="Renewables">Renewables</option>
-                <option value="WECC">WECC</option>
-                <option value="MRO">MRO</option>
-                <option value="SPP">SPP</option>
-                <option value="TRE">TRE</option>
-                <option value="SERC">SERC</option>
-                <option value="RFC">RFC</option>
-                <option value="NPCC">NPCC</option>
-                <option value="FRCC">FRCC</option>
-            </select></form></div><br/>
+                <option value="WECC">WECC Mix</option>
+                <option value="MRO">MRO Mix</option>
+                <option value="SPP">SPP Mix</option>
+                <option value="TRE">TRE Mix</option>
+                <option value="SERC">SERC Mix</option>
+                <option value="RFC">RFC Mix</option>
+                <option value="NPCC">NPCC Mix</option>
+                <option value="FRCC">FRCC Mix</option>
+            </select></form>
+    <form><span class="tooltip-wrap"><strong>feedstock = </strong></span>
+          <select id="myFeedstock" onchange="lifetimeSelect()">
+                <option value="corn_stover">Corn Stover</option>
+          </select></form>
+    <form><span class="tooltip-wrap">ionic liquid = </span>
+          <select id="myILs" onchange="ionicLiquidSelect()">
+                <option value="chlys">[Ch][Lys]</option>
+          </select></form></div><br/>
 
 
       <button class="accordion">Waterwash Process</button>
       <div id = 'waterwash_params' class="panel">
-        <div class="buttonSuperPro" id="SuperPro_waterwash">Use SuperPro Values</div></div><br/>
+        <div class="buttonSuperPro" id="SuperPro_waterwash">Use SuperPro Values</div>
+      <form><span class="tooltip-wrap"><strong>acid selection = </strong></span>
+          <select id="waterwash_acid" onchange="acidSelect('waterwash_acid')">
+                <option value="h2so4">H2SO4</option>
+                <option value="hcl">HCl</option>
+          </select></form></div><br/>
 
 
       <button class="accordion">iHG-Current Process</button>
       <div id = 'iHG-Current_params' class="panel">
-        <div class="buttonSuperPro" id="SuperPro_iHG-Current">Use SuperPro Values</div></div><br/>
+        <div class="buttonSuperPro" id="SuperPro_iHG-Current">Use SuperPro Values</div>
+      <form><span class="tooltip-wrap"><strong>acid selection = </strong></span>
+          <select id="iHG-Current_acid" onchange="acidSelect('iHG-Current_acid')">
+                <option value="hcl">HCl</option>
+                <option value="h2so4">H2SO4</option>
+          </select></form></div><br/>
 
 
       <button class="accordion">iHG-Projected Process</button>
       <div id = 'iHG-Projected_params' class="panel">
-        <div class="buttonSuperPro" id="SuperPro_iHG-Projected">Use SuperPro Values</div></div><br/>
+        <div class="buttonSuperPro" id="SuperPro_iHG-Projected">Use SuperPro Values</div>
+      <form><span class="tooltip-wrap"><strong>acid selection = </strong></span>
+          <select id="iHG-Projected_acid" onchange="acidSelect('iHG-Projected_acid')">
+                <option value="hcl">HCl</option>
+                <option value="h2so4">H2SO4</option>
+          </select></form></div><br/>
 
 
       <div id="chart"></div>
