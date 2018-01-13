@@ -1,5 +1,7 @@
-io_table_physicalunits_path = "io_tables/io_table_physicalunits.csv"
-io_table_physicalunits_water_path = "io_tables/io_table_physicalunits_water.csv"
+# removed process.water.m3 and included data in impact water vectors
+# farmedstover flatbedtruck set to 0 in io_table and instead calculated as parameter in model
+io_table_physicalunits_path = "io_tables/io_table_physicalunits_2.csv"
+io_table_physicalunits_water_path = "io_tables/io_table_physicalunits_2.csv"
 selectivity = ["iHG-Projected", "iHG-Current", "waterwash"]
 # Three ranges for sensitivity:  (a) low; (b) avg; and (c) high  
 scenario_range = ["low", "avg", 'high']
@@ -12,5 +14,7 @@ n2o_filepath = "io_tables/impact_vectors/n2o_impact.csv"
 co2_water_filepath = "io_tables/impact_vectors_water/co2_impact.csv"
 ch4_water_filepath = "io_tables/impact_vectors_water/ch4_impact.csv"
 n2o_water_filepath = "io_tables/impact_vectors_water/n2o_impact.csv"
+
+#updated impact vectors with process.water.m3 from original io_tables/input_output_table_working.xls
 water_consumption_path = "io_tables/impact_vectors_water/water_consumption.csv"
 water_withdrawal_path = "io_tables/impact_vectors_water/water_withdrawal.csv"
