@@ -34,8 +34,8 @@
     "octane_ltr": {"high": 0, "avg": 0, "low": 0, "units": "liter"},
     "electricity_requirements": {"high": 0, "avg": 0, "low": 0, "units": "kWh"}, 
     "electricity_credit": {"high": 0.008, "avg": 0.08, "low": 0.39, "units": "kWh"}, 
-    "biorefinery_direct_consumption": {"high": 7.04, "avg": 6.4, "low": 5.76, "units": "liter"}, 
-    "biorefinery_direct_withdrawal": {"high": 7.04, "avg": 6.4, "low": 5.76, "units": "liter"}},
+    "biorefinery_direct_consumption": {"high": 8.1, "avg": 7.36, "low": 6.6, "units": "liter"},
+    "biorefinery_direct_withdrawal": {"high": 8.1, "avg": 7.36, "low": 6.6, "units": "liter"}},
 "iHG-Projected": 
     {
     "acid": "hcl",
@@ -49,5 +49,5 @@
     "octane_ltr": {"high": 0, "avg": 0, "low": 0, "units": "liter"},
     "electricity_requirements": {"high": 0, "avg": 0, "low": 0, "units": "kWh"}, 
     "electricity_credit": {"high": 0.08, "avg": 0.67, "low": 1.1, "units": "kWh"}, 
-    "biorefinery_direct_consumption": {"high": 7.04, "avg": 6.4, "low": 5.76, "units": "liter"},
-    "biorefinery_direct_withdrawal": {"high": 6.49, "avg": 5.9, "low": 5.31, "units": "liter"}}}
+    "biorefinery_direct_consumption": {"high": 8.1, "avg": 7.36, "low": 6.6, "units": "liter"},
+    "biorefinery_direct_withdrawal": {"high": 8.1, "avg": 7.36, "low": 6.6, "units": "liter"}}}
