@@ -86,7 +86,7 @@ def FinalImpactModel(SP_params, model):
                     hf.FuelCO2kg(hf.FuelConvertMJ(
                         SP_params[selectivity]['octane_ltr'][scenario]/0.789,"gasoline", "liter"), "gasoline"))
 
-
+            
             
             if model == 'buttonGHG':
 
