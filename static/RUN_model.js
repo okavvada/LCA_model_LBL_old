@@ -6,6 +6,7 @@ var analysis_params = {
     }
 
 var processes = ["electricity_credit", "Electricity", "Chemicals_And_Fertilizers", "Petroleum", "Transportation", "Farming", "Direct", "Other"];
+var selectivity = ["iHG-Projected", "iHG-Current", "waterwash"];
 
 
 //     function ReadFile(event) {
@@ -55,6 +56,7 @@ var processes = ["electricity_credit", "Electricity", "Chemicals_And_Fertilizers
 
 // Set parameter values
 var input_dict = {};
+
 $.getJSON( "static/parameter_names.js", function(params_alias) {
     $.getJSON( "static/defaultParams.js", function(default_params) {
         for (pre_process in default_params) {
@@ -83,8 +85,8 @@ $.getJSON( "static/parameter_names.js", function(params_alias) {
             }}
         };
 
-        input_dict.params = default_params;
-        input_dict.params.analysis_params = analysis_params;
+    input_dict.params = default_params;
+    input_dict.params.analysis_params = analysis_params;
     });
 });
 
@@ -137,6 +139,20 @@ function feedstockSelect() {
 function ionicLiquidSelect() {
   var myList=document.getElementById("myILs");
   input_dict.params.analysis_params.ionic_liquid = myList.options[myList.selectedIndex].value;
+  $.getJSON( "static/water_direct_IL.js", function(water_IL) {
+    for (var i = 0; i < selectivity.length; i++) {
+        input_dict.params[selectivity[i]]['biorefinery_direct_consumption']['avg'] = water_IL[input_dict.params.analysis_params['ionic_liquid']][selectivity[i]];
+        input_dict.params[selectivity[i]]['biorefinery_direct_withdrawal']['avg'] = water_IL[input_dict.params.analysis_params['ionic_liquid']][selectivity[i]];
+        document.getElementById(selectivity[i] + '_biorefinery_direct_consumption').value = input_dict.params[selectivity[i]]['biorefinery_direct_consumption']['avg'];
+        document.getElementById(selectivity[i] + '_biorefinery_direct_withdrawal').value = input_dict.params[selectivity[i]]['biorefinery_direct_withdrawal']['avg'];
+        error_id_cons = selectivity[i] + '_error_biorefinery_direct_consumption'
+        error_id_with = selectivity[i] + '_error_biorefinery_direct_withdrawal'
+        input_dict.params[selectivity[i]]['biorefinery_direct_consumption']['low'] = (1 - parseFloat(document.getElementById(error_id_cons).value)) * input_dict.params[selectivity[i]]['biorefinery_direct_consumption']['avg'];
+        input_dict.params[selectivity[i]]['biorefinery_direct_consumption']['high'] = (1 + parseFloat(document.getElementById(error_id_cons).value)) * input_dict.params[selectivity[i]]['biorefinery_direct_consumption']['avg'];
+        input_dict.params[selectivity[i]]['biorefinery_direct_withdrawal']['low'] = (1 - parseFloat(document.getElementById(error_id_with).value)) * input_dict.params[selectivity[i]]['biorefinery_direct_withdrawal']['avg'];
+        input_dict.params[selectivity[i]]['biorefinery_direct_withdrawal']['high'] = (1 + parseFloat(document.getElementById(error_id_with).value)) * input_dict.params[selectivity[i]]['biorefinery_direct_withdrawal']['avg'];
+        }
+    })
 }   
 
 function acidSelect(id) {
