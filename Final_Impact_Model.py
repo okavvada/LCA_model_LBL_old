@@ -63,6 +63,8 @@ def FinalImpactModel(SP_params, model):
             y["csl.kg"] = SP_params[selectivity]['csl.kg'][scenario]/1000 * sugars[SP_params['analysis_params']['feedstock']] * SP_params[selectivity]['feedstock'][scenario]
             y["farmedstover.kg"] = SP_params[selectivity]['feedstock'][scenario]  
             y["dap.kg"] = SP_params[selectivity]['dap.kg'][scenario]/1000 * sugars[SP_params['analysis_params']['feedstock']] * SP_params[selectivity]['feedstock'][scenario]
+            y["lime.kg"] = SP_params[selectivity]['caoh.kg'][scenario]
+            y["naoh.kg"] = SP_params[selectivity]['naoh.kg'][scenario]
             y["naturalgas.MJ"] = SP_params[selectivity]['ng_input_stream_MJ'][scenario] * (hf.FuelConvertMJ(1, "ethanol", "kg"))
             y["gasoline.MJ"] = (hf.FuelConvertMJ(SP_params[selectivity]['octane_ltr'][scenario]/0.789, "gasoline", "liter"))
             y["rail.mt_km"] = ((SP_params[selectivity]['ionicLiquid_amount'][scenario]/1000) * 
@@ -87,7 +89,7 @@ def FinalImpactModel(SP_params, model):
                         SP_params[selectivity]['octane_ltr'][scenario]/0.789,"gasoline", "liter"), "gasoline"))
 
             
-            
+
             if model == 'buttonGHG':
 
                 results_kg_co2e = hf.TotalGHGEmissions(io_data, y,
