@@ -9,51 +9,6 @@ var processes = ["electricity_credit", "Electricity", "Chemicals_And_Fertilizers
 var selectivity = ["iHG-Projected", "iHG-Current", "waterwash"];
 
 
-//     function ReadFile(event) {
-//         var reader = new FileReader();
-//         reader.onload = onReaderLoad;
-//         reader.readAsText(event.target.files[0]);
-//     }
-
-//     function onReaderLoad(event){
-//         console.log(event.target.result);
-//         var obj = JSON.parse(event.target.result);
-//         console.log(obj);
-//     }
-
-
-// $(".buttonSuperPro").click(function(event) {
-//     target_id_super = event.target.id.replace("SuperPro_", '')
-//     file = ReadFile(event)
-//     console.log(file)
-
-    // $.getJSON( "static/test.js", function(super_params) {
-    //     for (item in input_dict.params[target_id_super]) {
-    //         if (input_dict.params[pre_process][item]['avg'] == input_dict.params[pre_process][item]['low']){
-    //             error_value = 0;
-    //         }
-    //         else {
-    //             error_value = Math.round(((input_dict.params[pre_process][item]['avg'] - input_dict.params[pre_process][item]['low'])/input_dict.params[pre_process][item]['avg'])*10)/10
-    //         }
-    //         if (item in super_params){
-    //             input_dict.params[target_id_super][item]['avg'] = super_params[item]
-    //             input_dict.params[target_id_super][item]['low'] = super_params[item] * (1 - error_value)
-    //             input_dict.params[target_id_super][item]['high'] = super_params[item] * (1 + error_value)
-    //         }
-    //         else {
-    //             input_dict.params[target_id_super][item]['avg'] = 0
-    //             input_dict.params[target_id_super][item]['low'] = 0
-    //             input_dict.params[target_id_super][item]['high'] = 0
-    //         }
-    //     }
-    // for (item in input_dict.params[target_id_super]){
-    //     input_val_id = target_id_super + "_" + item;
-    //     input_val = document.getElementById(input_val_id);
-    //     input_val.value = input_dict.params[target_id_super][item]['avg']
-    // }
-//    });
-// });
-
 // Set parameter values
 var input_dict = {};
 
@@ -93,7 +48,9 @@ $.getJSON( "static/parameter_names.js", function(params_alias) {
 
 $(".buttonSuperPro").click(function(event) {
     target_id_super = event.target.id.replace("SuperPro_", '')
-    $.getJSON( "static/test.js", function(super_params) {
+    pre_process = target_id_super
+    path = "static/SuperPro_data_" + target_id_super + ".js"
+    $.getJSON( path, function(super_params) {
         for (item in input_dict.params[target_id_super]) {
             if (input_dict.params[pre_process][item]['avg'] == input_dict.params[pre_process][item]['low']){
                 error_value = 0;
@@ -106,16 +63,36 @@ $(".buttonSuperPro").click(function(event) {
                 input_dict.params[target_id_super][item]['low'] = super_params[item] * (1 - error_value)
                 input_dict.params[target_id_super][item]['high'] = super_params[item] * (1 + error_value)
             }
-            else {
-                input_dict.params[target_id_super][item]['avg'] = 0
-                input_dict.params[target_id_super][item]['low'] = 0
-                input_dict.params[target_id_super][item]['high'] = 0
-            }
         }
     for (item in input_dict.params[target_id_super]){
         input_val_id = target_id_super + "_" + item;
         input_val = document.getElementById(input_val_id);
         input_val.value = input_dict.params[target_id_super][item]['avg']
+    }
+    });
+});
+
+$(".buttonDefault").click(function(event) {
+    target_id_def = event.target.id.replace("default_", '')
+    pre_process = target_id_def
+    $.getJSON( "static/defaultParams.js", function(default_params) {
+        for (item in input_dict.params[target_id_def]) {
+            if (input_dict.params[pre_process][item]['avg'] == input_dict.params[pre_process][item]['low']){
+                error_value = 0;
+            }
+            else {
+                error_value = Math.round(((input_dict.params[pre_process][item]['avg'] - input_dict.params[pre_process][item]['low'])/input_dict.params[pre_process][item]['avg'])*10)/10
+            }
+            if (item in default_params[pre_process]){
+                input_dict.params[target_id_def][item]['avg'] = default_params[pre_process][item]['avg']
+                input_dict.params[target_id_def][item]['low'] = default_params[pre_process][item]['avg'] * (1 - error_value)
+                input_dict.params[target_id_def][item]['high'] = default_params[pre_process][item]['avg'] * (1 + error_value)
+            }
+        }
+    for (item in input_dict.params[target_id_def]){
+        input_val_id = target_id_def + "_" + item;
+        input_val = document.getElementById(input_val_id);
+        input_val.value = input_dict.params[target_id_def][item]['avg']
     }
     });
 });
@@ -245,7 +222,6 @@ $("var").click(function(event) {
 
     var plot_data = [];
     input_dict.model = event.target.id
-    console.log(input_dict)
     $.ajax({
       url: "/ParametersList",
       type: 'POST',

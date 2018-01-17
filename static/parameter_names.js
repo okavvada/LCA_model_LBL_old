@@ -15,6 +15,8 @@
     "electricity_credit": "<strong> electricity credit </strong> <br />[kWh per liter of ethanol]", 
     "dap.kg": "<strong> diammonium phosphate </strong> <br /> [g per kg fermentable sugars]",   
     "csl.kg": "<strong> corn liquor </strong> <br /> [g per kg fermentable sugars]", 
+    "caoh.kg": "<strong> WWT nutrients (lime) </strong> <br /> [kg per kg ethanol]",
+    "naoh.kg": "<strong> Sodium hydroxide (NaOH) </strong> <br /> [kg per kg ethanol]",
     "feedstock": "<strong> feedstock amount </strong> [kg per kg ethanol]",
     "biorefinery_direct_withdrawal": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]"
 }

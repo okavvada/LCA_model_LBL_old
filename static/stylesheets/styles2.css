@@ -11,7 +11,24 @@ html, body {
 .buttonSuperPro {
   position: relative;
   top: -5px;
-  left: 230px;
+  left: 250px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: #4c035e;
+  border-radius: 10px;
+  margin-top: 1px;
+  cursor: pointer;
+  text-align: center;
+  color: #fff;
+  width: 140px;
+  font-size: 14px;
+  transition: 0.4s;
+}
+
+.buttonDefault {
+  position: relative;
+  top: -33px;
+  left: 0px;
   padding-top: 5px;
   padding-bottom: 5px;
   background-color: #4c035e;

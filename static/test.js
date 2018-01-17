@@ -1,1 +1,0 @@
-{"hcl.kg": 5, "chlys_amount": 4, "octane_ltr": 10, "dap.kg": 3}

@@ -1,0 +1,1 @@
+{"caoh.kg": 0.0028006280272911367, "ionicLiquid_amount": 0.005759536937747384, "octane_ltr": 0.0, "csl.kg": 0.03178587256421225, "naoh.kg": 0.0, "dap.kg": 0.0039493979703411845, "cellulase_amount": 0.015982801423022927, "ng_input_stream_MJ": 2.285545458359476, "electricity_requirements": 2.1505645252760015, "feedstock": 5.835110824141689}
