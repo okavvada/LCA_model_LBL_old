@@ -141,7 +141,7 @@ def SuperPro_translate(path, feedstock, fuel):
     ethanol_MJ = ethanol_kg * hhv_ethanol
     ethanol_l = ethanol_kg / density_ethanol
     cellulose_amnt = feedstock_data.cellulose[feedstock]
-    sugar_amnt = feedstock_data.cellulose[feedstock]
+    sugar_amnt = feedstock_data.sugars[feedstock]
 
     final_results = {}
     for key, value in result_units.iteritems():
@@ -150,9 +150,9 @@ def SuperPro_translate(path, feedstock, fuel):
         if key == 'cellulase_amount':
             result = value / (cellulose_amnt * feedstock_amnt)
         if key == 'csl.kg':
-            result = value / (sugar_amnt * feedstock_amnt)
+            result = value / (sugar_amnt * feedstock_amnt) * 1000
         if key == 'dap.kg':
-            result = value / (sugar_amnt * feedstock_amnt)
+            result = value / (sugar_amnt * feedstock_amnt) * 1000
         if key == 'electricity_requirements':
             result = value / ethanol_kg
         if key == 'feedstock':
