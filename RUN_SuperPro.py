@@ -1,13 +1,16 @@
 import SuperPro_data as SP_data
 import json
-import sys
+import argparse, sys
 
-input_path = sys.argv[1]
-feedstock = sys.argv[2]
-process = sys.argv[3]
+parser=argparse.ArgumentParser()
 
+parser.add_argument('--path', help='this is the xls file path')
+parser.add_argument('--feedstock', help='Foo the program')
+parser.add_argument('--preprocess', help='Foo the program')
 
-result = SP_data.SuperPro_translate(input_path, feedstock)
+args=parser.parse_args()
 
-with open('static/SuperPro_data_{}.js'.format(process), 'w') as outfile:
+result = SP_data.SuperPro_translate(args.path, args.feedstock)
+
+with open('static/SuperPro_data_{}.js'.format(args.preprocess), 'w') as outfile:
     json.dump(result, outfile)
