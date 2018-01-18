@@ -70,30 +70,26 @@ def getEthanolProduced(worksheet):
             ethanol_unit = worksheet.cell(row, unit_index).value
     return [ethanol_val, ethanol_unit]
 
-def convertToKg(fuel, ethanol):
+def convertToKg(ethanol):
     unit_str = ethanol[1].replace(' ', '')
     if '(' in unit_str:
         unit_str = unit_str[:unit_str.index('(')]
     elif 'U' in unit_str:
         unit_str = unit_str[:unit_str.index('U')]
-    if fuel == 'ethanol':
-        if unit_str == 'gal':
-            ethanol_kg = ethanol[0] * 3.78 * density_ethanol
+    if unit_str == 'gal':
+        ethanol_kg = ethanol[0] * 3.78 * density_ethanol
 
-        elif unit_str == 'kg':
-            ethanol_kg = ethanol[0]
+    elif unit_str == 'kg':
+        ethanol_kg = ethanol[0]
 
-        elif unit_str == 'l':
-            ethanol_kg = ethanol[0] * density_ethanol
+    elif unit_str == 'l':
+        ethanol_kg = ethanol[0] * density_ethanol
 
-        elif unit_str == 'lb':
-            ethanol_kg = ethanol[0] * 0.453592
+    elif unit_str == 'lb':
+        ethanol_kg = ethanol[0] * 0.453592
 
-        else:
-            print ("units not found")
-            return
     else:
-        print("fuel not found")
+        print ("units not found")
         return
 
     return ethanol_kg
@@ -125,7 +121,7 @@ def setSIUnits(result_json):
         results_units.update({key:real_unit})   
     return results_units
 
-def SuperPro_translate(path, feedstock, fuel):
+def SuperPro_translate(path, feedstock):
     workbook = xlrd.open_workbook(path)
     worksheet = workbook.sheet_by_index(0)
 
@@ -136,7 +132,7 @@ def SuperPro_translate(path, feedstock, fuel):
     result_units = setSIUnits(result_names)
 
     ethanol = getEthanolProduced(worksheet)
-    ethanol_kg = convertToKg(fuel, ethanol)
+    ethanol_kg = convertToKg(ethanol)
     feedstock_amnt = result_units['feedstock']
     ethanol_MJ = ethanol_kg * hhv_ethanol
     ethanol_l = ethanol_kg / density_ethanol
