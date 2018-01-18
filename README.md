@@ -32,7 +32,7 @@ Cellulosic biofuels are a promising option to meet a fraction of the liquid tran
 ## Input Data
 The model is based on an input-output lifecycle assessment (LCA) methodology similar to the one used in the Economic Input-Output LCA (EIO-LCA) but is based on physical units. The below data are required for the assessment. More data can be added to the files to be included in the analysis if necessary.
 
--- input-output data in physical units (`io_table_physicalunits.csv`)
+- input-output data in physical units (`io_table_physicalunits.csv`)
 
 #### Greenhouse Gas Model
 - GHG emission impacts (`impact_vectors/co2_impact.csv`, `impact_vectors/ch4_impact.csv`, `impact_vectors/n2o_impact.csv`)
