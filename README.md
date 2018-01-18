@@ -30,19 +30,23 @@ Cellulosic biofuels are a promising option to meet a fraction of the liquid tran
 
 
 ## Input Data
+The model is based on an input-output lifecycle assessment (LCA) methodology similar to the one used in the Economic Input-Output LCA (EIO-LCA) but is based on physical units. The below data are required for the assessment. More data can be added to the files to be included in the analysis if necessary.
+
+-- input-output data in physical units (`io_table_physicalunits.csv`)
+
 #### Greenhouse Gas Model
-- input-output data in physical units (`io_table_physicalunits.csv`)
 - GHG emission impacts (`impact_vectors/co2_impact.csv`, `impact_vectors/ch4_impact.csv`, `impact_vectors/n2o_impact.csv`)
 
 #### Water Model
-- input-output data in physical units (`io_table_physicalunits_water.csv`)
 - Water consumption impacts (`impact_vectors_water/water_consumption.csv`)
 - Water withdrawal impacts (`impact_vectors_water/water_withdrawal.csv`)
 
 
 ## Modeling Parameters
+The tool allows the user to customize some of the modeling parameters to assess specific biorefinery impacts. The user defined model parameters are described in the user interface and grouped by each pre-processing method. Default values can be assigned to the parameters based on previous work [published](http://pubs.acs.org/doi/abs/10.1021/acssuschemeng.7b02116).
+
 #### Intelligen Inc, SuperPro Designer
-The tool is compatible with outputs from the Intelligen Inc, SuperPro Designer tool. To use the output of the SuperPro tool to set your parameter values please follow the instructions to generate the compatible file before running the `Use SuperPro Values` command. If the compatibility file is not generated an error will appear on the screen. 
+The tool is compatible with the Intelligen Inc, SuperPro Designer tool. To use the output of the SuperPro tool to set your parameter values please follow the instructions to generate the compatible file before running the `Use SuperPro Values` command. If the compatibility file is not generated an error will appear on the screen. 
 
 Steps:
 - Copy a SuperPro output file in the form of `.xls` into the `input_data` folder. 
@@ -54,13 +58,7 @@ The valid options for the arguments are:
 - feedstock: `corn_stover`, `sorgum`
 - pre-processing method: `waterwash`, `iHG-Current`, `iHG-Projected`
 
-## Algorithmic Process
-
-
 
 ## Outputs
-
-
-
-## Webtool
+The output is a graph of the lifecycle GHG impacts for the `GHG model` and water consumption or water withdrawals for the `Water Consumption` or `Water Withdrawal` models respectively. The impacts are grouped by each of the potential pre-processing methods and a breakdown of each of the components contribution can be identified. The resulting figure is interactive and can be downloaded to your local computer.
 
