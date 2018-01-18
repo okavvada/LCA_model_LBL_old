@@ -20,7 +20,7 @@ The tool can be run through docker. After you have installed the dependencies yo
 - Clone the repo
 - Navigate your command prompt inside the repo
 - After you have installed docker, run `docker build -t flask-sample-one:latest .` and `docker run -d -p 5000:5000 flask-sample-one` in your command prompt
-- # Start the server by running `FLASK_DEBUG=1 FLASK_APP=server.py flask run`
+- Start the server by running `FLASK_DEBUG=1 FLASK_APP=server.py flask run`
 - Navigate to `localhost:5000`
 - and Done! Easy!
 
@@ -39,7 +39,7 @@ Cellulosic biofuels are a promising option to meet a fraction of the liquid tran
 - Water consumption impacts (`impact_vectors_water/water_consumption.csv`)
 - Water withdrawal impacts (`impact_vectors_water/water_withdrawal.csv`)
 
-####SuperPro
+#### Intelligen Inc, SuperPro Designer
 The tool is compatible with outputs from the Intelligen Inc, SuperPro Designer tool. To use the output of the SuperPro tool to set your parameter values please follow the instructions to generate the compatible file before running the `Use SuperPro Values` command. If the compatibility file is not generated an error will appear on the screen. 
 
 Steps:
