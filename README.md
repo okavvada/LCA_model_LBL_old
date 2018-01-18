@@ -48,11 +48,11 @@ Steps:
 - Copy a SuperPro output file in the form of `.xls` into the `input_data` folder. 
 - Open your command promp and navigate inside the repository
 - In your command prompt run `python RUN_SuperPro.py 'input_data/your_SuperPro_filename.xls' 'corn_stover' 'waterwash'`
-This will generate a compatibility file for a SuperPro run with `corn stover` as the feedstock and `waterwash` the pre-proceesing step. If you are running for a different feedstock, pre-processing method or fuel please substitute appropriately. The valid options are:
+This will generate a compatibility file for a SuperPro run with `corn stover` as the feedstock and `waterwash` the pre-proceesing step. If you are running for a different feedstock, pre-processing method or fuel please substitute appropriately. 
 
-feedstock: `corn_stover`, `sorgum`
-
-pre-processing method: `waterwash`, `iHG-Current`, `iHG-Projected`
+The valid options for the arguments are:
+- feedstock: `corn_stover`, `sorgum`
+- pre-processing method: `waterwash`, `iHG-Current`, `iHG-Projected`
 
 ## Algorithmic Process
 
