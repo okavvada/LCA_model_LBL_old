@@ -12,13 +12,15 @@ Below are the dependencies for the core model. You do not need to install them s
 - [Numpy](https://docs.scipy.org/doc/numpy-1.10.1/user/install.html)
 - [Pandas](http://pandas.pydata.org/pandas-docs/stable/install.html)
 - [Flask](http://flask.pocoo.org/docs/0.12/installation/)
+- [xlrd](https://pypi.python.org/pypi/xlrd)
+- [unitconvert](https://pypi.python.org/pypi/unitconvert/1.0.3)
 
 ## Start a local instance
 The tool can be run through docker. After you have installed the dependencies you can run a local instance of the webtool. Follow these steps:
 - Clone the repo
 - Navigate your command prompt inside the repo
 - After you have installed docker, run `docker build -t flask-sample-one:latest .` and `docker run -d -p 5000:5000 flask-sample-one` in your command prompt
-- Start the server by running `FLASK_DEBUG=1 FLASK_APP=server.py flask run`
+- # Start the server by running `FLASK_DEBUG=1 FLASK_APP=server.py flask run`
 - Navigate to `localhost:5000`
 - and Done! Easy!
 
@@ -36,6 +38,17 @@ Cellulosic biofuels are a promising option to meet a fraction of the liquid tran
 - input-output data in physical units (`io_table_physicalunits_water.csv`)
 - Water consumption impacts (`impact_vectors_water/water_consumption.csv`)
 - Water withdrawal impacts (`impact_vectors_water/water_withdrawal.csv`)
+
+####SuperPro
+The tool is compatible with outputs from the Intelligen Inc, SuperPro Designer tool. To use the output of the SuperPro tool to set your parameter values please follow the instructions to generate the compatible file before running the `Use SuperPro Values` command. If the compatibility file is not generated an error will appear on the screen. 
+
+Steps:
+- Copy a SuperPro output file in the form of `.xls` into the `input_data` folder. 
+- Open your command promp and navigate inside the repository
+- Run `python RUN_SuperPro.py 'input_data/your_SuperPro_filename.xls' 'corn_stover' 'waterwash'`
+This will generate a compatibility file for a SuperPro run with `corn stover` as the feedstock and `waterwash` the pre proceesing step. If you are running for a different feedstock, pre processing method or fuel please substitute appropriately. The valid options are:
+feedstock: `corn_stover`, `sorgum`
+pre processing method: `waterwash`, `iHG-Current`, `iHG-Projected`
 
 ## Modeling Parameters
 
