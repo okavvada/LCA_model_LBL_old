@@ -47,7 +47,7 @@ The tool is compatible with outputs from the Intelligen Inc, SuperPro Designer t
 Steps:
 - Copy a SuperPro output file in the form of `.xls` into the `input_data` folder. 
 - Open your command promp and navigate inside the repository
-- In your command prompt run `python RUN_SuperPro.py 'input_data/your_SuperPro_filename.xls' 'corn_stover' 'waterwash'`
+- In your command prompt run `python RUN_SuperPro.py --path=input_data/CornStover-to-EtOH-waterwash.xls --feedstock=corn_stover --preprocess=waterwash`
 This will generate a compatibility file for a SuperPro run with `corn stover` as the feedstock and `waterwash` the pre-proceesing step. If you are running for a different feedstock, pre-processing method or fuel please substitute appropriately. 
 
 The valid options for the arguments are:
