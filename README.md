@@ -39,6 +39,8 @@ Cellulosic biofuels are a promising option to meet a fraction of the liquid tran
 - Water consumption impacts (`impact_vectors_water/water_consumption.csv`)
 - Water withdrawal impacts (`impact_vectors_water/water_withdrawal.csv`)
 
+
+## Modeling Parameters
 #### Intelligen Inc, SuperPro Designer
 The tool is compatible with outputs from the Intelligen Inc, SuperPro Designer tool. To use the output of the SuperPro tool to set your parameter values please follow the instructions to generate the compatible file before running the `Use SuperPro Values` command. If the compatibility file is not generated an error will appear on the screen. 
 
@@ -46,12 +48,9 @@ Steps:
 - Copy a SuperPro output file in the form of `.xls` into the `input_data` folder. 
 - Open your command promp and navigate inside the repository
 - Run `python RUN_SuperPro.py 'input_data/your_SuperPro_filename.xls' 'corn_stover' 'waterwash'`
-This will generate a compatibility file for a SuperPro run with `corn stover` as the feedstock and `waterwash` the pre proceesing step. If you are running for a different feedstock, pre processing method or fuel please substitute appropriately. The valid options are:
+This will generate a compatibility file for a SuperPro run with `corn stover` as the feedstock and `waterwash` the pre-proceesing step. If you are running for a different feedstock, pre-processing method or fuel please substitute appropriately. The valid options are:
 feedstock: `corn_stover`, `sorgum`
-pre processing method: `waterwash`, `iHG-Current`, `iHG-Projected`
-
-## Modeling Parameters
-
+pre-processing method: `waterwash`, `iHG-Current`, `iHG-Projected`
 
 ## Algorithmic Process
 
