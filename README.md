@@ -41,7 +41,7 @@ Cellulosic biofuels are a promising option to meet a fraction of the liquid tran
 
 
 ## Modeling Parameters
-#### Intelligen Inc, SuperPro Designer
+### Intelligen Inc, SuperPro Designer
 The tool is compatible with outputs from the Intelligen Inc, SuperPro Designer tool. To use the output of the SuperPro tool to set your parameter values please follow the instructions to generate the compatible file before running the `Use SuperPro Values` command. If the compatibility file is not generated an error will appear on the screen. 
 
 Steps:
