@@ -50,7 +50,7 @@ $(".buttonSuperPro").click(function(event) {
     target_id_super = event.target.id.replace("SuperPro_", '')
     pre_process = target_id_super
     path = "static/SuperPro_data_" + target_id_super + ".js"
-    $.getJSON( path, function(super_params) {
+    $.getJSON(path).done(function(super_params) {
         for (item in input_dict.params[target_id_super]) {
             if (input_dict.params[pre_process][item]['avg'] == input_dict.params[pre_process][item]['low']){
                 error_value = 0;
@@ -69,13 +69,13 @@ $(".buttonSuperPro").click(function(event) {
         input_val = document.getElementById(input_val_id);
         input_val.value = input_dict.params[target_id_super][item]['avg']
     }
-    });
+    }).fail(function(){alert("The SuperPro data is not formated correctly. Run the `RUN_SuperPro.py` first to generate the .js file in the static folder. For more details see documentation.")});
 });
 
 $(".buttonDefault").click(function(event) {
     target_id_def = event.target.id.replace("default_", '')
     pre_process = target_id_def
-    $.getJSON( "static/defaultParams.js", function(default_params) {
+    $.getJSON("static/defaultParams.js", function(default_params) {
         for (item in input_dict.params[target_id_def]) {
             if (input_dict.params[pre_process][item]['avg'] == input_dict.params[pre_process][item]['low']){
                 error_value = 0;
