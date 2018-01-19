@@ -1,7 +1,6 @@
 # removed process.water.m3 and included data in impact water vectors
 # farmedstover flatbedtruck set to 0 in io_table and instead calculated as parameter in model
-io_table_physicalunits_path = "io_tables/io_table_physicalunits_2.csv"
-io_table_physicalunits_water_path = "io_tables/io_table_physicalunits_2.csv"
+io_table_physicalunits_path = "io_tables/io_table_physicalunits.csv"
 selectivity = ["iHG-Projected", "iHG-Current", "waterwash"]
 # Three ranges for sensitivity:  (a) low; (b) avg; and (c) high  
 scenario_range = ["low", "avg", 'high']

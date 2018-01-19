@@ -5,8 +5,7 @@ import helper_functions as hf
 from unit_conversions_and_mw.feedstock_conversions import *
 
 
-io_data_GHG = pd.read_csv(P.io_table_physicalunits_path).fillna(0)
-io_data_water = pd.read_csv(P.io_table_physicalunits_water_path).fillna(0)
+io_data = pd.read_csv(P.io_table_physicalunits_path).fillna(0)
 water_consumption = hf.csv_dict_list(P.water_consumption_path)
 water_withdrawal = hf.csv_dict_list(P.water_withdrawal_path)
 # Ethanol produciton functional unit (1 kg of ethanol)
@@ -34,11 +33,6 @@ def FinalImpactModel(SP_params, model):
     #  The net GHG emissions (kg CO2e) for the product life cycle by sector for model = 'buttonGHG'
     #  The net consumption water impacts (liters) for the product life cycle by sector for model = 'buttonConsWater'
     #  The net withdrawal water impacts (liters) for the product life cycle by sector for model = 'buttonWithWater'
-    if model == 'buttonGHG':
-        io_data = io_data_GHG
-
-    elif (model == 'buttonConsWater') or (model == 'buttonWithWater'):
-        io_data = io_data_water
 
     m = dict(m2)
     y = {}
