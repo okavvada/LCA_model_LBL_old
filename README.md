@@ -19,8 +19,8 @@ Below are the dependencies for the core model. You do not need to install them s
 The tool can be run through docker. After you have installed the dependencies you can run a local instance of the webtool. Follow these steps:
 - Clone the repo
 - Navigate your command prompt inside the repo
-- After you have installed docker, run `docker build -t flask-sample-one:latest .` and `docker run -d -p 5000:5000 flask-sample-one` in your command prompt
-- Start the server by running `FLASK_DEBUG=1 FLASK_APP=server.py flask run`
+- After you have installed docker, generate a docker image by running `docker build -t flask-sample-one:latest .` in your command prompt
+- Start your container by running `docker run -d -p 5000:5000 flask-sample-one` in your command prompt
 - Navigate to `localhost:5000`
 - and Done! Easy!
 
@@ -40,7 +40,6 @@ The model is based on an input-output lifecycle assessment (LCA) methodology sim
 #### Water Model
 - Water consumption impacts (`impact_vectors_water/water_consumption.csv`)
 - Water withdrawal impacts (`impact_vectors_water/water_withdrawal.csv`)
-
 
 ## Modeling Parameters
 The tool allows the user to customize some of the modeling parameters to assess specific biorefinery impacts. The user defined model parameters are described in the user interface and grouped by each pre-processing method. Default values can be assigned to the parameters based on previous work [published](http://pubs.acs.org/doi/abs/10.1021/acssuschemeng.7b02116).
