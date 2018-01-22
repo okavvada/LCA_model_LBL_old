@@ -3,9 +3,7 @@
 Refer to the [publication](http://pubs.acs.org/doi/abs/10.1021/acssuschemeng.7b02116) for more details on the modeling and life-cycle accounting process.
 
 ## Model Dependencies
-The core of the LCA-TEA model is written in Python 2.7. The model can be run through docker. Docker will take care of the dependencies and will create an instance of the tool locally on your computer. Please install docker to be able to run the model.
-
-[Docker](https://docs.docker.com/docker-for-mac/install/)
+The core of the LCA-TEA model is written in Python 2.7. The model can be run through docker. Docker will take care of the dependencies and will create an instance of the tool locally on your computer. Please install [Docker](https://docs.docker.com/docker-for-mac/install/) to be able to run the model.
 
 
 ## Start a local instance
