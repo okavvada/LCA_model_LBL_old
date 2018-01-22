@@ -7,13 +7,6 @@ The core of the LCA-TEA model is written in Python 2.7. The model can be run thr
 
 [Docker](https://docs.docker.com/docker-for-mac/install/)
 
-Below are the dependencies for the core model. You do not need to install them separately as they are installed for you through docker.
-- [Python](https://www.python.org/download/releases/2.7/)
-- [Numpy](https://docs.scipy.org/doc/numpy-1.10.1/user/install.html)
-- [Pandas](http://pandas.pydata.org/pandas-docs/stable/install.html)
-- [Flask](http://flask.pocoo.org/docs/0.12/installation/)
-- [xlrd](https://pypi.python.org/pypi/xlrd)
-- [unitconvert](https://pypi.python.org/pypi/unitconvert/1.0.3)
 
 ## Start a local instance
 The tool can be run through docker. After you have installed the dependencies you can run a local instance of the webtool. Follow these steps:
