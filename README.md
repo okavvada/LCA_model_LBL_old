@@ -8,11 +8,11 @@ The core of the LCA-TEA model is written in Python 2.7. The model can be run thr
 
 ## Start a local instance
 The tool can be run through docker. After you have installed the dependencies you can run a local instance of the webtool. Follow these steps:
-- Clone the repo
-- Navigate your command prompt inside the repo
-- After you have installed docker, generate a docker image by running `docker build -t flask-sample-one:latest .` in your command prompt
-- Start your container by running `docker run -d -p 5000:5000 flask-sample-one` in your command prompt
-- Navigate to `localhost:5000`
+- Clone this repository
+- Navigate your terminal inside the repository
+- After you have installed docker, generate a docker image by running `docker build -t flask-sample-one:latest .` in your terminal
+- Start your container by running `docker run -d -p 5000:5000 flask-sample-one` in your terminal
+- Navigate to `localhost:5000` in Chrome or your favorite browser 
 - and Done! Easy!
 
 
@@ -40,8 +40,8 @@ The tool is compatible with the Intelligen Inc, SuperPro Designer tool. To use t
 
 Steps:
 - Copy a SuperPro output file in the form of `.xls` into the `input_data` folder. 
-- Open your command promp and navigate inside the repository
-- In your command prompt run `python RUN_SuperPro.py --path=input_data/CornStover-to-EtOH-waterwash.xls --feedstock=corn_stover --preprocess=waterwash`
+- Open your terminal and navigate inside the repository
+- In your terminal run `python RUN_SuperPro.py --path=input_data/CornStover-to-EtOH-waterwash.xls --feedstock=corn_stover --preprocess=waterwash`
 This will generate a compatibility file for a SuperPro run with `corn stover` as the feedstock and `waterwash` the pre-proceesing step. If you are running for a different feedstock, pre-processing method or fuel please substitute appropriately. 
 
 The valid options for the arguments are:
