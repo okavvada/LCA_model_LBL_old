@@ -8,10 +8,10 @@ The core of the LCA-TEA model is written in Python 2.7. The model can be run thr
 
 ## Start a local instance
 The tool can be run through docker. After you have installed the dependencies you can run a local instance of the webtool. Follow these steps:
+- Install [Docker](https://docs.docker.com/docker-for-mac/install/) to be able to run the model.
 - Clone this repository.
 - Navigate your terminal inside the repository.
-- After you have installed docker, generate a docker image by running:
-`docker build -t flask-lca-tea-model:latest .`. You only need to perform this stem ONCE. Only the first time you install the LCA-TEA model. To run the model go to the next step.
+- Generate a docker image by running `docker build -t flask-lca-tea-model:latest .` in your terminal. You only need to perform this stem ONCE. Only the first time you install the LCA-TEA model. To run the model go to the next step.
 - Start your container by running `docker run -d -p 5000:5000 flask-lca-tea-model` in your terminal.
 - Navigate to `localhost:5000` in Chrome or your favorite browser.
 - and Done! Easy!
