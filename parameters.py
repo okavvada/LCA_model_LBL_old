@@ -5,6 +5,9 @@ selectivity = ["iHG-Projected", "iHG-Current", "waterwash"]
 # Three ranges for sensitivity:  (a) low; (b) avg; and (c) high  
 scenario_range = ["low", "avg", 'high']
 processes = ["electricity_credit", "Farming", "Transportation", "Petroleum", "Electricity", "Chemicals_And_Fertilizers", "Direct", "Other"]
+sections = ["Feedstock Supply Logistics", "Feedstock Handling and Preparation", "Transportation", "IL Pretreatment",
+			"Enzymatic Hydrolysis and Fermentation", "Recovery and Separation", "Hydrogeneration and Oligomerization",
+			"Wastewater Treatment", "Lignin Utilization", "Byproducts"]
 energy_content_path = "unit_conversions_and_mw/energy_content_by_mass_and_volume.csv"
 fuel_aliases_path = "unit_conversions_and_mw/fuel_aliases.csv"
 co2_filepath = "io_tables/impact_vectors/co2_impact.csv"

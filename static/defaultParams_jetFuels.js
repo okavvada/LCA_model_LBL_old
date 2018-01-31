@@ -1,0 +1,81 @@
+{"All":{
+"Feedstock Supply Logistics": {
+        "feedstock": {"high": 5.17, "avg": 4.7, "low": 4.23, "units": "kg per kg ethanol"},
+    },
+    "Feedstock Handling and Preparation": {
+        "electricity": {"high": 5.17, "avg": 4.7, "low": 4.23, "units": "kg per kg ethanol"},
+    },
+    "Transportation": {
+        "feedstock_distribution_rail": {"high": 0, "avg": 0, "low": 0, "units": "km"}, 
+        "feedstock_distribution_truck": {"high": 72, "avg": 80, "low": 88, "units": "km"},
+        "IL_rail_km": {"high": 160, "avg": 160, "low": 160, "units": "km"},
+        "IL_flatbedtruck_mt_km": {"high": 80, "avg": 80, "low": 80, "units": "km"},
+        "etoh_distribution_rail": {"high": 150, "avg": 135, "low": 120, "units": "km"},
+        "etoh_distribution_truck": {"high": 55, "avg": 50, "low": 45, "units": "km"},
+    }
+    "IL Pretreatment": {
+        "electricity": {"high": 5.17, "avg": 4.7, "low": 4.23, "units": "kg per kg ethanol"},
+        "ionicLiquid_amount": {"high": 0, "avg": 0, "low": 0, "units": "km"}, 
+        "acid.kg": {"high": 72, "avg": 80, "low": 88, "units": "km"},
+        "water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+        "steam_low": {"high": 72, "avg": 80, "low": 88, "units": "kg"},
+        "steam_high": {"high": 72, "avg": 80, "low": 88, "units": "kg"},
+        "cooling_water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+        "chilled_water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+    },
+    "Enzymatic Hydrolysis and Fermentation": {
+        "electricity": {"high": 5.17, "avg": 4.7, "low": 4.23, "units": "kg per kg ethanol"},
+        "cellulase_amount": {"high": 0.015, "avg": 0.018, "low": 0.022, "units": "kg protein per kg cellulose"}, 
+        "dap.kg": {"high": 0.033, "avg": 0.037, "low": 0.041, "units": "g per kg sugar"}, 
+        "csl.kg": {"high": 0.17, "avg": 0.18, "low": 0.20, "units": "g per kg sugar"}, 
+        "water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+        "steam_low": {"high": 72, "avg": 80, "low": 88, "units": "kg"},
+        "steam_high": {"high": 72, "avg": 80, "low": 88, "units": "kg"},
+        "cooling_water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+        "chilled_water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+        "direct_GHG": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+    },
+    "Recovery and Separation": {
+        "electricity": {"high": 5.17, "avg": 4.7, "low": 4.23, "units": "kg per kg ethanol"},
+        "water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+        "steam_low": {"high": 72, "avg": 80, "low": 88, "units": "kg"},
+        "steam_high": {"high": 72, "avg": 80, "low": 88, "units": "kg"},
+        "cooling_water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+        "chilled_water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+    },
+    "Hydrogeneration and Oligomerization": {
+        "electricity": {"high": 5.17, "avg": 4.7, "low": 4.23, "units": "kg per kg ethanol"},
+        "hydrogen": {"high": 0.015, "avg": 0.018, "low": 0.022, "units": "kg per kg ethanol"}, 
+        "chemicals": {"high": 0.015, "avg": 0.018, "low": 0.022, "units": "kg per kg ethanol"},
+        "water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+        "steam_low": {"high": 72, "avg": 80, "low": 88, "units": "kg"},
+        "steam_high": {"high": 72, "avg": 80, "low": 88, "units": "kg"},
+        "cooling_water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+        "chilled_water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+    },
+    "Wastewater Treatment": {
+        "electricity": {"high": 5.17, "avg": 4.7, "low": 4.23, "units": "kg per kg ethanol"},
+        "naoh.kg": {"high": 0, "avg": 0, "low": 0, "units": "kg"},
+        "water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+        "steam_low": {"high": 72, "avg": 80, "low": 88, "units": "kg"},
+        "steam_high": {"high": 72, "avg": 80, "low": 88, "units": "kg"},
+        "cooling_water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+        "chilled_water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+    },
+    "Lignin Utilization": {
+        "electricity": {"high": 5.17, "avg": 4.7, "low": 4.23, "units": "kg per kg ethanol"},
+        "ng_input_stream_MJ": {"high": 0, "avg": 0, "low": 0, "units": "kg"}, 
+        "chemicals": {"high": 0.015, "avg": 0.018, "low": 0.022, "units": "kg per kg ethanol"},
+        "water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+        "steam_low": {"high": 72, "avg": 80, "low": 88, "units": "kg"},
+        "steam_high": {"high": 72, "avg": 80, "low": 88, "units": "kg"},
+        "cooling_water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+        "chilled_water": {"high": 72, "avg": 80, "low": 88, "units": "L"},
+    },
+    "Byproducts": {
+        "process steam": {"high": 5.17, "avg": 4.7, "low": 4.23, "units": "kg per kg ethanol"},
+        "electricity_credit": {"high": 0, "avg": 0, "low": 0, "units": "kg"}, 
+        "water": {"high": 0.015, "avg": 0.018, "low": 0.022, "units": "kg per kg ethanol"},
+    }
+}
+}

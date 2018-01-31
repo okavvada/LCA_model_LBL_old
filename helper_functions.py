@@ -229,77 +229,80 @@ def TotalWaterImpacts(io_data, y, water_consumption, biorefinery_direct_consumpt
     return io_water_results_kg_df
 
 
-def AggregateResults(m, results_kg_co2e, selectivity, scenario):
-    # Category 1 : "Farming" 
-    m[scenario][selectivity].loc['Farming'] = results_kg_co2e["farmedstover.kg"]
-    
-    # Category 2 : "Transportation" 
-    m[scenario][selectivity].loc['Transportation'] = sum([results_kg_co2e["flatbedtruck.mt_km"], 
-                                              results_kg_co2e["tankertruck.mt_km"],
-                                              results_kg_co2e["rail.mt_km"],
-                                              results_kg_co2e["gaspipeline.mt_km"],
-                                              results_kg_co2e["liquidpipeline.mt_km"],
-                                              results_kg_co2e["barge.mt_km"],
-                                              results_kg_co2e["marinetanker.mt_km"]])
-    
-    # Category 3 : "Petroleum Products" 
-    m[scenario][selectivity].loc['Petroleum'] = sum([results_kg_co2e["diesel.MJ"], 
-                                              results_kg_co2e["rfo.MJ"],
-                                              results_kg_co2e["refgas.MJ"],
-                                              results_kg_co2e["gasoline.MJ"],
-                                              results_kg_co2e["crudeoil.MJ"],
-                                              results_kg_co2e["coal.MJ"],
-                                              results_kg_co2e["naturalgas.MJ"]])
-    
-    # Category 4: "Electricity" 
-    m[scenario][selectivity].loc['Electricity'] = sum([results_kg_co2e["electricity.NG.kWh"], 
-                                              results_kg_co2e["electricity.NGCC.kWh"],
-                                              results_kg_co2e["electricity.Coal.kWh"],
-                                              results_kg_co2e["electricity.Lignin.kWh"],
-                                              results_kg_co2e["electricity.Renewables.kWh"],
-                                              results_kg_co2e["electricity.WECC.kWh"],
-                                              results_kg_co2e["electricity.MRO.kWh"],
-                                              results_kg_co2e["electricity.SPP.kWh"],
-                                              results_kg_co2e["electricity.TRE.kWh"],
-                                              results_kg_co2e["electricity.SERC.kWh"],
-                                              results_kg_co2e["electricity.RFC.kWh"],
-                                              results_kg_co2e["electricity.NPCC.kWh"],
-                                              results_kg_co2e["electricity.US.kWh"],
-                                              results_kg_co2e["electricity.FRCC.kWh"],
-                                              results_kg_co2e["electricity.china.kWh"]])
-    
-    # Category 5:   "Chemicals and Fertilizers"
-    m[scenario][selectivity].loc['Chemicals_And_Fertilizers'] = sum([results_kg_co2e["n.kg"], 
-                                              results_kg_co2e["hcl.kg"],
-                                              results_kg_co2e["dap.kg"],
-                                              results_kg_co2e["k2o.kg"],
-                                              results_kg_co2e["p2o5.kg"],
-                                              results_kg_co2e["cellulase.kg"],
-                                              results_kg_co2e["atrazine.kg"],
-                                              results_kg_co2e["nacl.kg"],
-                                              results_kg_co2e["urea.kg"],
-                                              results_kg_co2e["insecticide.kg"],
-                                              results_kg_co2e["h2so4.kg"],
-                                              results_kg_co2e["naoh.kg"],
-                                              results_kg_co2e["ammonia.kg"],
-                                              results_kg_co2e["ethylene.MJ"],
-                                              results_kg_co2e["caco3.kg"],
-                                              results_kg_co2e["lysine.us.kg"],
-                                              results_kg_co2e["methanol.kg"],
-                                              results_kg_co2e["glucose.kg"],
-                                              results_kg_co2e["corn.bushel"],
-                                              results_kg_co2e["corn_starch.kg"]])
+def AggregateResults(m, results_kg_co2e, selectivity, scenario, section):
+    if section == 'All':
+        # Category 1 : "Farming" 
+        m[scenario][selectivity].loc['Farming'] = results_kg_co2e["farmedstover.kg"]
+        
+        # Category 2 : "Transportation" 
+        m[scenario][selectivity].loc['Transportation'] = sum([results_kg_co2e["flatbedtruck.mt_km"], 
+                                                  results_kg_co2e["tankertruck.mt_km"],
+                                                  results_kg_co2e["rail.mt_km"],
+                                                  results_kg_co2e["gaspipeline.mt_km"],
+                                                  results_kg_co2e["liquidpipeline.mt_km"],
+                                                  results_kg_co2e["barge.mt_km"],
+                                                  results_kg_co2e["marinetanker.mt_km"]])
+        
+        # Category 3 : "Petroleum Products" 
+        m[scenario][selectivity].loc['Petroleum'] = sum([results_kg_co2e["diesel.MJ"], 
+                                                  results_kg_co2e["rfo.MJ"],
+                                                  results_kg_co2e["refgas.MJ"],
+                                                  results_kg_co2e["gasoline.MJ"],
+                                                  results_kg_co2e["crudeoil.MJ"],
+                                                  results_kg_co2e["coal.MJ"],
+                                                  results_kg_co2e["naturalgas.MJ"]])
+        
+        # Category 4: "Electricity" 
+        m[scenario][selectivity].loc['Electricity'] = sum([results_kg_co2e["electricity.NG.kWh"], 
+                                                  results_kg_co2e["electricity.NGCC.kWh"],
+                                                  results_kg_co2e["electricity.Coal.kWh"],
+                                                  results_kg_co2e["electricity.Lignin.kWh"],
+                                                  results_kg_co2e["electricity.Renewables.kWh"],
+                                                  results_kg_co2e["electricity.WECC.kWh"],
+                                                  results_kg_co2e["electricity.MRO.kWh"],
+                                                  results_kg_co2e["electricity.SPP.kWh"],
+                                                  results_kg_co2e["electricity.TRE.kWh"],
+                                                  results_kg_co2e["electricity.SERC.kWh"],
+                                                  results_kg_co2e["electricity.RFC.kWh"],
+                                                  results_kg_co2e["electricity.NPCC.kWh"],
+                                                  results_kg_co2e["electricity.US.kWh"],
+                                                  results_kg_co2e["electricity.FRCC.kWh"],
+                                                  results_kg_co2e["electricity.china.kWh"]])
+        
+        # Category 5:   "Chemicals and Fertilizers"
+        m[scenario][selectivity].loc['Chemicals_And_Fertilizers'] = sum([results_kg_co2e["n.kg"], 
+                                                  results_kg_co2e["hcl.kg"],
+                                                  results_kg_co2e["dap.kg"],
+                                                  results_kg_co2e["k2o.kg"],
+                                                  results_kg_co2e["p2o5.kg"],
+                                                  results_kg_co2e["cellulase.kg"],
+                                                  results_kg_co2e["atrazine.kg"],
+                                                  results_kg_co2e["nacl.kg"],
+                                                  results_kg_co2e["urea.kg"],
+                                                  results_kg_co2e["insecticide.kg"],
+                                                  results_kg_co2e["h2so4.kg"],
+                                                  results_kg_co2e["naoh.kg"],
+                                                  results_kg_co2e["ammonia.kg"],
+                                                  results_kg_co2e["ethylene.MJ"],
+                                                  results_kg_co2e["caco3.kg"],
+                                                  results_kg_co2e["lysine.us.kg"],
+                                                  results_kg_co2e["methanol.kg"],
+                                                  results_kg_co2e["glucose.kg"],
+                                                  results_kg_co2e["corn.bushel"],
+                                                  results_kg_co2e["corn_starch.kg"]])
 
-    #Direct emissions at the biorefinery facility
-    m[scenario][selectivity].loc['Direct'] = results_kg_co2e["direct"]
+        #Direct emissions at the biorefinery facility
+        m[scenario][selectivity].loc['Direct'] = results_kg_co2e["direct"]
 
-    #Others
-    m[scenario][selectivity].loc['Other'] = (round(sum(results_kg_co2e.values()),3) -
-        round(sum([m[scenario][selectivity].loc['Farming'],
-                        m[scenario][selectivity].loc['Transportation'],
-                        m[scenario][selectivity].loc['Petroleum'],
-                        m[scenario][selectivity].loc['Electricity'],
-                        m[scenario][selectivity].loc['Chemicals_And_Fertilizers'],
-                        m[scenario][selectivity].loc['Direct']]),3))
+        #Others
+        m[scenario][selectivity].loc['Other'] = (round(sum(results_kg_co2e.values()),3) -
+            round(sum([m[scenario][selectivity].loc['Farming'],
+                            m[scenario][selectivity].loc['Transportation'],
+                            m[scenario][selectivity].loc['Petroleum'],
+                            m[scenario][selectivity].loc['Electricity'],
+                            m[scenario][selectivity].loc['Chemicals_And_Fertilizers'],
+                            m[scenario][selectivity].loc['Direct']]),3))
+    else:
+        m[scenario][selectivity][section] = sum(results_kg_co2e.values())
 
-    
+
