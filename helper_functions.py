@@ -120,6 +120,28 @@ def FuelCO2kg(MJ_fuel_in, fuel_type):
         return
     return fuel_CO2
 
+def CooledWaterCO2kg(cooled_type):
+    # Provides the fossil CO2 emissions (kg) for cooling water or heating steam
+    # of a given volume equivalent
+    #
+    # Args:
+    #  cooled_type: string indicating the water type (cooling_water, chilled_water, 
+    # steam_low, steam_high) 
+    
+    # Numeric coefficients carbon emissions per L of water
+    waters = {
+        'cooling_water': 5,
+        'chilled_water': 5,
+        'steam_low': 5,
+        'steam_high': 5}
+
+    if cooled_type in waters.keys():
+        water_CO2 = waters[cooled_type]
+    else:
+        print ("water not found")
+        return
+    return water_CO2
+
 
 def GHGImpactVectorSum(time_horizon):
     # Computes an impact vector equal to the total kg co2 equivalents per physical 
@@ -166,7 +188,7 @@ def IOSolutionPhysicalUnits(A, y):
     return solution
 
 
-def TotalGHGEmissions(io_data, y, biorefinery_direct_ghg, time_horizon):
+def TotalGHGEmissions(io_data, y, biorefinery_direct_ghg, cooled_water_ghg, time_horizon):
     # Returns a vector of of all GHG emissions in the form of kg CO2e
     #
     # Args:
@@ -193,8 +215,8 @@ def TotalGHGEmissions(io_data, y, biorefinery_direct_ghg, time_horizon):
         y_array.append(y[item])
 
     io_ghg_results_kg = IOSolutionPhysicalUnits(A, y_array) * GHGImpactVectorSum(time_horizon)
-    io_ghg_results_kg = np.append(io_ghg_results_kg,[biorefinery_direct_ghg])
-    rownames = np.append(io_data.products.values, ['direct'])
+    io_ghg_results_kg = np.append(io_ghg_results_kg,[biorefinery_direct_ghg, cooled_water_ghg])
+    rownames = np.append(io_data.products.values, ['direct', 'cooled_water_and_steam'])
     io_ghg_results_kg_df = pd.DataFrame(io_ghg_results_kg, columns = ['ghg_results_kg'])
     io_ghg_results_kg_df['products'] = rownames
     return io_ghg_results_kg_df
@@ -229,8 +251,8 @@ def TotalWaterImpacts(io_data, y, water_consumption, biorefinery_direct_consumpt
     return io_water_results_kg_df
 
 
-def AggregateResults(m, results_kg_co2e, selectivity, scenario, section):
-    if section == 'All':
+def AggregateResults(m, results_kg_co2e, selectivity, scenario, fuel):
+    if fuel == 'ethanol':
         # Category 1 : "Farming" 
         m[scenario][selectivity].loc['Farming'] = results_kg_co2e["farmedstover.kg"]
         
@@ -303,6 +325,6 @@ def AggregateResults(m, results_kg_co2e, selectivity, scenario, section):
                             m[scenario][selectivity].loc['Chemicals_And_Fertilizers'],
                             m[scenario][selectivity].loc['Direct']]),3))
     else:
-        m[scenario][selectivity][section] = sum(results_kg_co2e.values())
+        m[scenario]['All'][selectivity] = sum(results_kg_co2e.values())
 
 

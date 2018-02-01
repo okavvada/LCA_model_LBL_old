@@ -1,13 +1,13 @@
 # removed process.water.m3 and included data in impact water vectors
 # farmedstover flatbedtruck set to 0 in io_table and instead calculated as parameter in model
 io_table_physicalunits_path = "io_tables/io_table_physicalunits.csv"
-selectivity = ["iHG-Projected", "iHG-Current", "waterwash"]
+selectivity = ["iHG-Current","iHG-Projected", "waterwash"]
 # Three ranges for sensitivity:  (a) low; (b) avg; and (c) high  
 scenario_range = ["low", "avg", 'high']
 processes = ["electricity_credit", "Farming", "Transportation", "Petroleum", "Electricity", "Chemicals_And_Fertilizers", "Direct", "Other"]
-sections = ["Feedstock Supply Logistics", "Feedstock Handling and Preparation", "Transportation", "IL Pretreatment",
-			"Enzymatic Hydrolysis and Fermentation", "Recovery and Separation", "Hydrogeneration and Oligomerization",
-			"Wastewater Treatment", "Lignin Utilization", "Byproducts"]
+sections = ["Feedstock_Supply_Logistics", "Feedstock_Handling_and_Preparation", "Transportation", "IL_Pretreatment",
+			"Enzymatic_Hydrolysis_and_Fermentation", "Recovery_and_Separation", "Hydrogeneration_and_Oligomerization",
+			"Wastewater_Treatment", "Lignin_Utilization", "Byproducts"]
 energy_content_path = "unit_conversions_and_mw/energy_content_by_mass_and_volume.csv"
 fuel_aliases_path = "unit_conversions_and_mw/fuel_aliases.csv"
 co2_filepath = "io_tables/impact_vectors/co2_impact.csv"

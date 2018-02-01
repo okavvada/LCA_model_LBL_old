@@ -2,18 +2,127 @@ var analysis_params = {
     'time_horizon': 100,
     'facility_electricity': 'US',
     'ionic_liquid': 'chlys',
-    'feedstock': 'corn_stover'
+    'feedstock': 'corn_stover',
+    'fuel': 'ethanol'
     }
+
+var common_params = {
+  "IL_rail_km": {"high": 160, "avg": 160, "low": 160, "units": "km"},
+    "IL_flatbedtruck_mt_km": {"high": 80, "avg": 80, "low": 80, "units": "km"},
+    "etoh_distribution_rail": {"high": 150, "avg": 135, "low": 120, "units": "km"},
+    "etoh_distribution_truck": {"high": 55, "avg": 50, "low": 45, "units": "km"},
+    "feedstock_distribution_rail": {"high": 0, "avg": 0, "low": 0, "units": "km"}, 
+    "feedstock_distribution_truck": {"high": 72, "avg": 80, "low": 88, "units": "km"}}
+
 
 var processes = ["electricity_credit", "Electricity", "Chemicals_And_Fertilizers", "Petroleum", "Transportation", "Farming", "Direct", "Other"];
 var selectivity = ["iHG-Projected", "iHG-Current", "waterwash"];
+var parameter_path = "static/defaultParams.js";
+var sections_all = ["Feedstock_Supply_Logistics", "Feedstock_Handling_and_Preparation", "Transportation", "IL_Pretreatment",
+      "Enzymatic_Hydrolysis_and_Fermentation", "Recovery_and_Separation", "Hydrogeneration_and_Oligomerization",
+      "Wastewater_Treatment", "Lignin_Utilization", "Byproducts"]
 
 
 // Set parameter values
 var input_dict = {};
 
+$("#myFuels").change(function() {
+  html_text = "<button class='accordion' id='common'>Common Parameters</button><div id = 'common_params' class='panel'>"+
+              "<form><span class='tooltip-wrap'><strong>GWP time horizon [years] = </strong></span>"+
+                    "<select id='myVals' onchange='lifetimeSelect()''><option value='100'>100</option><option value='20'>20</option></select></form>"+
+              "<form><span class='tooltip-wrap'><strong>biorefinary electricity source [region] </strong></span>"+
+                      "<select id='myList' onchange='electricitySelect()''><option value='US'>US</option><option value='NG'>NG</option>"+
+                          "<option value='NGCC'>NGCC</option><option value='NG'>Coal</option><option value='Lignin'>Lignin</option>"+
+                          "<option value='Renewables'>Renewables</option><option value='WECC'>WECC Mix</option><option value='MRO'>MRO Mix</option>"+
+                          "<option value='SPP'>SPP Mix</option><option value='TRE'>TRE Mix</option><option value='SERC'>SERC Mix</option><option value='RFC'>RFC Mix</option>"+
+                          "<option value='NPCC'>NPCC Mix</option><option value='FRCC'>FRCC Mix</option></select></form>"+
+              "<form><span class='tooltip-wrap'><strong>feedstock = </strong></span><select id='myFeedstock' onchange='feedstockSelect()'>"+
+                          "<option value='corn_stover'>Corn Stover</option><option value='sorghum'>Sorghum</option></select></form>"+
+              "<form><span class='tooltip-wrap'><strong>ionic liquid = </strong></span><select id='myILs' onchange='ionicLiquidSelect()'>"+
+                          "<option value='chlys'>[Ch][Lys]</option></select></form></div>"
+    parent = document.getElementById('acc');
+    parent.insertAdjacentHTML("beforeend", html_text)
+
+  if (analysis_params.fuel == 'ethanol'){
+    parameter_path = "static/defaultParams.js";
+    if (document.getElementById(sections_all[0]) !== null) {
+      var element_3 = document.getElementById('common');
+      element_3.parentNode.removeChild(element_3);
+      for (var i = 0; i < sections_all.length; i++) {
+      var element = document.getElementById(sections_all[i]);
+      var element_2 = document.getElementById(sections_all[i]+"_params");
+          element.parentNode.removeChild(element);
+          element_2.parentNode.removeChild(element_2);
+          $("br").remove();
+        }
+    }
+
+    html_text = "<br/><button class='accordion' id='waterwash'>Waterwash Process</button><br/>" +
+                "<button class='accordion' id='iHG-Current'>iHG-Current Process</button><br/>" +
+                "<button class='accordion' id='iHG-Projected'>iHG-Projected Process</button>"
+    parent = document.getElementById('acc');
+    parent.insertAdjacentHTML("beforeend", html_text)
+
+    for (var i = 0; i < selectivity.length; i++) {
+      parent_id = selectivity[i];
+      html_text = "<div id='" + parent_id + "_params' class='panel'>" +
+                  "<div class='buttonSuperPro' id='SuperPro_" + parent_id + "'>Use SuperPro Values</div>" +
+                  "<div class='buttonDefault' id='default_" + parent_id + "'>Use Default Values</div>" +
+                    "<form><span class='tooltip-wrap'><strong>acid selection = </strong></span>" +
+                      "<select id='" + parent_id + "_acid' onchange='acidSelect('" + parent_id + "_acid')'>" +
+                      "<option value='h2so4'>H2SO4</option><option value='hcl'>HCl</option>" +
+                  "</select></form></div>" 
+      parent = document.getElementById(parent_id);
+      parent.insertAdjacentHTML("afterend", html_text)
+    }
+  }
+
+  if (analysis_params.fuel == 'jet_fuel'){
+    parameter_path = "static/defaultParams_jetFuels.js";
+    if (document.getElementById(selectivity[0]) !== null) {
+      var element_3 = document.getElementById('common');
+      element_3.parentNode.removeChild(element_3);
+      for (var i = 0; i < selectivity.length; i++) {
+        var element = document.getElementById(selectivity[i]);
+            element.parentNode.removeChild(element);
+        var element_2 = document.getElementById(selectivity[i]+"_params");
+            element_2.parentNode.removeChild(element_2);
+            $("br").remove();
+          }}
+        html_text = "<br/>"
+        parent = document.getElementById('acc');
+        parent.insertAdjacentHTML("beforeend", html_text)
+
+    for (var i = 0; i < sections_all.length; i++) {
+        html_text = "<button class='accordion' id='" + sections_all[i] + "'>" + sections_all[i] + " Process</button><br/>"
+        parent = document.getElementById('acc');
+        parent.insertAdjacentHTML("beforeend", html_text)
+  }
+    for (var i = 0; i < sections_all.length; i++) {
+      parent_id = sections_all[i];
+      if (parent_id === 'IL_Pretreatment') {
+        html_text = "<div id='" + parent_id + "_params' class='panel'>" +
+                    "<div class='buttonSuperPro' id='SuperPro_" + parent_id + "'>Use SuperPro Values</div>" +
+                    "<div class='buttonDefault' id='default_" + parent_id + "'>Use Default Values</div>" +
+                      "<form><span class='tooltip-wrap'><strong>acid selection = </strong></span>" +
+                        "<select id='" + parent_id + "_acid' onchange='acidSelect('" + parent_id + "_acid')'>" +
+                        "<option value='h2so4'>H2SO4</option><option value='hcl'>HCl</option>" +
+                    "</select></form></div>" 
+        parent = document.getElementById(parent_id);
+        parent.insertAdjacentHTML("afterend", html_text)
+      }
+      else {
+        html_text = "<div id='" + parent_id + "_params' class='panel'>" +
+                    "<div class='buttonSuperPro' id='SuperPro_" + parent_id + "'>Use SuperPro Values</div>" +
+                    "<div class='buttonDefault' id='default_" + parent_id + "'>Use Default Values</div>"
+        parent = document.getElementById(parent_id);
+        parent.insertAdjacentHTML("afterend", html_text)}
+      }
+    }
+  
+
 $.getJSON( "static/parameter_names.js", function(params_alias) {
-    $.getJSON( "static/defaultParams.js", function(default_params) {
+    $.getJSON( parameter_path, function(default_params) {
         for (pre_process in default_params) {
             parent_id = pre_process + "_params"
             for (item in default_params[pre_process]) {
@@ -29,6 +138,7 @@ $.getJSON( "static/parameter_names.js", function(params_alias) {
                     else {
                         error_value = Math.round(((default_params[pre_process][item]['avg'] - default_params[pre_process][item]['low'])/default_params[pre_process][item]['avg'])*10)/10
                     }
+
                     html_text = (params_alias[item] + " = " + 
                                 "</span><input placeholder='value' name=" + pre_process + 
                                 " type='text' id=" + pre_process + "_" + item + " value=" + default_params[pre_process][item]['avg'] + ">"+
@@ -38,11 +148,30 @@ $.getJSON( "static/parameter_names.js", function(params_alias) {
                     parent = document.getElementById(parent_id);
                     parent.appendChild(span_class)
             }}
-        };
+      }
 
     input_dict.params = default_params;
     input_dict.params.analysis_params = analysis_params;
+    input_dict.params.common = common_params;
     });
+});
+
+  var acc = document.getElementsByClassName("accordion");
+  for (var i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+          /* Toggle between adding and removing the "active" class,
+          to highlight the button that controls the panel */
+          this.classList.toggle("active");
+
+          /* Toggle between hiding and showing the active panel */
+          var panel = this.nextElementSibling;
+          if (panel.style.display === "block") {
+              panel.style.display = "none";
+          } else {
+              panel.style.display = "block";
+          }
+      });
+    }
 });
 
 
@@ -97,6 +226,10 @@ $(".buttonDefault").click(function(event) {
     });
 });
 
+function fuelSelect() {
+  var myList=document.getElementById("myFuels");
+  analysis_params.fuel = myList.options[myFuels.selectedIndex].value;
+}
 
 function electricitySelect() {
   var myList=document.getElementById("myList");
@@ -138,7 +271,9 @@ function acidSelect(id) {
   input_dict.params[process_key]['acid'] = myList.options[myList.selectedIndex].value;
 }   
 
+
 $("body").on("change", "input", function(){
+  console.log(input_dict)
     to_replace = event.target.name + '_';
     if (event.target.placeholder == "value") {
       key = event.target.id.replace(to_replace, '');
@@ -198,28 +333,8 @@ run_cons_water_button.addEventListener('mouseout', function() {
 });
 
 
-var acc = document.getElementsByClassName("accordion");
-var i;
-
-for (i = 0; i < acc.length; i++) {
-    acc[i].addEventListener("click", function() {
-        /* Toggle between adding and removing the "active" class,
-        to highlight the button that controls the panel */
-        this.classList.toggle("active");
-
-        /* Toggle between hiding and showing the active panel */
-        var panel = this.nextElementSibling;
-        if (panel.style.display === "block") {
-            panel.style.display = "none";
-        } else {
-            panel.style.display = "block";
-        }
-    });
-}
-
 
 $("var").click(function(event) {
-
     var plot_data = [];
     input_dict.model = event.target.id
     $.ajax({
@@ -229,64 +344,88 @@ $("var").click(function(event) {
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
       success: function(data) {
-        for (i=0; i<processes.length; i++){
-          if (processes[i] != 'Other') {
-          var trace = {
-            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
-            y: [data[processes[i]]['waterwash'],
-                data[processes[i]]['iHG-Current'],
-                data[processes[i]]['iHG-Projected']],
-            name: processes[i],
-            type: 'bar',
-            width: 0.7
-          }}
-          else {
+        sectors = [];
+        processes = []
+        for (sector in data) {
+          sectors.push(sector)
+        }
+        console.log(data)
+        var index_1 = sectors.indexOf('error_bars_max');
+        sectors.splice(index_1, 1);
+        var index_2 = sectors.indexOf('error_bars_min');
+        sectors.splice(index_2, 1);
+        for (preproc in data[sectors[0]]) {
+          processes.push(preproc)
+        }
+        for (i=0; i<sectors.length; i++){
+          y = []
+          errors_max = []
+          errors_min = []
+          for (j=0; j<processes.length; j++){
+            y.push(data[sectors[i]][processes[j]])
+            errors_max.push(data.error_bars_max[processes[j]])
+            errors_min.push(data.error_bars_min[processes[j]])
+          }
+          if (input_dict.params.analysis_params.fuel == 'ethanol') {
+            if (i != sectors.length - 2) {
             var trace = {
-            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
-            y: [data[processes[i]]['waterwash'],
-                data[processes[i]]['iHG-Current'],
-                data[processes[i]]['iHG-Projected']],
-            name: processes[i],
-            type: 'bar',
-            width: 0.7,
-            error_y: {
-              type: 'data',
-              symmetric: false,
-              array: [data.error_bars_max['waterwash'], 
-                      data.error_bars_max['iHG-Current'], 
-                      data.error_bars_max['iHG-Projected']],
-              arrayminus: [data.error_bars_min['waterwash'], 
-                           data.error_bars_min['iHG-Current'], 
-                           data.error_bars_min['iHG-Projected']]
-            }
-          }}
+              x: processes,
+              y: y,
+              name: sectors[i],
+              type: 'bar',
+              width: 0.7
+            }}
+            else {
+              var trace = {
+              x: processes,
+              y: y,
+              name: sectors[i],
+              type: 'bar',
+              width: 0.7,
+              error_y: {
+                type: 'data',
+                symmetric: false,
+                array: errors_max,
+                arrayminus: errors_min
+              }
+            }}
+          }
+          else if (input_dict.params.analysis_params.fuel == 'jet_fuel') {
+            var trace = {
+              x: processes,
+              y: y,
+              name: sectors[i],
+              type: 'bar',
+              width: 0.4
+            }}
+          
 
           plot_data.push(trace);
         }
             total_ww = 0
             total_ihc = 0
             total_ihp = 0
-        for (i=0; i<processes.length; i++){
-            total_ww += data[processes[i]]['waterwash']
-            total_ihc += data[processes[i]]['iHG-Current']
-            total_ihp += data[processes[i]]['iHG-Projected']}
+        // for (i=0; i<processes.length; i++){
+        //     total_ww += data[processes[i]]['waterwash']
+        //     total_ihc += data[processes[i]]['iHG-Current']
+        //     total_ihp += data[processes[i]]['iHG-Projected']}
 
-        var trace_marker = {
-            x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
-            y: [total_ww,
-                total_ihc,
-                total_ihp],
-            mode: 'markers',
-            showlegend: false,
-            marker: {
-                color: '#rgba(59, 57, 53, 0.1)',
-                size: 7,
-                line: {
-                    width: 2,
-                }
-          }}
+        // var trace_marker = {
+        //     x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
+        //     y: [total_ww,
+        //         total_ihc,
+        //         total_ihp],
+        //     mode: 'markers',
+        //     showlegend: false,
+        //     marker: {
+        //         color: '#rgba(59, 57, 53, 0.1)',
+        //         size: 7,
+        //         line: {
+        //             width: 2,
+        //         }
+        //   }}
 
-        plot_data.push(trace_marker);
+        // plot_data.push(trace_marker);
         if (input_dict.model == 'buttonGHG'){
             y_axis_label = 'g CO<sub>2</sub>(eq) per MJ';
         }

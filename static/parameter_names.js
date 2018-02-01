@@ -11,12 +11,19 @@
     "ionicLiquid_amount": "<strong> ionic liquid amount </strong> <br /> [kg per kg feedstock]", 
     "ng_input_stream_MJ": "<strong> natural gas </strong> [MJ per MJ ethanol]", 
     "octane_ltr": "<strong> octane </strong> [liters per liter of ethanol]",
-    "electricity_requirements": "<strong> electricity </strong> [kWh per liter of ethanol]",
+    "electricity": "<strong> electricity </strong> [kWh per liter of ethanol]",
     "electricity_credit": "<strong> electricity credit </strong> <br />[kWh per liter of ethanol]", 
     "dap.kg": "<strong> diammonium phosphate </strong> <br /> [g per kg fermentable sugars]",   
     "csl.kg": "<strong> corn liquor </strong> <br /> [g per kg fermentable sugars]", 
     "caoh.kg": "<strong> WWT nutrients (lime) </strong> <br /> [kg per kg ethanol]",
     "naoh.kg": "<strong> Sodium hydroxide (NaOH) </strong> <br /> [kg per kg ethanol]",
     "feedstock.kg": "<strong> feedstock amount </strong> [kg per kg ethanol]",
-    "water_direct_withdrawal": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]"
+    "water_direct_withdrawal": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]",
+    "steam_low": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]",
+    "steam_high": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]",
+    "cooling_water": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]",
+    "chilled_water": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]",
+    "direct_GHG": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]",
+    "steam_low_credit": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]",
+    "water_direct_consumption_credit": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]"
 }

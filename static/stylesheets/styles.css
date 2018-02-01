@@ -8,6 +8,20 @@ html, body {
   padding: 0;
 }
 
+#fuelSelection{
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  padding: 15px;
+  background-color: #ccb5e2;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+#myFuels{
+  font-size: 14px;
+}
+
 .buttonSuperPro {
   position: relative;
   top: -5px;
@@ -183,6 +197,7 @@ form {
   width: 390px;
   display: none;
 }
+
 
 .thumb {
     height: 75px;
