@@ -106,6 +106,14 @@ def FinalImpactModel(SP_params, model, fuel='ethanol'):
                                                 SP_params['common']['etoh_distribution_truck'][scenario])) +
                                             (feedstock_amount/1000) * 
                                                 SP_params['common']['feedstock_distribution_truck'][scenario])
+                print(y["flatbedtruck.mt_km"])
+                print((ionic_liquid_amount * feedstock_amount/1000))
+                print(etoh_feed_stream_mass_kg/1000)
+                print(SP_params['common']['IL_flatbedtruck_mt_km'][scenario])
+                print(feedstock_amount/1000)
+                print(SP_params['common']['etoh_distribution_truck'][scenario])
+                print(SP_params['common']['feedstock_distribution_truck'][scenario])
+
             if 'electricity' in SP_params[selectivity].keys():
                 y["electricity.{}.kWh".format(SP_params['analysis_params']['facility_electricity'])] = (
                                                             SP_params[selectivity]['electricity'][scenario]/0.789)

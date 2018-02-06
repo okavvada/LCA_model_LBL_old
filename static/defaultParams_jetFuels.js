@@ -1,6 +1,6 @@
 {
 "Feedstock_Supply_Logistics": {
-        "feedstock.kg": {"high": 7, "avg": 7, "low": 7, "units": "kg per kg ethanol"},
+        "feedstock.kg": {"high": 7.02, "avg": 7.02, "low": 7.02, "units": "kg per kg ethanol"},
         "electricity": {"high": 0.0002, "avg": 0.0002, "low": 0.0002, "units": "kg per kg ethanol"}},
     "Feedstock_Handling_and_Preparation": {
         "electricity": {"high": 0.34, "avg": 0.34, "low": 0.34, "units": "kg per kg ethanol"}},
@@ -19,8 +19,8 @@
     "Enzymatic_Hydrolysis_and_Fermentation": {
         "electricity": {"high": 0.9, "avg": 0.9, "low": 0.9, "units": "kg per kg ethanol"},
         "cellulase_amount": {"high": 0.018, "avg": 0.018, "low": 0.018, "units": "kg protein per kg cellulose"}, 
-        "dap.kg": {"high": 0.00002, "avg": 0.00002, "low": 0.00002, "units": "g per kg sugar"}, 
-        "csl.kg": {"high": 0.00016, "avg": 0.00016, "low": 0.00016, "units": "g per kg sugar"}, 
+        "dap.kg": {"high": 0.02, "avg": 0.02, "low": 0.02, "units": "g per kg sugar"}, 
+        "csl.kg": {"high": 0.16, "avg": 0.16, "low": 0.16, "units": "g per kg sugar"}, 
         "water_direct_consumption": {"high": 6.7, "avg": 6.7, "low": 6.7, "units": "L"},
         "water_direct_withdrawal": {"high": 6.7, "avg": 6.7, "low": 6.7, "units": "liter"},
         "steam_low": {"high": 0.3, "avg": 0.3, "low": 0.3, "units": "kg"},
