@@ -130,10 +130,10 @@ def CooledWaterCO2kg(cooled_type):
     
     # Numeric coefficients carbon emissions per L of water
     waters = {
-        'cooling_water': 5,
-        'chilled_water': 5,
-        'steam_low': 5,
-        'steam_high': 5}
+        'cooling_water': 0,
+        'chilled_water': 0,
+        'steam_low': 0,
+        'steam_high': 0}
 
     if cooled_type in waters.keys():
         water_CO2 = waters[cooled_type]

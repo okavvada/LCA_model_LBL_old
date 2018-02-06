@@ -7,7 +7,7 @@ var analysis_params = {
     }
 
 var common_params = {
-  "IL_rail_km": {"high": 160, "avg": 160, "low": 160, "units": "km"},
+    "IL_rail_km": {"high": 160, "avg": 160, "low": 160, "units": "km"},
     "IL_flatbedtruck_mt_km": {"high": 80, "avg": 80, "low": 80, "units": "km"},
     "etoh_distribution_rail": {"high": 150, "avg": 135, "low": 120, "units": "km"},
     "etoh_distribution_truck": {"high": 55, "avg": 50, "low": 45, "units": "km"},
@@ -47,7 +47,9 @@ $("#myFuels").change(function() {
     parameter_path = "static/defaultParams.js";
     if (document.getElementById(sections_all[0]) !== null) {
       var element_3 = document.getElementById('common');
+      var element_4 = document.getElementById('common_params');
       element_3.parentNode.removeChild(element_3);
+      element_4.parentNode.removeChild(element_4);
       for (var i = 0; i < sections_all.length; i++) {
       var element = document.getElementById(sections_all[i]);
       var element_2 = document.getElementById(sections_all[i]+"_params");
@@ -90,7 +92,12 @@ $("#myFuels").change(function() {
             $("br").remove();
           }}
         html_text = "<br/>"
+
+        superpro_button = "<div class='buttonSuperPro' id='SuperPro_All'>Use SuperPro Values</div>" +
+                          "<div class='buttonDefault' id='default_All'>Use Default Values</div>"
         parent = document.getElementById('acc');
+        superpro_parent = document.getElementById('buttonWithWater')
+        superpro_parent.insertAdjacentHTML("afterend", superpro_button)
         parent.insertAdjacentHTML("beforeend", html_text)
 
     for (var i = 0; i < sections_all.length; i++) {
@@ -102,8 +109,6 @@ $("#myFuels").change(function() {
       parent_id = sections_all[i];
       if (parent_id === 'IL_Pretreatment') {
         html_text = "<div id='" + parent_id + "_params' class='panel'>" +
-                    "<div class='buttonSuperPro' id='SuperPro_" + parent_id + "'>Use SuperPro Values</div>" +
-                    "<div class='buttonDefault' id='default_" + parent_id + "'>Use Default Values</div>" +
                       "<form><span class='tooltip-wrap'><strong>acid selection = </strong></span>" +
                         "<select id='" + parent_id + "_acid' onchange='acidSelect('" + parent_id + "_acid')'>" +
                         "<option value='h2so4'>H2SO4</option><option value='hcl'>HCl</option>" +
@@ -112,9 +117,7 @@ $("#myFuels").change(function() {
         parent.insertAdjacentHTML("afterend", html_text)
       }
       else {
-        html_text = "<div id='" + parent_id + "_params' class='panel'>" +
-                    "<div class='buttonSuperPro' id='SuperPro_" + parent_id + "'>Use SuperPro Values</div>" +
-                    "<div class='buttonDefault' id='default_" + parent_id + "'>Use Default Values</div>"
+        html_text = "<div id='" + parent_id + "_params' class='panel'>"
         parent = document.getElementById(parent_id);
         parent.insertAdjacentHTML("afterend", html_text)}
       }
@@ -125,6 +128,26 @@ $.getJSON( "static/parameter_names.js", function(params_alias) {
     $.getJSON( parameter_path, function(default_params) {
         for (pre_process in default_params) {
             parent_id = pre_process + "_params"
+            if (parent_id === 'Transportation_params') {
+                for (item in common_params) {
+                          var span_class = document.createElement("span");
+                          span_class.className = "tooltip-wrap";
+                          if (item['avg'] == item['low']){
+                              error_value = 0;
+                          }
+                          else {
+                              error_value = Math.round(((common_params[item]['avg'] - common_params[item]['low'])/common_params[item]['avg'])*10)/10
+                          }
+
+                          html_text = (params_alias[item] + " = " + 
+                                      "</span><input placeholder='value' name=" + pre_process + 
+                                      " type='text' id=" + pre_process + "_" + common_params[item] + " value=" + common_params[item]['avg'] + ">"+
+                                      "<span>+/-</span><input placeholder='error' name=" + pre_process + 
+                                      " type='text' id=" + pre_process + "_error_" + common_params[item] +" value=" + error_value +" ><br/>")
+                          span_class.insertAdjacentHTML("afterbegin", html_text)
+                          parent = document.getElementById(parent_id);
+                          parent.appendChild(span_class)
+            }}
             for (item in default_params[pre_process]) {
                 if (item == 'acid'){
                     continue
@@ -172,58 +195,66 @@ $.getJSON( "static/parameter_names.js", function(params_alias) {
           }
       });
     }
-});
-
 
 $(".buttonSuperPro").click(function(event) {
     target_id_super = event.target.id.replace("SuperPro_", '')
-    pre_process = target_id_super
+    if (analysis_params.fuel == 'jet_fuel'){
+      target_id_super = 'All';
+    }
     path = "static/SuperPro_data_" + target_id_super + ".js"
     $.getJSON(path).done(function(super_params) {
-        for (item in input_dict.params[target_id_super]) {
-            if (input_dict.params[pre_process][item]['avg'] == input_dict.params[pre_process][item]['low']){
+      for (name in super_params){
+        for (item in input_dict.params[name]) {
+            if (item['avg'] == item['low']){
                 error_value = 0;
             }
             else {
-                error_value = Math.round(((input_dict.params[pre_process][item]['avg'] - input_dict.params[pre_process][item]['low'])/input_dict.params[pre_process][item]['avg'])*10)/10
+                error_value = Math.round(((item['avg'] - item['low'])/item['avg'])*10)/10
             }
-            if (item in super_params){
-                input_dict.params[target_id_super][item]['avg'] = super_params[item]
-                input_dict.params[target_id_super][item]['low'] = super_params[item] * (1 - error_value)
-                input_dict.params[target_id_super][item]['high'] = super_params[item] * (1 + error_value)
+            if (item in super_params[name]){
+                input_dict.params[name][item]['avg'] = super_params[name][item]
+                input_dict.params[name][item]['low'] = super_params[name][item] * (1 - error_value)
+                input_dict.params[name][item]['high'] = super_params[name][item] * (1 + error_value)
             }
         }
-    for (item in input_dict.params[target_id_super]){
-        input_val_id = target_id_super + "_" + item;
-        input_val = document.getElementById(input_val_id);
-        input_val.value = input_dict.params[target_id_super][item]['avg']
-    }
+      for (item in input_dict.params[name]){
+          input_val_id = name + "_" + item;
+          input_val = document.getElementById(input_val_id);
+          input_val.value = input_dict.params[name][item]['avg']
+      }}
     }).fail(function(){alert("The SuperPro data is not formated correctly. Run the `RUN_SuperPro.py` first to generate the .js file in the static folder. For more details see documentation.")});
 });
 
 $(".buttonDefault").click(function(event) {
     target_id_def = event.target.id.replace("default_", '')
-    pre_process = target_id_def
-    $.getJSON("static/defaultParams.js", function(default_params) {
-        for (item in input_dict.params[target_id_def]) {
-            if (input_dict.params[pre_process][item]['avg'] == input_dict.params[pre_process][item]['low']){
+    if (analysis_params.fuel == 'jet_fuel'){
+      target_id_def = 'All';
+      parameter_path = "static/defaultParams_jetFuels.js";}
+    else if (analysis_params.fuel == 'ethanol'){
+      parameter_path = "static/defaultParams.js";}
+    $.getJSON(parameter_path, function(default_params) {
+      for (name in default_params){
+        for (item in input_dict.params[name]) {
+            if (item['avg'] == item['low']){
                 error_value = 0;
             }
             else {
-                error_value = Math.round(((input_dict.params[pre_process][item]['avg'] - input_dict.params[pre_process][item]['low'])/input_dict.params[pre_process][item]['avg'])*10)/10
+                error_value = Math.round(((item['avg'] - item['low'])/item['avg'])*10)/10
             }
-            if (item in default_params[pre_process]){
-                input_dict.params[target_id_def][item]['avg'] = default_params[pre_process][item]['avg']
-                input_dict.params[target_id_def][item]['low'] = default_params[pre_process][item]['avg'] * (1 - error_value)
-                input_dict.params[target_id_def][item]['high'] = default_params[pre_process][item]['avg'] * (1 + error_value)
+            if (item in default_params[name]){
+                input_dict.params[name][item]['avg'] = default_params[name][item]['avg']
+                input_dict.params[name][item]['low'] = default_params[name][item]['avg'] * (1 - error_value)
+                input_dict.params[name][item]['high'] = default_params[name][item]['avg'] * (1 + error_value)
             }
         }
-    for (item in input_dict.params[target_id_def]){
-        input_val_id = target_id_def + "_" + item;
+    for (item in input_dict.params[name]){
+        input_val_id = name + "_" + item;
         input_val = document.getElementById(input_val_id);
-        input_val.value = input_dict.params[target_id_def][item]['avg']
-    }
+        input_val.value = input_dict.params[name][item]['avg']
+    }}
     });
+});
+
 });
 
 function fuelSelect() {

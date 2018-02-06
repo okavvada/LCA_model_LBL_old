@@ -53,30 +53,36 @@ def FinalImpactModel(SP_params, model, fuel='ethanol'):
                 y_cred.update({item:0})
             biorefinery_direct_ghg = 0
             cooled_water_ghg = 0
+            if fuel == 'ethanol':
+                ionic_liquid_amount = SP_params[selectivity]['ionicLiquid_amount'][scenario]
+                feedstock_amount = SP_params[selectivity]['feedstock.kg'][scenario]
+            if fuel == 'jet_fuel':
+                ionic_liquid_amount = SP_params['IL_Pretreatment']['ionicLiquid_amount'][scenario]
+                feedstock_amount = SP_params["Feedstock_Supply_Logistics"]['feedstock.kg'][scenario]
             if 'acid.kg' in SP_params[selectivity].keys():
                 if (SP_params[selectivity]['acid'] == 'hcl'):
-                    y["hcl.kg"] = SP_params[selectivity]['acid.kg'][scenario] * SP_params[selectivity]['ionicLiquid_amount'][scenario]
+                    y["hcl.kg"] = SP_params[selectivity]['acid.kg'][scenario] * ionic_liquid_amount
                 elif (SP_params[selectivity]['acid'] == 'h2so4'):
-                    y["h2so4.kg"] = SP_params[selectivity]['acid.kg'][scenario] * SP_params[selectivity]['ionicLiquid_amount'][scenario]
+                    y["h2so4.kg"] = SP_params[selectivity]['acid.kg'][scenario] * ionic_liquid_amount
             if 'ionicLiquid_amount' in SP_params[selectivity].keys():
-                y["lysine.us.kg"] = SP_params[selectivity]['ionicLiquid_amount'][scenario] * SP_params[selectivity]['feedstock.kg'][scenario] * 0.58
-                y["cholinium.hydroxide.kg"] = SP_params[selectivity]['ionicLiquid_amount'][scenario] * 0.42  
+                y["lysine.us.kg"] = ionic_liquid_amount * feedstock_amount * 0.58
+                y["cholinium.hydroxide.kg"] = ionic_liquid_amount * 0.42  
             if 'cellulase_amount' in SP_params[selectivity].keys():
-                y["cellulase.kg"] = SP_params[selectivity]['cellulase_amount'][scenario] * cellulose[SP_params['analysis_params']['feedstock']] * SP_params[selectivity]['feedstock.kg'][scenario]
+                y["cellulase.kg"] = SP_params[selectivity]['cellulase_amount'][scenario] * cellulose[SP_params['analysis_params']['feedstock']] * feedstock_amount
             if 'csl.kg' in SP_params[selectivity].keys():
-                y["csl.kg"] = SP_params[selectivity]['csl.kg'][scenario]/1000 * sugars[SP_params['analysis_params']['feedstock']] * SP_params[selectivity]['feedstock.kg'][scenario]
+                y["csl.kg"] = SP_params[selectivity]['csl.kg'][scenario]/1000 * sugars[SP_params['analysis_params']['feedstock']] * feedstock_amount
             if 'feedstock.kg' in SP_params[selectivity].keys():
                 if SP_params['analysis_params']['feedstock'] == 'corn_stover':
-                    y["farmedstover.kg"] = SP_params[selectivity]['feedstock.kg'][scenario]
+                    y["farmedstover.kg"] = feedstock_amount
                 if SP_params['analysis_params']['feedstock'] == 'sorghum':
-                    y["sorghum.kg"] = SP_params[selectivity]['feedstock.kg'][scenario]
+                    y["sorghum.kg"] = feedstock_amount
                 if SP_params['analysis_params']['feedstock'] == 'mixed':
-                    y["sorghum.kg"] = SP_params[selectivity]['feedstock.kg'][scenario] * 0.4
-                    y["farmedstover.kg"] = SP_params[selectivity]['feedstock.kg'][scenario] * 0.4
-                    y["farmedmiscanthus.kg"] = SP_params[selectivity]['feedstock.kg'][scenario] * 0.2
-                    y["switchgrass.kg"] = SP_params[selectivity]['feedstock.kg'][scenario] * 0.2
+                    y["sorghum.kg"] = feedstock_amount * 0.4
+                    y["farmedstover.kg"] = feedstock_amount * 0.4
+                    y["farmedmiscanthus.kg"] = feedstock_amount * 0.2
+                    y["switchgrass.kg"] = feedstock_amount * 0.2
             if 'dap.kg' in SP_params[selectivity].keys():
-                y["dap.kg"] = SP_params[selectivity]['dap.kg'][scenario]/1000 * sugars[SP_params['analysis_params']['feedstock']] * SP_params[selectivity]['feedstock.kg'][scenario]
+                y["dap.kg"] = SP_params[selectivity]['dap.kg'][scenario]/1000 * sugars[SP_params['analysis_params']['feedstock']] * feedstock_amount
             if 'caoh.kg' in SP_params[selectivity].keys():
                 y["lime.kg"] = SP_params[selectivity]['caoh.kg'][scenario]
             if 'naoh.kg' in SP_params[selectivity].keys():
@@ -89,16 +95,16 @@ def FinalImpactModel(SP_params, model, fuel='ethanol'):
                 y["gasoline.MJ"] = (hf.FuelConvertMJ(SP_params[selectivity]['octane_ltr'][scenario]/0.789, "gasoline", "liter"))
 
             if (fuel == 'ethanol') or (selectivity == "Transportation"):
-                y["rail.mt_km"] = ((SP_params[selectivity]['ionicLiquid_amount'][scenario] * SP_params[selectivity]['feedstock.kg'][scenario]/1000) * 
+                y["rail.mt_km"] = ((ionic_liquid_amount * feedstock_amount/1000) * 
                                 SP_params['common']['IL_rail_km'][scenario] +
                                 (etoh_feed_stream_mass_kg/1000 * SP_params['common']['etoh_distribution_rail'][scenario]) +
-                                (SP_params[selectivity]['feedstock.kg'][scenario]/1000) * 
+                                (feedstock_amount/1000) * 
                                 SP_params['common']['feedstock_distribution_rail'][scenario])
-                y["flatbedtruck.mt_km"] = (((SP_params[selectivity]['ionicLiquid_amount'][scenario] * SP_params[selectivity]['feedstock.kg'][scenario]/1000) * 
+                y["flatbedtruck.mt_km"] = (((ionic_liquid_amount * feedstock_amount/1000) * 
                                                 SP_params['common']['IL_flatbedtruck_mt_km'][scenario]) +
                                             (etoh_feed_stream_mass_kg/1000 * (
                                                 SP_params['common']['etoh_distribution_truck'][scenario])) +
-                                            (SP_params[selectivity]['feedstock.kg'][scenario]/1000) * 
+                                            (feedstock_amount/1000) * 
                                                 SP_params['common']['feedstock_distribution_truck'][scenario])
             if 'electricity' in SP_params[selectivity].keys():
                 y["electricity.{}.kWh".format(SP_params['analysis_params']['facility_electricity'])] = (

@@ -39,6 +39,40 @@ html, body {
   transition: 0.4s;
 }
 
+#SuperPro_All{
+  position: absolute;
+  top: 70px;
+  left: 250px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: #4c035e;
+  border-radius: 10px;
+  margin-top: 1px;
+  cursor: pointer;
+  text-align: center;
+  color: #fff;
+  width: 140px;
+  font-size: 14px;
+  transition: 0.4s;
+}
+
+#default_All{
+  position: absolute;
+  top: 70px;
+  left: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: #4c035e;
+  border-radius: 10px;
+  margin-top: 1px;
+  cursor: pointer;
+  text-align: center;
+  color: #fff;
+  width: 140px;
+  font-size: 14px;
+  transition: 0.4s;
+}
+
 .buttonDefault {
   position: relative;
   top: -33px;

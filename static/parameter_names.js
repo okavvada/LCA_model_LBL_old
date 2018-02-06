@@ -19,11 +19,11 @@
     "naoh.kg": "<strong> Sodium hydroxide (NaOH) </strong> <br /> [kg per kg ethanol]",
     "feedstock.kg": "<strong> feedstock amount </strong> [kg per kg ethanol]",
     "water_direct_withdrawal": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]",
-    "steam_low": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]",
-    "steam_high": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]",
-    "cooling_water": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]",
-    "chilled_water": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]",
-    "direct_GHG": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]",
-    "steam_low_credit": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]",
-    "water_direct_consumption_credit": "<strong> biorefinery water withdrawal </strong> <br /> [liters per kg ethanol]"
+    "steam_low": "<strong> biorefinery steam low heat </strong> <br /> [kg per kg ethanol]",
+    "steam_high": "<strong> biorefinery steam high heat </strong> <br /> [kg per kg ethanol]",
+    "cooling_water": "<strong> biorefinery cooling water </strong> <br /> [liters per kg ethanol]",
+    "chilled_water": "<strong> biorefinery chilled water </strong> <br /> [liters per kg ethanol]",
+    "direct_GHG": "<strong> biorefinery direct GHG emissions </strong> <br /> [kg per kg ethanol]",
+    "steam_low_credit": "<strong> biorefinery steam credit </strong> <br /> [kg per kg ethanol]",
+    "water_direct_consumption_credit": "<strong> biorefinery water credit </strong> <br /> [liters per kg ethanol]"
 }
