@@ -40,14 +40,16 @@ The tool allows the user to customize some of the modeling parameters to assess 
 The tool is compatible with the Intelligen Inc, SuperPro Designer tool. To use the output of the SuperPro tool to set your parameter values please follow the instructions to generate the compatible file before running the `Use SuperPro Values` command. If the compatibility file is not generated an error will appear on the screen. 
 
 Steps:
-- Copy a SuperPro output file in the form of `.xls` into the `input_data` folder. 
+- Use "no formatting" option when generating a SuperPro output
+- Copy the SuperPro output file in the form of `.xls` into the `input_data` folder. 
 - Open your terminal and navigate inside the repository
-- In your terminal run `python RUN_SuperPro.py --path=input_data/CornStover-to-EtOH-waterwash.xls --feedstock=corn_stover --preprocess=waterwash`
-This will generate a compatibility file for a SuperPro run with `corn stover` as the feedstock and `waterwash` the pre-proceesing step. If you are running for a different feedstock, pre-processing method or fuel please substitute appropriately. 
+- In your terminal run `python RUN_SuperPro.py --path='input_data/SuperPro Result_V2.xls' --feedstock=corn_stover --preprocess='All' --fuel=jet_fuel`
+This will generate a compatibility file for a SuperPro run with `jet fuel` as the output fuel, `corn stover` as the feedstock and `All` the pre-proceesing step. If you are running for a different feedstock, pre-processing method or fuel please substitute appropriately. 
 
 The valid options for the arguments are:
 - feedstock: `corn_stover`, `sorgum`
-- pre-processing method: `waterwash`, `iHG-Current`, `iHG-Projected`
+- pre-processing method: `waterwash`, `iHG-Current`, `iHG-Projected`, `All`
+- fuel: `ethanol` or `jet_fuel`
 
 
 ## Outputs
