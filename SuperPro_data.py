@@ -198,9 +198,11 @@ def convertToKg(fuel, fuel_name):
 
 def setSuperProNames(result_json):
     results_names = {}
-    for key, value in SuperPro_names.iteritems():
-        if key in result_json.keys():
-            results_names.update({value:result_json[key]})
+    for key, value in result_json.iteritems():
+        if key in SuperPro_names.keys():
+            results_names.update({SuperPro_names[key]:value})
+        else:
+            results_names.update({key:value})
     return results_names
 
 def setSIUnits(result_json):
@@ -304,6 +306,20 @@ def SuperPro_translate(path, feedstock, fuel_name, preprocess):
                 result = value / fuel_kg
             if key == 'chilled_water':
                 result = value / fuel_kg
+            if 'Steam' in key:
+                result = value / fuel_kg
+                temp = key.replace('Steam', '')
+                temp = int(temp.replace('C', ''))
+                if temp < 500:
+                    if 'steam_low' in process_results.keys():
+                        process_results['steam_low'] += result
+                    else:
+                        process_results.update({'steam_low':result})
+                elif temp > 500:
+                    if 'steam_high' in process_results.keys():
+                        process_results['steam_high'] += result
+                    else:
+                        process_results.update({'steam_high':result})
 
             process_results.update({key:result})
         final_results.update({sector:process_results})

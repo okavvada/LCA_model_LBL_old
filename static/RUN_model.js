@@ -436,27 +436,7 @@ $("var").click(function(event) {
             total_ww = 0
             total_ihc = 0
             total_ihp = 0
-        // for (i=0; i<processes.length; i++){
-        //     total_ww += data[processes[i]]['waterwash']
-        //     total_ihc += data[processes[i]]['iHG-Current']
-        //     total_ihp += data[processes[i]]['iHG-Projected']}
 
-        // var trace_marker = {
-        //     x: ['waterwash', 'iHG-Current', 'iHG-Projected'],
-        //     y: [total_ww,
-        //         total_ihc,
-        //         total_ihp],
-        //     mode: 'markers',
-        //     showlegend: false,
-        //     marker: {
-        //         color: '#rgba(59, 57, 53, 0.1)',
-        //         size: 7,
-        //         line: {
-        //             width: 2,
-        //         }
-        //   }}
-
-        // plot_data.push(trace_marker);
         if (input_dict.model == 'buttonGHG'){
             y_axis_label = 'g CO<sub>2</sub>(eq) per MJ';
         }
