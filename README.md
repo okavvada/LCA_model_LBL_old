@@ -47,7 +47,7 @@ Steps:
 This will generate a compatibility file for a SuperPro run with `jet fuel` as the output fuel, `corn stover` as the feedstock and `All` the pre-proceesing step. If you are running for a different feedstock, pre-processing method or fuel please substitute appropriately. 
 
 The valid options for the arguments are:
-- feedstock: `corn_stover`, `sorgum`
+- feedstock: `corn_stover`, `sorghum`
 - pre-processing method: `waterwash`, `iHG-Current`, `iHG-Projected`, `All`
 - fuel: `ethanol` or `jet_fuel`
 
