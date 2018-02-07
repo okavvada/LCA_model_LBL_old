@@ -30,7 +30,7 @@ $("#myFuels").change(function() {
   html_text = "<button class='accordion' id='common'>Common Parameters</button><div id = 'common_params' class='panel'>"+
               "<form><span class='tooltip-wrap'><strong>GWP time horizon [years] = </strong></span>"+
                     "<select id='myVals' onchange='lifetimeSelect()''><option value='100'>100</option><option value='20'>20</option></select></form>"+
-              "<form><span class='tooltip-wrap'><strong>biorefinary electricity source [region] </strong></span>"+
+              "<form><span class='tooltip-wrap'><strong>biorefinery electricity source [region] </strong></span>"+
                       "<select id='myList' onchange='electricitySelect()''><option value='US'>US</option><option value='NG'>NG</option>"+
                           "<option value='NGCC'>NGCC</option><option value='NG'>Coal</option><option value='Lignin'>Lignin</option>"+
                           "<option value='Renewables'>Renewables</option><option value='WECC'>WECC Mix</option><option value='MRO'>MRO Mix</option>"+
