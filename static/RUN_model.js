@@ -22,6 +22,16 @@ var sections_all = ["Feedstock_Supply_Logistics", "Feedstock_Handling_and_Prepar
       "Enzymatic_Hydrolysis_and_Fermentation", "Recovery_and_Separation", "Hydrogeneration_and_Oligomerization",
       "Wastewater_Treatment", "Lignin_Utilization", "Byproducts"]
 
+// var sections_names = ["Feedstock_Supply_Logistics": "Feedstock_Supply_Logistics", 
+//                       "Feedstock_Handling_and_Preparation": "Feedstock_Supply_Logistics", 
+//                       "Transportation": "Feedstock_Supply_Logistics", 
+//                       "IL_Pretreatment": "Feedstock_Supply_Logistics",
+//                       "Enzymatic_Hydrolysis_and_Fermentation": , 
+//                       "Recovery_and_Separation": , 
+//                       "Hydrogeneration_and_Oligomerization": ,
+//                       "Wastewater_Treatment": , 
+//                       "Lignin_Utilization": , 
+//                       "Byproducts": ]
 
 // Set parameter values
 var input_dict = {};
@@ -101,7 +111,7 @@ $("#myFuels").change(function() {
         parent.insertAdjacentHTML("beforeend", html_text)
 
     for (var i = 0; i < sections_all.length; i++) {
-        html_text = "<button class='accordion' id='" + sections_all[i] + "'>" + sections_all[i] + " Process</button><br/>"
+        html_text = "<button class='accordion' id='" + sections_all[i] + "'>" + sections_all[i].replace(/_/g, ' ') + " Process</button><br/>"
         parent = document.getElementById('acc');
         parent.insertAdjacentHTML("beforeend", html_text)
   }
