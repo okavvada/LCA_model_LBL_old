@@ -5,7 +5,7 @@ import parameters as P
 
 def csv_dict_list(variables_file):
     mydict = {}
-    reader = csv.reader(open(variables_file, "rb"))
+    reader = csv.reader(open(variables_file, "r"))
     for i, rows in enumerate(reader):
         if i == 0: continue
         k = rows[0]
