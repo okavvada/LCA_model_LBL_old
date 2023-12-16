@@ -209,7 +209,7 @@ def TotalGHGEmissions(io_data, y, biorefinery_direct_ghg, cooled_water_ghg, time
     # Returns:
     #  The net GHG emissions (kg CO2e) for the product life cycle by sector
 
-    A = io_data.drop(['products'],1).values.T
+    A = io_data.drop(columns=['products']).values.T
     y_array = []
     for item in io_data['products']:
         y_array.append(y[item])
@@ -234,7 +234,7 @@ def TotalWaterImpacts(io_data, y, water_consumption, biorefinery_direct_consumpt
     #   biorefinery
     # Returns:
     #  The net water consumption (liters water) for the product life cycle by sector
-    A = io_data.drop(['products'],1).values.T
+    A = io_data.drop(columns=['products']).values.T
     y_array = []
     water_consumption_array = []
     for item in io_data['products']:

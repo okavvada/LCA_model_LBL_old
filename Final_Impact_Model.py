@@ -203,11 +203,11 @@ def FinalImpactModel(SP_params, model, fuel='ethanol'):
         aggregated_data_high = m['high'][selectivities].T
         
         if 'electricity_credit' in aggregated_data_avg.columns.values:
-            aggregated_data_avg_pos = aggregated_data_avg.drop(['electricity_credit'],1)
+            aggregated_data_avg_pos = aggregated_data_avg.drop(columns=['electricity_credit'])
         if 'steam_low_credit' in aggregated_data_avg.columns.values:
-            aggregated_data_avg_pos = aggregated_data_avg.drop(['steam_low_credit'],1)
+            aggregated_data_avg_pos = aggregated_data_avg.drop(columns=['steam_low_credit'])
         if 'water_direct_consumption_credit' in aggregated_data_avg.columns.values:
-            aggregated_data_avg_pos = aggregated_data_avg.drop(['water_direct_consumption_credit'],1)
+            aggregated_data_avg_pos = aggregated_data_avg.drop(columns=['water_direct_consumption_credit'])
 
     else:
         aggregated_data_avg = m['avg'].T
