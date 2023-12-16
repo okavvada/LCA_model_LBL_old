@@ -190,7 +190,7 @@ def convertToKg(fuel, fuel_name):
         fuel_kg = fuel[0] * 0.453592
 
     else:
-        print ("units not found")
+        print("units not found")
         return
 
     return fuel_kg

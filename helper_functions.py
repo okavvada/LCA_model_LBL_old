@@ -59,12 +59,12 @@ def FuelConvertMJ(num, fuel_name, unit):
     elif fuel_name in aliases.values():
         fuel =  fuel_name
     else:
-        print ("fuel not found")
+        print("fuel not found")
         return
 
     content_MJ = energy_content[energy_content['Fuel'] == fuel][unit].iloc[0]
     if content_MJ == "N/A":
-        print ("Invalid unit entered. You may not enter a unit of volume for solid fuels")
+        print("Invalid unit entered. You may not enter a unit of volume for solid fuels")
     else:
     # liter column of data frame requires that the output be converted to a 
     # character, then to numeric.  Converting directly to numeric doesn't work 
@@ -116,7 +116,7 @@ def FuelCO2kg(MJ_fuel_in, fuel_type):
     if fuel_type in fuels.keys():
         fuel_CO2 = MJ_fuel_in * fuels[fuel_type]
     else:
-        print ("fuel not found")
+        print("fuel not found")
         return
     return fuel_CO2
 
@@ -138,7 +138,7 @@ def CooledWaterCO2kg(cooled_type):
     if cooled_type in waters.keys():
         water_CO2 = waters[cooled_type]
     else:
-        print ("water not found")
+        print("water not found")
         return
     return water_CO2
 
